@@ -407,15 +407,6 @@
   gap: 0.5rem;
 }
 
-.audit-initiate__selection-head button {
-  border: 0;
-  background: transparent;
-  color: var(--color-primary);
-  font-size: var(--fs-caption);
-  font-weight: 600;
-  cursor: pointer;
-}
-
 .audit-initiate__checkbox-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -436,26 +427,6 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-}
-
-.audit-initiate__info-btn {
-  width: 28px;
-  height: 28px;
-  flex: 0 0 28px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  color: var(--color-text-secondary);
-  cursor: pointer;
-}
-
-.audit-initiate__info-btn:hover,
-.audit-initiate__info-btn:focus-visible {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
 }
 
 .audit-initiate__two-col {
@@ -529,11 +500,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
-  border: 0;
-  padding: 0;
-  background: transparent;
   text-align: left;
-  cursor: pointer;
 }
 
 .audit-initiate__rule-copy strong {
@@ -718,21 +685,6 @@
   font-size: var(--fs-caption);
 }
 
-.audit-initiate__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.audit-initiate__footer-right {
-  display: flex;
-  gap: 0.5rem;
-}
-
 @media (max-width: 1023px) {
   .audit-initiate-page {
     padding-left: 1rem;
@@ -769,20 +721,9 @@
   .audit-initiate__metric-row {
     grid-template-columns: 1fr;
   }
-
-  .audit-initiate__selection-head,
-  .audit-initiate__footer {
+  .audit-initiate__selection-head {
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .audit-initiate__footer-right {
-    width: 100%;
-  }
-
-  .audit-initiate__footer .app-btn,
-  .audit-initiate__footer-right .app-btn {
-    flex: 1;
   }
 
   .audit-initiate__review-grid dl > div {

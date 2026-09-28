@@ -225,7 +225,7 @@ export function InitiateAuditPage() {
   const renderInfoButton = (field: string, value: string, row: TableRow) => (
     <button
       type="button"
-      className="audit-initiate__info-btn"
+      className="app-icon-btn app-icon-btn--sm app-icon-btn--default"
       aria-label={t("initiate.explain", { value })}
       onClick={() => explain(field, value, row)}
     >
@@ -302,8 +302,8 @@ export function InitiateAuditPage() {
               <div className="audit-initiate__selection-head">
                 <h3>{t("initiate.fields.selectCircles")}</h3>
                 <div>
-                  <button type="button" onClick={() => setCircles(circlesAvailable)}>{t("initiate.actions.selectAll")}</button>
-                  <button type="button" onClick={() => setCircles([])}>{t("initiate.actions.clear")}</button>
+                  <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>{t("initiate.actions.selectAll")}</SecondaryButton>
+                  <SecondaryButton size="sm" onClick={() => setCircles([])}>{t("initiate.actions.clear")}</SecondaryButton>
                 </div>
               </div>
               <div className="audit-initiate__checkbox-grid">
@@ -424,9 +424,9 @@ export function InitiateAuditPage() {
                         onChange={() => setSignals(toggle(signals, id))}
                         ariaLabel={`${id} ${label}`}
                       />
-                      <button type="button" className="audit-initiate__rule-copy" onClick={() => explain("rule_id", id, { rule_id:id })}>
+                      <div className="audit-initiate__rule-copy">
                         <strong>{id}</strong><span>{label}</span>
-                      </button>
+                      </div>
                       {renderInfoButton("rule_id", id, { rule_id:id })}
                     </div>
                   ))}
@@ -453,9 +453,9 @@ export function InitiateAuditPage() {
                       onChange={() => setControlFlags(toggle(controlFlags, id))}
                       ariaLabel={`${id} ${label}`}
                     />
-                    <button type="button" className="audit-initiate__rule-copy" onClick={() => explain("flag_id", id, { flag_id:id })}>
+                    <div className="audit-initiate__rule-copy">
                       <strong>{id}</strong><span>{label}</span>
-                    </button>
+                    </div>
                     {renderInfoButton("flag_id", id, { flag_id:id })}
                   </div>
                 ))}
@@ -652,22 +652,24 @@ export function InitiateAuditPage() {
           <p className="audit-initiate__validation" role="status">{t("initiate.validation.completeStep")}</p>
         )}
 
-        <div className="audit-initiate__footer">
-          <div>
-            <SecondaryButton onClick={saveDraft}>{t("initiate.actions.saveDraft")}</SecondaryButton>
-          </div>
-          <div className="audit-initiate__footer-right">
-            {step > 0 && <SecondaryButton onClick={() => setStep((value) => Math.max(0,value-1))}>{t("initiate.actions.back")}</SecondaryButton>}
-            {step < STEPS.length - 1 ? (
-              <PrimaryButton disabled={!stepValid} onClick={() => setStep((value) => Math.min(STEPS.length-1,value+1))}>
-                {t("initiate.actions.continue")}
-              </PrimaryButton>
-            ) : (
-              <PrimaryButton disabled={!stepValid} onClick={confirmCandidates}>
-                {t("initiate.actions.confirmCandidates")}
-              </PrimaryButton>
-            )}
-          </div>
+        <div className="entry-form__footer">
+          <SecondaryButton size="sm" onClick={saveDraft}>
+            {t("initiate.actions.saveDraft")}
+          </SecondaryButton>
+          {step > 0 && (
+            <SecondaryButton size="sm" onClick={() => setStep((value) => Math.max(0,value-1))}>
+              {t("initiate.actions.back")}
+            </SecondaryButton>
+          )}
+          {step < STEPS.length - 1 ? (
+            <PrimaryButton size="sm" disabled={!stepValid} onClick={() => setStep((value) => Math.min(STEPS.length-1,value+1))}>
+              {t("initiate.actions.continue")}
+            </PrimaryButton>
+          ) : (
+            <PrimaryButton size="sm" disabled={!stepValid} onClick={confirmCandidates}>
+              {t("initiate.actions.confirmCandidates")}
+            </PrimaryButton>
+          )}
         </div>
       </div>
 
