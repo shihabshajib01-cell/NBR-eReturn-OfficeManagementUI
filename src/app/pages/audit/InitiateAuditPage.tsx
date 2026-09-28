@@ -14,10 +14,7 @@ import { fc } from "../modulePageUtils";
 import { ALL_TAXPAYER_ROWS } from "./auditData";
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
 import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge";
-import {
-  addAuditCandidates, clearAuditDraft, loadAuditDraft, saveAuditDraft,
-  type AuditDraft,
-} from "./auditCandidateStore";
+import { addAuditCandidates } from "./auditCandidateStore";
 
 const STEPS = [
   "setup", "population", "readiness", "criteria", "preview", "review",
@@ -72,27 +69,25 @@ interface InitiateAuditModalProps {
 
 export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAuditModalProps) {
   const { t, i18n } = useTranslation("audit");
-  const restored = loadAuditDraft();
-
   const assessmentYears = unique("assessment_year");
   const circlesAvailable = unique("circle");
   const dataQualityAvailable = unique("data_quality");
   const coverageAvailable = unique("coverage_tier");
 
-  const [step, setStep] = useState(restored?.step ?? 0);
-  const [assessmentYear, setAssessmentYear] = useState(restored?.assessmentYear ?? assessmentYears[0] ?? "2025-26");
-  const [track, setTrack] = useState(restored?.track ?? "risk");
-  const [scopeMode, setScopeMode] = useState(restored?.scopeMode ?? "all");
-  const [circles, setCircles] = useState<string[]>(restored?.circles ?? []);
-  const [dataQuality, setDataQuality] = useState<string[]>(restored?.dataQuality?.length ? restored.dataQuality : dataQualityAvailable);
-  const [coverageTiers, setCoverageTiers] = useState<string[]>(restored?.coverageTiers?.length ? restored.coverageTiers : coverageAvailable);
-  const [riskLevels, setRiskLevels] = useState<string[]>(restored?.riskLevels ?? []);
-  const [signals, setSignals] = useState<string[]>(restored?.signals ?? []);
-  const [controlFlags, setControlFlags] = useState<string[]>(restored?.controlFlags ?? []);
-  const [matchMode, setMatchMode] = useState(restored?.matchMode ?? "any");
-  const [manualReturnIds, setManualReturnIds] = useState<string[]>(restored?.manualReturnIds ?? []);
+  const [step, setStep] = useState(0);
+  const [assessmentYear, setAssessmentYear] = useState(assessmentYears[0] ?? "2025-26");
+  const [track, setTrack] = useState("risk");
+  const [scopeMode, setScopeMode] = useState("all");
+  const [circles, setCircles] = useState<string[]>([]);
+  const [dataQuality, setDataQuality] = useState<string[]>(dataQualityAvailable);
+  const [coverageTiers, setCoverageTiers] = useState<string[]>(coverageAvailable);
+  const [riskLevels, setRiskLevels] = useState<string[]>([]);
+  const [signals, setSignals] = useState<string[]>([]);
+  const [controlFlags, setControlFlags] = useState<string[]>([]);
+  const [matchMode, setMatchMode] = useState("any");
+  const [manualReturnIds, setManualReturnIds] = useState<string[]>([]);
   const [manualSearch, setManualSearch] = useState("");
-  const [exclusions, setExclusions] = useState<Record<string,string>>(restored?.exclusions ?? {});
+  const [exclusions, setExclusions] = useState<Record<string,string>>({});
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
 
   const baseYearRows = useMemo(
@@ -181,16 +176,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     if (resolved) setExplanation(resolved);
   };
 
-  const draft: AuditDraft = {
-    step, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers,
-    riskLevels, signals, controlFlags, matchMode, manualReturnIds, exclusions,
-  };
-
-  const saveDraft = () => {
-    saveAuditDraft(draft);
-    toast.success(t("initiate.toast.draftSaved"));
-  };
-
   const selectionBasis = useMemo(() => {
     const scope = scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ");
     if (track === "population") return `Population selection · ${scope}`;
@@ -212,7 +197,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       track: TRACKS.find((item) => item.id === track)?.id ?? track,
       selectionBasis,
     });
-    clearAuditDraft();
     toast.success(t("initiate.toast.candidatesConfirmed", { count: finalRows.length }));
     onConfirmed();
     onClose();
@@ -623,9 +607,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
 
   const modalFooter = (
     <>
-      <SecondaryButton size="sm" onClick={saveDraft}>
-        {t("initiate.actions.saveDraft")}
-      </SecondaryButton>
       {step > 0 && (
         <SecondaryButton size="sm" onClick={() => setStep((value) => Math.max(0,value-1))}>
           {t("initiate.actions.back")}

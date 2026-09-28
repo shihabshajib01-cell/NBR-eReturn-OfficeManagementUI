@@ -20,24 +20,7 @@ export interface AuditCandidateRecord extends TableRow {
   selected_on: string;
 }
 
-export interface AuditDraft {
-  step: number;
-  assessmentYear: string;
-  track: string;
-  scopeMode: string;
-  circles: string[];
-  dataQuality: string[];
-  coverageTiers: string[];
-  riskLevels: string[];
-  signals: string[];
-  controlFlags: string[];
-  matchMode: string;
-  manualReturnIds: string[];
-  exclusions: Record<string, string>;
-}
-
 const CANDIDATE_KEY = "nbr-audit-candidates-v1";
-const DRAFT_KEY = "nbr-initiate-audit-draft-v1";
 
 function canUseStorage() {
   return typeof window !== "undefined" && !!window.localStorage;
@@ -116,23 +99,4 @@ export function addAuditCandidates(
   const next = [...additions, ...existing];
   if (canUseStorage()) window.localStorage.setItem(CANDIDATE_KEY, JSON.stringify(next));
   return next;
-}
-
-export function saveAuditDraft(draft: AuditDraft) {
-  if (canUseStorage()) window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-}
-
-export function loadAuditDraft(): AuditDraft | null {
-  if (!canUseStorage()) return null;
-  const raw = window.localStorage.getItem(DRAFT_KEY);
-  if (!raw) return null;
-  try {
-    return JSON.parse(raw) as AuditDraft;
-  } catch {
-    return null;
-  }
-}
-
-export function clearAuditDraft() {
-  if (canUseStorage()) window.localStorage.removeItem(DRAFT_KEY);
 }

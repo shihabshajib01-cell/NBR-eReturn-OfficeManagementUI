@@ -241,7 +241,6 @@
     "actions": {
       "selectAll": "সব নির্বাচন",
       "clear": "Clear",
-      "saveDraft": "Draft save",
       "back": "Back",
       "continue": "Continue",
       "confirmCandidates": "Candidate confirm"
@@ -287,7 +286,6 @@
     },
     "explain": "{{value}} ব্যাখ্যা",
     "toast": {
-      "draftSaved": "Audit selection draft saved হয়েছে।",
       "candidatesConfirmed": "{{count}} audit candidate confirm হয়েছে।"
     }
   },

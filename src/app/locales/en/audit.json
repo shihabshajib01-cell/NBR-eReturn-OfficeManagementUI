@@ -241,7 +241,6 @@
     "actions": {
       "selectAll": "Select all",
       "clear": "Clear",
-      "saveDraft": "Save draft",
       "back": "Back",
       "continue": "Continue",
       "confirmCandidates": "Confirm candidates"
@@ -287,7 +286,6 @@
     },
     "explain": "Explain {{value}}",
     "toast": {
-      "draftSaved": "Audit selection draft saved.",
       "candidatesConfirmed": "{{count}} audit candidates confirmed."
     }
   },
