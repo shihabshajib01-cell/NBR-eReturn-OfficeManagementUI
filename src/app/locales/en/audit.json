@@ -309,6 +309,7 @@
     },
     "filters": {
       "selectionTrack": "Selection Track"
-    }
+    },
+    "initiateAction": "Initiate Audit"
   }
 }

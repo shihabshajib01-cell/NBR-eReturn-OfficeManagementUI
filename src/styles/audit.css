@@ -192,10 +192,6 @@
 
 
 /* Initiate Audit — page-scoped stepper and selection workflow */
-.audit-initiate-page {
-  padding-bottom: var(--space-8);
-}
-
 .audit-stepper {
   margin-bottom: 1rem;
   overflow-x: auto;
@@ -275,14 +271,6 @@
   border-color: var(--color-primary);
   background: var(--color-primary);
   color: var(--color-text-on-primary);
-}
-
-.audit-initiate__card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-sm);
-  padding: 1.25rem;
 }
 
 .audit-initiate__section-heading {
@@ -685,13 +673,7 @@
   font-size: var(--fs-caption);
 }
 
-@media (max-width: 1023px) {
-  .audit-initiate-page {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .audit-initiate__option-grid,
+@media (max-width: 1023px) {  .audit-initiate__option-grid,
   .audit-initiate__two-col,
   .audit-initiate__review-grid {
     grid-template-columns: 1fr;
@@ -730,4 +712,20 @@
     grid-template-columns: 1fr;
     gap: 0.25rem;
   }
+}
+
+
+.audit-initiate-modal {
+  min-width: 0;
+}
+
+.audit-initiate-modal__description {
+  margin: 0 0 1rem;
+  color: var(--color-text-secondary);
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body-sm);
+}
+
+.audit-initiate-modal__content {
+  min-width: 0;
 }

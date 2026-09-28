@@ -26,7 +26,6 @@ import {
 } from "./auditData";
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
 import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge";
-import { InitiateAuditPage } from "./InitiateAuditPage";
 import { AuditCandidatesPage } from "./AuditCandidatesPage";
 
 const PER_PAGE = 10;
@@ -533,7 +532,7 @@ export function AuditModulePage() {
 
   switch (subNav) {
     case "audit-overview": return <AuditOverviewPage />;
-    case "initiate-audit": return <InitiateAuditPage />;
+    case "initiate-audit": return <AuditCandidatesPage initialInitiateOpen />;
     case "audit-candidates": return <AuditCandidatesPage />;
     case "all-taxpayers": return <AuditTablePage config={taxpayerConfig} />;
     case "risk-cases": return <AuditTablePage config={riskConfig} />;

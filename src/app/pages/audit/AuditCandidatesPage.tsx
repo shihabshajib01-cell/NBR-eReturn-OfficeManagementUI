@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Download, Filter, Printer } from "lucide-react";
+import { Download, Filter, Plus, Printer } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
 import { DynamicDetailsDrawer } from "../../components/drawers/DynamicDetailsDrawer";
@@ -16,6 +16,7 @@ import { fc } from "../modulePageUtils";
 import { getAuditCandidates } from "./auditCandidateStore";
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
 import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge";
+import { InitiateAuditModal } from "./InitiateAuditPage";
 
 const PER_PAGE = 10;
 
@@ -30,11 +31,15 @@ function flattenColumns(cols: ColDef[]) {
   );
 }
 
-export function AuditCandidatesPage() {
+interface AuditCandidatesPageProps {
+  initialInitiateOpen?: boolean;
+}
+
+export function AuditCandidatesPage({ initialInitiateOpen = false }: AuditCandidatesPageProps) {
   const { isDesktop } = useUIState();
   const { t, i18n } = useTranslation("audit");
   const { t: tc } = useTranslation("common");
-  const [rows] = useState<TableRow[]>(() => getAuditCandidates());
+  const [rows, setRows] = useState<TableRow[]>(() => getAuditCandidates());
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
   const [drawer, setDrawer] = useState<TableRow | null>(null);
@@ -42,6 +47,7 @@ export function AuditCandidatesPage() {
   const [showFilter, setShowFilter] = useState(false);
   const [filterValues, setFilterValues] = useState<Record<string,string>>({});
   const [appliedFilters, setAppliedFilters] = useState<Record<string,string>>({});
+  const [initiateOpen, setInitiateOpen] = useState(initialInitiateOpen);
 
   const cols: ColDef[] = [
     fc("candidate_id", t("candidates.columns.candidateId"), { mono:true }),
@@ -124,6 +130,16 @@ export function AuditCandidatesPage() {
         <div>
           <h1 className="table-page__title">{t("candidates.title")}</h1>
           <p className="table-page__desc">{t("candidates.description")}</p>
+        </div>
+        <div className="table-page__actions">
+          <button
+            type="button"
+            className="action-btn action-btn--primary"
+            onClick={() => setInitiateOpen(true)}
+          >
+            <Plus size={11} strokeWidth={3} aria-hidden="true" />
+            {t("candidates.initiateAction")}
+          </button>
         </div>
       </div>
 
@@ -208,6 +224,15 @@ export function AuditCandidatesPage() {
       />
 
       <AuditExplainerDrawer explanation={explanation} onClose={()=>setExplanation(null)} />
+
+      <InitiateAuditModal
+        open={initiateOpen}
+        onClose={() => setInitiateOpen(false)}
+        onConfirmed={() => {
+          setRows(getAuditCandidates());
+          setPage(1);
+        }}
+      />
 
       {!isDesktop && (
         <MobileFilterOverlay

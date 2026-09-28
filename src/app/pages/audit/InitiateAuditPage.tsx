@@ -1,13 +1,13 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
-import { Check, Info, Search } from "lucide-react";
+import { Check, ClipboardList, Info } from "lucide-react";
 import { toast } from "sonner";
 import { AppCheckbox } from "../../components/forms/AppCheckbox";
 import { AppSearchField } from "../../components/forms/AppSearchField";
 import { AppSelectField } from "../../components/forms/AppSelectField";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { SecondaryButton } from "../../components/buttons/SecondaryButton";
+import { AppModal } from "../../components/modals/AppModal";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
 import type { ColDef, TableRow } from "../modulePageUtils";
 import { fc } from "../modulePageUtils";
@@ -64,9 +64,14 @@ function flagIds(value: unknown): string[] {
   return Array.from(new Set(String(value ?? "").match(/F[0-5]/g) ?? []));
 }
 
-export function InitiateAuditPage() {
+interface InitiateAuditModalProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirmed: () => void;
+}
+
+export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAuditModalProps) {
   const { t, i18n } = useTranslation("audit");
-  const navigate = useNavigate();
   const restored = loadAuditDraft();
 
   const assessmentYears = unique("assessment_year");
@@ -209,7 +214,8 @@ export function InitiateAuditPage() {
     });
     clearAuditDraft();
     toast.success(t("initiate.toast.candidatesConfirmed", { count: finalRows.length }));
-    navigate("/audit/audit-candidates");
+    onConfirmed();
+    onClose();
   };
 
   const setExcluded = (row: TableRow, include: boolean) => {
@@ -615,16 +621,44 @@ export function InitiateAuditPage() {
     );
   };
 
-  return (
-    <div className="table-page audit-page audit-initiate-page">
-      <div className="table-page__header">
-        <div>
-          <h1 className="table-page__title">{t("initiate.title")}</h1>
-          <p className="table-page__desc">{t("initiate.description")}</p>
-        </div>
-      </div>
+  const modalFooter = (
+    <>
+      <SecondaryButton size="sm" onClick={saveDraft}>
+        {t("initiate.actions.saveDraft")}
+      </SecondaryButton>
+      {step > 0 && (
+        <SecondaryButton size="sm" onClick={() => setStep((value) => Math.max(0,value-1))}>
+          {t("initiate.actions.back")}
+        </SecondaryButton>
+      )}
+      {step < STEPS.length - 1 ? (
+        <PrimaryButton size="sm" disabled={!stepValid} onClick={() => setStep((value) => Math.min(STEPS.length-1,value+1))}>
+          {t("initiate.actions.continue")}
+        </PrimaryButton>
+      ) : (
+        <PrimaryButton size="sm" disabled={!stepValid} onClick={confirmCandidates}>
+          {t("initiate.actions.confirmCandidates")}
+        </PrimaryButton>
+      )}
+    </>
+  );
 
-      <nav className="audit-stepper" aria-label={t("initiate.progressLabel")}>
+  return (
+    <AppModal
+      open={open}
+      onClose={onClose}
+      title={t("initiate.title")}
+      icon={<ClipboardList size={17} strokeWidth={1.8} />}
+      size="xl"
+      footer={modalFooter}
+      describedBy="initiate-audit-description"
+    >
+      <div className="audit-initiate-modal">
+        <p id="initiate-audit-description" className="audit-initiate-modal__description">
+          {t("initiate.description")}
+        </p>
+
+        <nav className="audit-stepper" aria-label={t("initiate.progressLabel")}>
         <ol>
           {STEPS.map((id,index) => (
             <li key={id} className={[
@@ -645,35 +679,16 @@ export function InitiateAuditPage() {
         </ol>
       </nav>
 
-      <div className="audit-initiate__card">
-        {renderStep()}
+        <div className="audit-initiate-modal__content">
+          {renderStep()}
 
-        {!stepValid && (
-          <p className="audit-initiate__validation" role="status">{t("initiate.validation.completeStep")}</p>
-        )}
-
-        <div className="entry-form__footer">
-          <SecondaryButton size="sm" onClick={saveDraft}>
-            {t("initiate.actions.saveDraft")}
-          </SecondaryButton>
-          {step > 0 && (
-            <SecondaryButton size="sm" onClick={() => setStep((value) => Math.max(0,value-1))}>
-              {t("initiate.actions.back")}
-            </SecondaryButton>
-          )}
-          {step < STEPS.length - 1 ? (
-            <PrimaryButton size="sm" disabled={!stepValid} onClick={() => setStep((value) => Math.min(STEPS.length-1,value+1))}>
-              {t("initiate.actions.continue")}
-            </PrimaryButton>
-          ) : (
-            <PrimaryButton size="sm" disabled={!stepValid} onClick={confirmCandidates}>
-              {t("initiate.actions.confirmCandidates")}
-            </PrimaryButton>
+          {!stepValid && (
+            <p className="audit-initiate__validation" role="status">{t("initiate.validation.completeStep")}</p>
           )}
         </div>
-      </div>
 
-      <AuditExplainerDrawer explanation={explanation} onClose={() => setExplanation(null)} />
-    </div>
+        <AuditExplainerDrawer explanation={explanation} onClose={() => setExplanation(null)} />
+      </div>
+    </AppModal>
   );
 }

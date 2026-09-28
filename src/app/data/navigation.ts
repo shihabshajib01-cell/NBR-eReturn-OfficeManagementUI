@@ -182,7 +182,6 @@ export const NAVIGATION: MainNavDef[] = [
     icon: FileSearch,
     children: [
       { id: "audit-overview", label: "Audit Overview", labelKey: "navigation.audit.auditOverview", icon: LayoutDashboard },
-      { id: "initiate-audit", label: "Initiate Audit", labelKey: "navigation.audit.initiateAudit", icon: ClipboardList },
       { id: "audit-candidates", label: "Audit Candidates", labelKey: "navigation.audit.auditCandidates", icon: BadgeCheck },
       { id: "all-taxpayers", label: "All Taxpayers", labelKey: "navigation.audit.allTaxpayers", icon: FileText },
       { id: "risk-cases", label: "Risk Cases", labelKey: "navigation.audit.riskCases", icon: ShieldAlert },
