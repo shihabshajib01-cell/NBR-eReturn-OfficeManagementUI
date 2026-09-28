@@ -26,6 +26,7 @@ import enKpi from "../locales/en/kpi.json";
 import enHelp from "../locales/en/help.json";
 import enPermissions from "../locales/en/permissions.json";
 import enSpecialRegistration from "../locales/en/specialRegistration.json";
+import enAudit from "../locales/en/audit.json";
 
 import bnCommon from "../locales/bn/common.json";
 import bnNavigation from "../locales/bn/navigation.json";
@@ -51,6 +52,7 @@ import bnKpi from "../locales/bn/kpi.json";
 import bnHelp from "../locales/bn/help.json";
 import bnPermissions from "../locales/bn/permissions.json";
 import bnSpecialRegistration from "../locales/bn/specialRegistration.json";
+import bnAudit from "../locales/bn/audit.json";
 
 const resources = {
   en: {
@@ -78,6 +80,7 @@ const resources = {
     help: enHelp,
     permissions: enPermissions,
     specialRegistration: enSpecialRegistration,
+    audit: enAudit,
   },
   bn: {
     common: bnCommon,
@@ -104,6 +107,7 @@ const resources = {
     help: bnHelp,
     permissions: bnPermissions,
     specialRegistration: bnSpecialRegistration,
+    audit: bnAudit,
   },
 };
 
@@ -139,6 +143,7 @@ i18n
       "help",
       "permissions",
       "specialRegistration",
+      "audit",
     ],
     interpolation: {
       escapeValue: false,

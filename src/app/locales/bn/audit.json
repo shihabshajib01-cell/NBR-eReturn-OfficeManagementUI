@@ -1,0 +1,137 @@
+{
+  "prototypeNotice": "এগুলো শুধুই উদাহরণভিত্তিক প্রোটোটাইপ রেকর্ড — লাইভ করদাতার তথ্য নয়। প্রস্তাবিত SLA ও অমীমাংসিত ভূমিকা/নীতিগত সিদ্ধান্ত আনুষ্ঠানিক অনুমোদনের অপেক্ষায় থাকবে।",
+  "common": {
+    "records": "রেকর্ড",
+    "search": "অডিট খুঁজুন",
+    "readOnly": "শুধু দেখা যাবে",
+    "readOnlyDetails": "অডিট ইভেন্টের বিস্তারিত",
+    "recordDetails": "অডিট রেকর্ডের বিস্তারিত"
+  },
+  "pages": {
+    "overview": {
+      "title": "অডিট ওভারভিউ",
+      "description": "সমষ্টিগত ঝুঁকি, কিউ স্বাস্থ্য, রিকনসিলিয়েশন ও ভূমিকা-ভিত্তিক তদারকি। Risk Level-কে Finding বা চূড়ান্ত কর সিদ্ধান্ত হিসেবে ধরা হবে না।"
+    },
+    "riskCases": {
+      "title": "রিস্ক কেস",
+      "description": "A–E substantive risk signal থেকে তৈরি অগ্রাধিকারভিত্তিক কেস, কর্মকর্তার এখতিয়ার অনুযায়ী সীমাবদ্ধ।",
+      "note": "Risk Level শুধু পর্যালোচনার অগ্রাধিকার, কোনো সিদ্ধান্ত নয়। Finding-এর জন্য যাচাইকৃত signal ও linked evidence লাগবে। TIN ডিফল্টভাবে মাস্কড থাকবে।"
+    },
+    "control": {
+      "title": "কন্ট্রোল ও ডেটা কোয়ালিটি",
+      "description": "F0–F5 consistency ও filing-control-এর আলাদা কিউ। এগুলো substantive Risk Level বাড়ায় না।",
+      "note": "Data-quality ও control flag Risk Case থেকে আলাদা পথে থাকবে। F5-এর dependency উৎস ফ্রেমওয়ার্কে এখনো অমীমাংসিত।"
+    },
+    "secondReview": {
+      "title": "দ্বিতীয় পর্যালোচনা",
+      "description": "কেস বন্ধের আগে সম্পূর্ণ verification trail-এর supervisory review।",
+      "note": "বর্তমান design brief অনুযায়ী supervising Range Officer second review করবেন। Review-এ নির্দিষ্ট signal ও evidence উল্লেখ করতে হবে; generic approval যথেষ্ট নয়। Outcome: Sign off অথবা Request rework।"
+    },
+    "rules": {
+      "title": "রুলস ও গভর্ন্যান্স",
+      "description": "Versioned rule change, বাধ্যতামূলক dry-run, endorsement, approval ও controlled rollout।",
+      "note": "Rule কখনো in-place edit হবে না। বর্তমান design assumption অনুযায়ী DCT authoring → Range Officer endorsement → Commissioner approval। Shadow mode case route না করে শুধু ফল record করে।"
+    },
+    "reconciliation": {
+      "title": "রিকনসিলিয়েশন",
+      "description": "প্রতিটি high-risk return-এর জন্য সংশ্লিষ্ট case আছে কি না—দৈনিক যাচাই।",
+      "note": "Range Officer তার Circles এবং Commissioner Zone স্তরে reconciliation দেখবেন। mismatch oversight issue; এটি Risk Level নীরবে বদলায় না।"
+    },
+    "trail": {
+      "title": "অডিট ট্রেইল",
+      "description": "Assessment, human decision ও sensitive-data access-এর append-only event history।",
+      "note": "কিছু overwrite বা delete হবে না। Correction নতুন event। Return Version, Classification Version ও Rule/Config Version সঙ্গে থাকবে যাতে মূল সিদ্ধান্ত পুনর্গঠন করা যায়।"
+    }
+  },
+  "overview": {
+    "openRiskCases": "খোলা রিস্ক কেস",
+    "evidencePending": "Evidence pending",
+    "readyForSecondReview": "Second review-এর জন্য প্রস্তুত",
+    "slaEscalations": "SLA escalation",
+    "scopedByJurisdiction": "Circle / Range / Zone scope",
+    "signalLinkedEvidence": "Evidence নির্দিষ্ট signal-এর সাথে linked",
+    "rangeOfficerQueue": "Supervisory queue",
+    "proposedSlaNote": "প্রস্তাবিত, এখনো অনুমোদিত নয় এমন SLA ভিত্তিক",
+    "riskDistribution": "Risk Level distribution",
+    "queueHealth": "Queue health",
+    "roleScope": "Role ও jurisdiction scope",
+    "riskPrincipleTitle": "মূল সিদ্ধান্ত নীতি",
+    "riskPrinciple": "Screening → Verification → Audit → Final Determination আলাদা কার্যক্রম। কোনো signal বা Risk Level নিজে থেকে Finding, assessment, demand বা accusation হয়ে যায় না।"
+  },
+  "columns": {
+    "caseId": "Case ID",
+    "caseCount": "কেস",
+    "returnId": "Return ID",
+    "tin": "TIN",
+    "assessmentYear": "Assessment Year",
+    "returnVersion": "Return Version",
+    "circle": "Circle",
+    "coverageTier": "Coverage Tier",
+    "riskLevel": "Risk Level",
+    "status": "Status",
+    "sla": "SLA / handling",
+    "signals": "Signals",
+    "verification": "Verification",
+    "evidenceStatus": "Evidence Status",
+    "evidenceRefs": "Evidence reference",
+    "findingStatus": "Finding Status",
+    "reason": "Reason / basis",
+    "assignedTo": "Assigned to",
+    "flagId": "Flag",
+    "check": "Check",
+    "source": "Source",
+    "dependency": "Dependency",
+    "queue": "Queue",
+    "primarySignal": "Primary signal",
+    "verificationBasis": "Verification basis",
+    "findingSummary": "Finding summary",
+    "submittedBy": "Submitted by",
+    "permittedActions": "Permitted actions",
+    "ruleId": "Rule ID",
+    "version": "Version",
+    "ruleFamily": "Rule family",
+    "dryRun": "Dry run",
+    "governanceStatus": "Governance status",
+    "mode": "Mode",
+    "rolloutScope": "Rollout scope",
+    "authorRole": "Author role",
+    "plainLanguageCondition": "Plain-language condition",
+    "versionNote": "Version note",
+    "date": "তারিখ",
+    "scope": "Scope",
+    "highRiskReturns": "High-risk returns",
+    "matchingCases": "Matching cases",
+    "missingCases": "Missing cases",
+    "supervisorView": "Supervisor view",
+    "timestampUtc": "Timestamp (UTC)",
+    "eventId": "Event ID",
+    "actorRole": "Actor role",
+    "actorId": "Actor ID",
+    "action": "Action",
+    "dataState": "Data state",
+    "assessment": "Assessment record",
+    "humanRecord": "Human record",
+    "accessRecord": "Access record",
+    "classificationVersion": "Classification Version",
+    "ruleConfigVersion": "Rule/Config Version",
+    "reviewHandling": "Review handling",
+    "openItems": "Open items",
+    "waitingOn": "Waiting on",
+    "role": "Role",
+    "jurisdiction": "Jurisdiction",
+    "primaryAuditWork": "Primary audit work",
+    "dataAccess": "Data access"
+  },
+  "filters": {
+    "all": "সব",
+    "riskLevel": "Risk Level",
+    "coverageTier": "Coverage Tier",
+    "status": "Status",
+    "controlFlag": "Control Flag",
+    "governanceStatus": "Governance Status",
+    "mode": "Mode",
+    "viewer": "Viewer",
+    "role": "Role",
+    "return": "Return"
+  }
+}

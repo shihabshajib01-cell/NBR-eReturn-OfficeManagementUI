@@ -1,0 +1,137 @@
+{
+  "prototypeNotice": "Illustrative prototype records only — not live taxpayer data. Proposed SLA values and unresolved role/policy assumptions remain subject to formal approval.",
+  "common": {
+    "records": "records",
+    "search": "Search Audit",
+    "readOnly": "Read only",
+    "readOnlyDetails": "Audit event details",
+    "recordDetails": "Audit record details"
+  },
+  "pages": {
+    "overview": {
+      "title": "Audit Overview",
+      "description": "Aggregate risk, queue health, reconciliation and role-scoped oversight. This overview does not treat a Risk Level as a finding or final tax determination."
+    },
+    "riskCases": {
+      "title": "Risk Cases",
+      "description": "Prioritized cases created from substantive A–E risk signals, scoped by officer jurisdiction.",
+      "note": "Risk Level is a review priority, not a conclusion. Findings require a verified signal linked to evidence. TIN is masked by default."
+    },
+    "control": {
+      "title": "Control & Data Quality",
+      "description": "Separate F0–F5 consistency and filing-control queue. These items do not increase substantive Risk Level.",
+      "note": "Data-quality and control flags stay on a separate path from Risk Cases. F5 dependency remains unresolved in the source framework."
+    },
+    "secondReview": {
+      "title": "Second Review",
+      "description": "Supervisory review of completed verification trails before closure.",
+      "note": "The current design brief assigns second review to the supervising Range Officer. Review must name the signal and evidence; generic approval text is not sufficient. Permitted outcomes are Sign off or Request rework."
+    },
+    "rules": {
+      "title": "Rules & Governance",
+      "description": "Versioned rule change requests, mandatory dry-runs, endorsement, approval and controlled rollout.",
+      "note": "Rules are never edited in place. New or changed rules require a dry-run, then follow DCT authoring → Range Officer endorsement → Commissioner approval under the current design assumption. Shadow mode records results without routing cases."
+    },
+    "reconciliation": {
+      "title": "Reconciliation",
+      "description": "Daily confirmation that each high-risk return has a corresponding case within the relevant supervisory scope.",
+      "note": "Reconciliation is surfaced to Range Officers for their Circles and to the Commissioner for the Zone. A mismatch is an oversight issue; it does not silently change Risk Level."
+    },
+    "trail": {
+      "title": "Audit Trail",
+      "description": "Append-only event history for assessment, human decisions and sensitive-data access.",
+      "note": "Nothing is overwritten or deleted. Corrections are new events. Return Version, Classification Version and Rule/Config Version travel with the assessment so the original decision can be reconstructed."
+    }
+  },
+  "overview": {
+    "openRiskCases": "Open risk cases",
+    "evidencePending": "Evidence pending",
+    "readyForSecondReview": "Ready for second review",
+    "slaEscalations": "SLA escalations",
+    "scopedByJurisdiction": "Circle / Range / Zone scope",
+    "signalLinkedEvidence": "Evidence stays linked to a specific signal",
+    "rangeOfficerQueue": "Supervisory queue",
+    "proposedSlaNote": "Based on proposed, not approved, SLA defaults",
+    "riskDistribution": "Risk Level distribution",
+    "queueHealth": "Queue health",
+    "roleScope": "Role and jurisdiction scope",
+    "riskPrincipleTitle": "Core decision principle",
+    "riskPrinciple": "Screening → Verification → Audit → Final Determination are separate activities. A signal or Risk Level does not automatically become a Finding, assessment, demand or accusation."
+  },
+  "columns": {
+    "caseId": "Case ID",
+    "caseCount": "Cases",
+    "returnId": "Return ID",
+    "tin": "TIN",
+    "assessmentYear": "Assessment Year",
+    "returnVersion": "Return Version",
+    "circle": "Circle",
+    "coverageTier": "Coverage Tier",
+    "riskLevel": "Risk Level",
+    "status": "Status",
+    "sla": "SLA / handling",
+    "signals": "Signals",
+    "verification": "Verification",
+    "evidenceStatus": "Evidence Status",
+    "evidenceRefs": "Evidence references",
+    "findingStatus": "Finding Status",
+    "reason": "Reason / basis",
+    "assignedTo": "Assigned to",
+    "flagId": "Flag",
+    "check": "Check",
+    "source": "Source",
+    "dependency": "Dependency",
+    "queue": "Queue",
+    "primarySignal": "Primary signal",
+    "verificationBasis": "Verification basis",
+    "findingSummary": "Finding summary",
+    "submittedBy": "Submitted by",
+    "permittedActions": "Permitted actions",
+    "ruleId": "Rule ID",
+    "version": "Version",
+    "ruleFamily": "Rule family",
+    "dryRun": "Dry run",
+    "governanceStatus": "Governance status",
+    "mode": "Mode",
+    "rolloutScope": "Rollout scope",
+    "authorRole": "Author role",
+    "plainLanguageCondition": "Plain-language condition",
+    "versionNote": "Version note",
+    "date": "Date",
+    "scope": "Scope",
+    "highRiskReturns": "High-risk returns",
+    "matchingCases": "Matching cases",
+    "missingCases": "Missing cases",
+    "supervisorView": "Supervisor view",
+    "timestampUtc": "Timestamp (UTC)",
+    "eventId": "Event ID",
+    "actorRole": "Actor role",
+    "actorId": "Actor ID",
+    "action": "Action",
+    "dataState": "Data state",
+    "assessment": "Assessment record",
+    "humanRecord": "Human record",
+    "accessRecord": "Access record",
+    "classificationVersion": "Classification Version",
+    "ruleConfigVersion": "Rule/Config Version",
+    "reviewHandling": "Review handling",
+    "openItems": "Open items",
+    "waitingOn": "Waiting on",
+    "role": "Role",
+    "jurisdiction": "Jurisdiction",
+    "primaryAuditWork": "Primary audit work",
+    "dataAccess": "Data access"
+  },
+  "filters": {
+    "all": "All",
+    "riskLevel": "Risk Level",
+    "coverageTier": "Coverage Tier",
+    "status": "Status",
+    "controlFlag": "Control Flag",
+    "governanceStatus": "Governance Status",
+    "mode": "Mode",
+    "viewer": "Viewer",
+    "role": "Role",
+    "return": "Return"
+  }
+}

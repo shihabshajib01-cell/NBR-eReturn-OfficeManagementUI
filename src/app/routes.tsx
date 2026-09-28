@@ -47,6 +47,7 @@ const PermissionListPage       = lazy(() => import("./pages/administration-reque
 const SpecialRegistrationPage  = lazy(() => import("./pages/administration-requests/SpecialRegistrationPage").then(m => ({ default: m.SpecialRegistrationPage })));
 const TimeExtensionPage        = lazy(() => import("./pages/administration-requests/TimeExtensionPage").then(m => ({ default: m.TimeExtensionPage })));
 const AuditSelectionPage       = lazy(() => import("./pages/administration-requests/AuditSelectionPage").then(m => ({ default: m.AuditSelectionPage })));
+const AuditModulePage          = lazy(() => import("./pages/audit/AuditModulePage").then(m => ({ default: m.AuditModulePage })));
 
 // ─── Param-based route components ────────────────────────────────────────────
 // These are stable function components — Suspense is provided by MainContentArea.
@@ -144,7 +145,7 @@ export const router = createBrowserRouter([
       { path: "misfiled-returns",Component: PlaceholderPage },
       { path: "case-financial",  Component: PlaceholderPage },
       { path: "audit",           Component: PlaceholderPage },
-      { path: "audit/:subNav",   Component: PlaceholderPage },
+      { path: "audit/:subNav",   Component: AuditModulePage },
       { path: "administration",  Component: PlaceholderPage },
 
       // Dashboard

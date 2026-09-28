@@ -7,16 +7,20 @@ interface StatusBadgeProps {
 const SUCCESS_STATUSES = new Set([
   "approved", "active", "verified", "paid", "resolved", "transferred",
   "disposed", "matched", "decided", "issued", "completed", "disbursed",
+  "closed", "signed off", "live",
 ]);
 const ERROR_STATUSES = new Set([
   "rejected", "inactive", "invalid", "unpaid", "failed", "cancelled",
-  "mismatched", "suspended",
+  "mismatched", "suspended", "missing case",
 ]);
 const WARNING_STATUSES = new Set([
   "pending", "pending review", "dormant", "partially paid", "in progress", "selected",
   "adjourned", "under review", "misfiled", "out of jurisdiction",
+  "assigned", "verifying", "evidence pending", "ready for review", "second review",
+  "rework requested", "partially verified", "unable to verify", "shadow", "staged",
+  "dry run required", "awaiting endorsement", "awaiting approval",
 ]);
-const SECONDARY_STATUSES = new Set(["waived"]);
+const SECONDARY_STATUSES = new Set(["waived", "superseded", "refuted", "not verified"]);
 
 const STATUS_KEYS: Record<string, string> = {
   "active": "active", "inactive": "inactive", "pending": "pending",
@@ -31,6 +35,14 @@ const STATUS_KEYS: Record<string, string> = {
   "selected": "selected", "adjourned": "adjourned", "under review": "underReview",
   "misfiled": "misfiled", "out of jurisdiction": "outOfJurisdiction", "waived": "waived",
   "pending review": "pendingReview",
+  "closed": "closed", "signed off": "signedOff", "assigned": "assigned",
+  "verifying": "verifying", "evidence pending": "evidencePending",
+  "ready for review": "readyForReview", "second review": "secondReview",
+  "rework requested": "reworkRequested", "partially verified": "partiallyVerified",
+  "not verified": "notVerified", "refuted": "refuted", "unable to verify": "unableToVerify",
+  "shadow": "shadow", "staged": "staged", "live": "live", "superseded": "superseded",
+  "dry run required": "dryRunRequired", "awaiting endorsement": "awaitingEndorsement",
+  "awaiting approval": "awaitingApproval", "missing case": "missingCase",
 };
 
 function getVariant(v: string): string {
