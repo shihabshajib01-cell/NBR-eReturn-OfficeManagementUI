@@ -18,6 +18,8 @@ function figmaAssetResolver() {
 }
 
 export default defineConfig({
+  // GitHub Pages project-site base; defaults to root for local/other deployments.
+  base: process.env.BASE_PATH || '/',
   plugins: [
     figmaAssetResolver(),
     // The React and Tailwind plugins are both required for Make, even if

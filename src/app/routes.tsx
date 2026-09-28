@@ -211,4 +211,8 @@ export const router = createBrowserRouter([
       { path: "administration/audit-selection",    Component: AuditSelectionPage },
     ],
   },
-]);
+], {
+  // Keep BrowserRouter aligned with Vite's deployment base ("/" locally,
+  // repository subpath on GitHub Pages).
+  basename: import.meta.env.BASE_URL,
+});
