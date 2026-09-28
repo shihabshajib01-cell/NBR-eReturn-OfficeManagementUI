@@ -72,7 +72,14 @@
     "refundAdjustment": "Refund & Adjustment"
   },
   "audit": {
-    "main": "Audit"
+    "main": "Audit",
+    "auditOverview": "Audit Overview",
+    "riskCases": "Risk Cases",
+    "controlDataQuality": "Control & Data Quality",
+    "secondReview": "Second Review",
+    "rulesGovernance": "Rules & Governance",
+    "reconciliation": "Reconciliation",
+    "auditTrail": "Audit Trail"
   },
   "administration": {
     "main": "Administration & Requests",

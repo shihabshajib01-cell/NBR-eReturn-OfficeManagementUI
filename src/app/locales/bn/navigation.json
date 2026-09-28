@@ -72,7 +72,14 @@
     "refundAdjustment": "ফেরত ও সমন্বয়"
   },
   "audit": {
-    "main": "অডিট"
+    "main": "অডিট",
+    "auditOverview": "অডিট ওভারভিউ",
+    "riskCases": "ঝুঁকিপূর্ণ কেস",
+    "controlDataQuality": "কন্ট্রোল ও ডেটা কোয়ালিটি",
+    "secondReview": "দ্বিতীয় পর্যালোচনা",
+    "rulesGovernance": "রুলস ও গভর্ন্যান্স",
+    "reconciliation": "রিকনসিলিয়েশন",
+    "auditTrail": "অডিট ট্রেইল"
   },
   "administration": {
     "main": "প্রশাসন ও অনুরোধ",

@@ -180,7 +180,15 @@ export const NAVIGATION: MainNavDef[] = [
     label: "Audit",
     labelKey: "navigation.audit.main",
     icon: FileSearch,
-    children: [],
+    children: [
+      { id: "audit-overview", label: "Audit Overview", labelKey: "navigation.audit.auditOverview", icon: LayoutDashboard },
+      { id: "risk-cases", label: "Risk Cases", labelKey: "navigation.audit.riskCases", icon: ShieldAlert },
+      { id: "control-data-quality", label: "Control & Data Quality", labelKey: "navigation.audit.controlDataQuality", icon: FileWarning },
+      { id: "second-review", label: "Second Review", labelKey: "navigation.audit.secondReview", icon: BadgeCheck },
+      { id: "rules-governance", label: "Rules & Governance", labelKey: "navigation.audit.rulesGovernance", icon: Settings2 },
+      { id: "reconciliation", label: "Reconciliation", labelKey: "navigation.audit.reconciliation", icon: ArrowLeftRight },
+      { id: "audit-trail", label: "Audit Trail", labelKey: "navigation.audit.auditTrail", icon: History },
+    ],
   },
   {
     id: "administration",

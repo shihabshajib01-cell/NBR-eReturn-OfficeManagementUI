@@ -144,6 +144,7 @@ export const router = createBrowserRouter([
       { path: "misfiled-returns",Component: PlaceholderPage },
       { path: "case-financial",  Component: PlaceholderPage },
       { path: "audit",           Component: PlaceholderPage },
+      { path: "audit/:subNav",   Component: PlaceholderPage },
       { path: "administration",  Component: PlaceholderPage },
 
       // Dashboard
