@@ -420,7 +420,7 @@ export function AuditModulePage() {
       fc("queue",t("columns.queue")),{type:"col",col:{key:"control_status",label:t("columns.status"),badge:true}},
     ],
     filters:[
-      { key:"circle", label:t("filters.circle"), type:"select", options:opts(uniqueValues(CONTROL_ROWS,"circle"),t("filters.allCircles")) },
+      { key:"circle", label:t("filters.circle"), type:"select", options:opts(uniqueValues(CONTROL_ROWS,"circle")) },
       { key:"flag_id", label:t("filters.controlFlag"), type:"select", options:opts(["F0","F1","F2","F3","F4","F5"]) },
       { key:"control_status", label:t("filters.status"), type:"select", options:opts(["Pending","In Progress","Pending Review","Resolved","Under Review"]) },
     ],
@@ -445,7 +445,7 @@ export function AuditModulePage() {
       {type:"col",col:{key:"review_status",label:t("columns.status"),badge:true}},fc("permitted_actions",t("columns.permittedActions")),
     ],
     filters:[
-      { key:"circle", label:t("filters.circle"), type:"select", options:opts(uniqueValues(SECOND_REVIEW_ROWS,"circle"),t("filters.allCircles")) },
+      { key:"circle", label:t("filters.circle"), type:"select", options:opts(uniqueValues(SECOND_REVIEW_ROWS,"circle")) },
       { key:"risk_level", label:t("filters.riskLevel"), type:"select", options:opts(["High","Very High"]) },
       { key:"review_status", label:t("filters.status"), type:"select", options:opts(["Ready for Review","Second Review","Rework Requested"]) },
     ],
