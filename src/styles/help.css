@@ -229,7 +229,7 @@
   font-weight: 700;
   color: var(--color-text-primary);
   margin: 0;
-  text-transform: uppercase;
+
   letter-spacing: 0.04em;
 }
 
@@ -524,7 +524,7 @@
   font-size: var(--fs-caption);
   font-weight: 700;
   color: var(--color-text-primary);
-  text-transform: uppercase;
+
   letter-spacing: 0.05em;
   margin: 0;
 }
@@ -589,7 +589,7 @@
 .help-release__label {
   font-size: var(--fs-caption);
   font-weight: 700;
-  text-transform: uppercase;
+
   letter-spacing: 0.04em;
   margin: 0 0 8px;
   color: var(--color-text-secondary);
@@ -634,7 +634,7 @@
 .help-search-result__type {
   font-size: 10px;
   font-weight: 700;
-  text-transform: uppercase;
+
   letter-spacing: 0.06em;
   padding: 1px 7px;
   border-radius: 10px;
