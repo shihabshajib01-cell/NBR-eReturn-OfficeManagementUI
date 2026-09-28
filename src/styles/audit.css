@@ -1,45 +1,16 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   Audit module — extends the existing design system without redefining tokens
+   Audit module — audit-specific layout only.
+   Shared table, search, filter, pagination and responsive styles come from
+   the existing Office Management design system.
    ══════════════════════════════════════════════════════════════════════════ */
-
-.audit-page {
-  padding: 1.25rem;
-}
-
-.audit-notice,
-.audit-context-card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-sm);
-}
-
-.audit-notice {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.625rem;
-  padding: 0.75rem 0.875rem;
-  margin-bottom: 1rem;
-  color: var(--color-text-secondary);
-}
-
-.audit-notice svg {
-  flex-shrink: 0;
-  margin-top: 0.1rem;
-  color: var(--color-warning);
-}
-
-.audit-notice p,
-.audit-context-card p {
-  margin: 0;
-  font-size: var(--fs-body-sm);
-  line-height: var(--lh-body-sm);
-  color: var(--color-text-secondary);
-}
 
 .audit-context-card {
   padding: 1rem;
   margin-bottom: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
 }
 
 .audit-context-card h2 {
@@ -48,6 +19,13 @@
   line-height: var(--lh-body-md);
   font-weight: 600;
   color: var(--color-text-primary);
+}
+
+.audit-context-card p {
+  margin: 0;
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body-sm);
+  color: var(--color-text-secondary);
 }
 
 .audit-readonly-badge {
@@ -75,66 +53,8 @@
   margin-bottom: 1rem;
 }
 
-.audit-table-toolbar {
-  flex-wrap: wrap;
-}
-
-.audit-search {
-  width: min(320px, 100%);
-  margin-left: auto;
-}
-
-.audit-filter-row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(180px, 1fr));
-  gap: 0.75rem;
-  padding: 0.875rem 1rem;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-background-subtle);
-}
-
 @media (max-width: 1199px) {
   .audit-overview-grid {
     grid-template-columns: 1fr;
-  }
-
-  .audit-filter-row {
-    grid-template-columns: repeat(2, minmax(180px, 1fr));
-  }
-}
-
-@media (max-width: 1023px) {
-  .audit-page {
-    padding: 0;
-  }
-
-  .audit-page .table-page__header,
-  .audit-page .dashboard-page__header,
-  .audit-notice,
-  .audit-context-card {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
-  .audit-page .table-card,
-  .audit-page .dash-section {
-    border-radius: 0;
-    border-left: 0;
-    border-right: 0;
-  }
-
-  .audit-overview-grid {
-    gap: 0;
-  }
-
-  .audit-search {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .audit-filter-row {
-    grid-template-columns: 1fr;
-    padding: 0.75rem 1rem;
   }
 }
