@@ -2,16 +2,22 @@ import { useMemo, useState } from "react";
 import { useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import {
-  AlertTriangle, BadgeCheck, FileSearch, Scale, ShieldAlert, Timer, Workflow, Activity,
+  Activity, BadgeCheck, Download, FileSearch, Filter, Printer, Scale, ShieldAlert,
+  Timer, Workflow,
 } from "lucide-react";
 import { StatCard } from "../../components/cards/StatCard";
 import { DashSection } from "../../components/dashboard/DashSection";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
 import { DynamicDetailsDrawer } from "../../components/drawers/DynamicDetailsDrawer";
 import { AppSearchField } from "../../components/forms/AppSearchField";
-import { AppSelectField } from "../../components/forms/AppSelectField";
+import { FilterPanel } from "../../components/filters/FilterPanel";
+import { MobileFilterOverlay } from "../../components/filters/MobileFilterOverlay";
+import { AppliedFilterChips } from "../../components/filters/AppliedFilterChips";
+import { MobileSearchFilter } from "../../components/shared/MobileSearchFilter";
 import { Pagination } from "../../components/shared/Pagination";
-import type { ColDef, TableRow } from "../modulePageUtils";
+import { useUIState } from "../../hooks/useUI";
+import { handleExportDisabled } from "../../utils/exportDisabled";
+import type { ColDef, FilterDef, TableRow } from "../modulePageUtils";
 import { fc } from "../modulePageUtils";
 import {
   ALL_TAXPAYER_ROWS, AUDIT_TRAIL_ROWS, CONTROL_ROWS, QUEUE_HEALTH_ROWS,
@@ -23,16 +29,9 @@ import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge
 
 const PER_PAGE = 10;
 
-type FilterDef = {
-  field: string;
-  label: string;
-  options: { value: string; label: string }[];
-};
-
 type AuditTableConfig = {
   title: string;
   description: string;
-  note?: string;
   rows: TableRow[];
   columns: ColDef[];
   drawerColumns?: ColDef[];
@@ -48,16 +47,6 @@ type AuditTableConfig = {
   readOnly?: boolean;
 };
 
-function PrototypeNotice() {
-  const { t } = useTranslation("audit");
-  return (
-    <div className="audit-notice" role="note">
-      <AlertTriangle size={16} strokeWidth={1.75} aria-hidden="true" />
-      <p>{t("prototypeNotice")}</p>
-    </div>
-  );
-}
-
 function flattenColumns(cols: ColDef[]) {
   return cols.flatMap((col) => col.type === "col"
     ? [{ key: col.col.key, label: col.col.label }]
@@ -72,14 +61,16 @@ function uniqueValues(rows: TableRow[], field: string): string[] {
 }
 
 function AuditTablePage({ config }: { config: AuditTableConfig }) {
+  const { isDesktop } = useUIState();
   const { t, i18n } = useTranslation("audit");
+  const { t: translateCommon } = useTranslation("common");
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
   const [drawer, setDrawer] = useState<TableRow | null>(null);
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
-  const [filterValues, setFilterValues] = useState<Record<string, string>>(
-    () => Object.fromEntries(config.filters.map((f) => [f.field, "all"]))
-  );
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterValues, setFilterValues] = useState<Record<string, string>>({});
+  const [appliedFilters, setAppliedFilters] = useState<Record<string, string>>({});
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -87,22 +78,42 @@ function AuditTablePage({ config }: { config: AuditTableConfig }) {
       const matchesSearch = !needle || Object.values(row).some((v) =>
         String(v ?? "").toLowerCase().includes(needle)
       );
-      const matchesFilters = config.filters.every((f) => {
-        const selected = filterValues[f.field] ?? "all";
-        return selected === "all" || String(row[f.field] ?? "") === selected;
+      const matchesFilters = config.filters.every((filter) => {
+        const selected = appliedFilters[filter.key];
+        return !selected || String(row[filter.key] ?? "") === selected;
       });
       return matchesSearch && matchesFilters;
     });
-  }, [config.rows, config.filters, filterValues, q]);
+  }, [config.rows, config.filters, appliedFilters, q]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
   const safePage = Math.min(page, totalPages);
   const pageRows = filtered.slice((safePage - 1) * PER_PAGE, safePage * PER_PAGE);
   const drawerCols = flattenColumns(config.drawerColumns ?? config.columns);
+  const hasActiveFilters = Object.values(appliedFilters).some(Boolean);
 
   const handleCellExplain = (key: string, value: string, row: TableRow) => {
     const resolved = resolveAuditExplanation(key, value, row, i18n.resolvedLanguage);
     if (resolved) setExplanation(resolved);
+  };
+
+  const handleSearchChange = (value: string) => {
+    setQ(value);
+    setPage(1);
+  };
+
+  const handleFilterToggle = () => setShowFilter((open) => !open);
+  const handleFilterChange = (key: string, value: string) =>
+    setFilterValues((prev) => ({ ...prev, [key]: value }));
+  const handleFilterApply = () => {
+    setAppliedFilters(Object.fromEntries(Object.entries(filterValues).filter(([, value]) => value)));
+    setShowFilter(false);
+    setPage(1);
+  };
+  const handleFilterReset = () => {
+    setFilterValues({});
+    setAppliedFilters({});
+    setPage(1);
   };
 
   return (
@@ -115,49 +126,73 @@ function AuditTablePage({ config }: { config: AuditTableConfig }) {
         {config.readOnly && <span className="audit-readonly-badge">{t("common.readOnly")}</span>}
       </div>
 
-      <PrototypeNotice />
-
-      {config.note && (
-        <div className="audit-context-card">
-          <p>{config.note}</p>
-        </div>
-      )}
+      <MobileSearchFilter
+        searchValue={q}
+        onSearchChange={handleSearchChange}
+        onFilterClick={handleFilterToggle}
+        placeholder={translateCommon("common.searchPlaceholder")}
+        hasActiveFilters={hasActiveFilters}
+      />
 
       <div className="table-card">
-        <div className="table-card__toolbar audit-table-toolbar">
+        <div className="table-card__toolbar">
           <div className="table-card__title-group">
             <h2 className="table-card__title">{config.title}</h2>
-            <span className="table-card__count">{filtered.length} {t("common.records")}</span>
+            <span className="table-card__count" aria-live="polite" aria-atomic="true">
+              {filtered.length} {translateCommon("common.records")}
+            </span>
           </div>
-          <div className="audit-search">
+
+          <div className="table-card__search-wrapper">
             <AppSearchField
               value={q}
-              onChange={(value) => { setQ(value); setPage(1); }}
-              label={t("common.search")}
-              placeholder={t("common.search")}
+              onChange={handleSearchChange}
+              placeholder={translateCommon("common.searchPlaceholder")}
+              label={translateCommon("common.searchPlaceholder")}
               size="compact"
             />
           </div>
+
+          {config.filters.length > 0 && (
+            <button
+              type="button"
+              onClick={handleFilterToggle}
+              className={`table-card__toolbar-btn${showFilter ? " table-card__toolbar-btn--active" : ""}`}
+            >
+              <Filter size={13} aria-hidden="true" /> {translateCommon("actions.filter")}
+            </button>
+          )}
+
+          <button
+            type="button"
+            className="table-card__toolbar-btn table-card__toolbar-btn--download"
+            onClick={() => handleExportDisabled(translateCommon("actions.exportDisabled"))}
+          >
+            <Download size={13} aria-hidden="true" /> {translateCommon("actions.export")}
+          </button>
+
+          <button
+            type="button"
+            className="table-card__toolbar-btn table-card__toolbar-btn--print"
+            onClick={() => window.print()}
+          >
+            <Printer size={13} aria-hidden="true" /> {translateCommon("actions.print")}
+          </button>
         </div>
 
-        {config.filters.length > 0 && (
-          <div className="audit-filter-row">
-            {config.filters.map((filter) => (
-              <AppSelectField
-                key={filter.field}
-                id={`audit-filter-${filter.field}`}
-                label={filter.label}
-                value={filterValues[filter.field] ?? "all"}
-                onChange={(value) => {
-                  setFilterValues((prev) => ({ ...prev, [filter.field]: value }));
-                  setPage(1);
-                }}
-                options={filter.options}
-                compact
-              />
-            ))}
+        {isDesktop && showFilter && config.filters.length > 0 && (
+          <div className="table-card__filter-panel">
+            <FilterPanel
+              filters={config.filters}
+              values={filterValues}
+              onChange={handleFilterChange}
+              onApply={handleFilterApply}
+              onReset={handleFilterReset}
+            />
           </div>
         )}
+
+        <AppliedFilterChips values={appliedFilters} onClear={handleFilterReset} inCard />
 
         <ResponsiveTable
           cols={config.columns}
@@ -190,6 +225,18 @@ function AuditTablePage({ config }: { config: AuditTableConfig }) {
       />
 
       <AuditExplainerDrawer explanation={explanation} onClose={() => setExplanation(null)} />
+
+      {!isDesktop && config.filters.length > 0 && (
+        <MobileFilterOverlay
+          isOpen={showFilter}
+          filters={config.filters}
+          values={filterValues}
+          onChange={handleFilterChange}
+          onApply={handleFilterApply}
+          onReset={handleFilterReset}
+          onClose={handleFilterToggle}
+        />
+      )}
     </div>
   );
 }
@@ -227,8 +274,6 @@ function AuditOverviewPage() {
         <h1 className="dashboard-page__title">{t("pages.overview.title")}</h1>
         <p className="dashboard-page__subtitle">{t("pages.overview.description")}</p>
       </div>
-
-      <PrototypeNotice />
 
       <div className="audit-global-scope-card">
         <div>
@@ -286,16 +331,11 @@ export function AuditModulePage() {
   const { subNav = "audit-overview" } = useParams<{ subNav: string }>();
   const { t } = useTranslation("audit");
 
-  const all = (label: string) => ({ value:"all", label });
-  const opts = (values: string[], allLabel = t("filters.all")) => [
-    all(allLabel),
-    ...values.map((v) => ({ value:v, label:v })),
-  ];
+  const opts = (values: string[]) => values;
 
   const taxpayerConfig: AuditTableConfig = {
     title: t("pages.allTaxpayers.title"),
     description: t("pages.allTaxpayers.description"),
-    note: t("pages.allTaxpayers.note"),
     rows: ALL_TAXPAYER_ROWS,
     columns: [
       fc("taxpayer_name", t("columns.taxpayer")),
@@ -319,12 +359,12 @@ export function AuditModulePage() {
       fc("reason_code", t("columns.reason")),
     ],
     filters: [
-      { field:"circle", label:t("filters.circle"), options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"circle"), t("filters.allCircles")) },
-      { field:"assessment_year", label:t("filters.assessmentYear"), options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"assessment_year")) },
-      { field:"data_quality", label:t("filters.dataQuality"), options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"data_quality")) },
-      { field:"coverage_tier", label:t("filters.coverageTier"), options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"coverage_tier")) },
-      { field:"risk_level", label:t("filters.riskLevel"), options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"risk_level")) },
-      { field:"audit_state", label:t("filters.auditState"), options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"audit_state")) },
+      { key:"circle", label:t("filters.circle"), type:"select", options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"circle")) },
+      { key:"assessment_year", label:t("filters.assessmentYear"), type:"select", options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"assessment_year")) },
+      { key:"data_quality", label:t("filters.dataQuality"), type:"select", options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"data_quality")) },
+      { key:"coverage_tier", label:t("filters.coverageTier"), type:"select", options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"coverage_tier")) },
+      { key:"risk_level", label:t("filters.riskLevel"), type:"select", options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"risk_level")) },
+      { key:"audit_state", label:t("filters.auditState"), type:"select", options:opts(uniqueValues(ALL_TAXPAYER_ROWS,"audit_state")) },
     ],
     clickableKeys:["circle","data_quality","coverage_tier","signals","risk_level","control_flags","audit_state","return_version"],
     mobileCardMapping:{ primary:"taxpayer_name", identifier:"tin", meta:["circle","coverage_tier","risk_level","control_flags"], status:"audit_state" },
@@ -333,7 +373,6 @@ export function AuditModulePage() {
   const riskConfig: AuditTableConfig = {
     title: t("pages.riskCases.title"),
     description: t("pages.riskCases.description"),
-    note: t("pages.riskCases.note"),
     rows: RISK_CASE_ROWS,
     columns: [
       fc("case_id", t("columns.caseId"), { mono:true }),
@@ -356,10 +395,10 @@ export function AuditModulePage() {
       { type:"col", col:{ key:"case_status", label:t("columns.status"), badge:true } }, fc("assigned_to", t("columns.assignedTo")),
     ],
     filters: [
-      { field:"circle", label:t("filters.circle"), options:opts(uniqueValues(RISK_CASE_ROWS,"circle"), t("filters.allCircles")) },
-      { field:"risk_level", label:t("filters.riskLevel"), options:opts(["Low","Medium","High","Very High"]) },
-      { field:"coverage_tier", label:t("filters.coverageTier"), options:opts(["DT0","DT1","DT1+H","DT2","DT3"]) },
-      { field:"case_status", label:t("filters.status"), options:opts(["Assigned","Verifying","Evidence Pending","Ready for Review","Second Review","Rework Requested","Closed"]) },
+      { key:"circle", label:t("filters.circle"), type:"select", options:opts(uniqueValues(RISK_CASE_ROWS,"circle")) },
+      { key:"risk_level", label:t("filters.riskLevel"), type:"select", options:opts(["Low","Medium","High","Very High"]) },
+      { key:"coverage_tier", label:t("filters.coverageTier"), type:"select", options:opts(["DT0","DT1","DT1+H","DT2","DT3"]) },
+      { key:"case_status", label:t("filters.status"), type:"select", options:opts(["Assigned","Verifying","Evidence Pending","Ready for Review","Second Review","Rework Requested","Closed"]) },
     ],
     clickableKeys:["circle","coverage_tier","risk_level","case_status","sla"],
     mobileCardMapping:{ primary:"case_id", identifier:"return_id", meta:["circle","risk_level","coverage_tier"], status:"case_status" },
@@ -368,7 +407,6 @@ export function AuditModulePage() {
   const controlConfig: AuditTableConfig = {
     title:t("pages.control.title"),
     description:t("pages.control.description"),
-    note:t("pages.control.note"),
     rows:CONTROL_ROWS,
     columns:[
       fc("return_id",t("columns.returnId"),{mono:true}), fc("tin",t("columns.tin"),{mono:true}),
@@ -382,9 +420,9 @@ export function AuditModulePage() {
       fc("queue",t("columns.queue")),{type:"col",col:{key:"control_status",label:t("columns.status"),badge:true}},
     ],
     filters:[
-      {field:"circle",label:t("filters.circle"),options:opts(uniqueValues(CONTROL_ROWS,"circle"),t("filters.allCircles"))},
-      {field:"flag_id",label:t("filters.controlFlag"),options:opts(["F0","F1","F2","F3","F4","F5"])},
-      {field:"control_status",label:t("filters.status"),options:opts(["Pending","In Progress","Pending Review","Resolved","Under Review"])},
+      { key:"circle", label:t("filters.circle"), type:"select", options:opts(uniqueValues(CONTROL_ROWS,"circle")) },
+      { key:"flag_id", label:t("filters.controlFlag"), type:"select", options:opts(["F0","F1","F2","F3","F4","F5"]) },
+      { key:"control_status", label:t("filters.status"), type:"select", options:opts(["Pending","In Progress","Pending Review","Resolved","Under Review"]) },
     ],
     clickableKeys:["circle","flag_id","coverage_tier","control_status"],
     mobileCardMapping:{primary:"flag_id",identifier:"return_id",meta:["circle","coverage_tier","queue"],status:"control_status"},
@@ -393,7 +431,6 @@ export function AuditModulePage() {
   const reviewConfig: AuditTableConfig = {
     title:t("pages.secondReview.title"),
     description:t("pages.secondReview.description"),
-    note:t("pages.secondReview.note"),
     rows:SECOND_REVIEW_ROWS,
     columns:[
       fc("case_id",t("columns.caseId"),{mono:true}),fc("return_id",t("columns.returnId"),{mono:true}),
@@ -408,9 +445,9 @@ export function AuditModulePage() {
       {type:"col",col:{key:"review_status",label:t("columns.status"),badge:true}},fc("permitted_actions",t("columns.permittedActions")),
     ],
     filters:[
-      {field:"circle",label:t("filters.circle"),options:opts(uniqueValues(SECOND_REVIEW_ROWS,"circle"),t("filters.allCircles"))},
-      {field:"risk_level",label:t("filters.riskLevel"),options:opts(["High","Very High"])},
-      {field:"review_status",label:t("filters.status"),options:opts(["Ready for Review","Second Review","Rework Requested"])},
+      { key:"circle", label:t("filters.circle"), type:"select", options:opts(uniqueValues(SECOND_REVIEW_ROWS,"circle")) },
+      { key:"risk_level", label:t("filters.riskLevel"), type:"select", options:opts(["High","Very High"]) },
+      { key:"review_status", label:t("filters.status"), type:"select", options:opts(["Ready for Review","Second Review","Rework Requested"]) },
     ],
     clickableKeys:["circle","risk_level","primary_signal","review_status"],
     mobileCardMapping:{primary:"case_id",identifier:"return_id",meta:["circle","risk_level","primary_signal"],status:"review_status"},
@@ -419,7 +456,6 @@ export function AuditModulePage() {
   const rulesConfig: AuditTableConfig = {
     title:t("pages.rules.title"),
     description:t("pages.rules.description"),
-    note:t("pages.rules.note"),
     rows:RULE_ROWS,
     columns:[
       fc("rule_id",t("columns.ruleId"),{mono:true}),fc("version",t("columns.version"),{mono:true}),
@@ -436,8 +472,8 @@ export function AuditModulePage() {
       fc("version_note",t("columns.versionNote")),
     ],
     filters:[
-      {field:"governance_status",label:t("filters.governanceStatus"),options:opts(["Awaiting Endorsement","Awaiting Approval","Approved","Superseded"])},
-      {field:"mode",label:t("filters.mode"),options:opts(["Draft","Shadow","Staged","Live","Superseded"])},
+      { key:"governance_status", label:t("filters.governanceStatus"), type:"select", options:opts(["Awaiting Endorsement","Awaiting Approval","Approved","Superseded"]) },
+      { key:"mode", label:t("filters.mode"), type:"select", options:opts(["Draft","Shadow","Staged","Live","Superseded"]) },
     ],
     clickableKeys:["rule_id","version","dry_run_status","governance_status","mode"],
     mobileCardMapping:{primary:"rule_id",identifier:"version",meta:["rule_family","rollout_scope"],status:"mode"},
@@ -446,7 +482,6 @@ export function AuditModulePage() {
   const reconciliationConfig: AuditTableConfig = {
     title:t("pages.reconciliation.title"),
     description:t("pages.reconciliation.description"),
-    note:t("pages.reconciliation.note"),
     rows:RECONCILIATION_ROWS,
     columns:[
       fc("reconciliation_date",t("columns.date")),fc("scope",t("columns.scope")),
@@ -462,8 +497,8 @@ export function AuditModulePage() {
       fc("supervisor_view",t("columns.supervisorView")),
     ],
     filters:[
-      {field:"reconciliation_status",label:t("filters.status"),options:opts(["Matched","Missing Case","Under Review"])},
-      {field:"supervisor_view",label:t("filters.viewer"),options:opts(["Range Officer","Commissioner"])},
+      { key:"reconciliation_status", label:t("filters.status"), type:"select", options:opts(["Matched","Missing Case","Under Review"]) },
+      { key:"supervisor_view", label:t("filters.viewer"), type:"select", options:opts(["Range Officer","Commissioner"]) },
     ],
     clickableKeys:["scope","reconciliation_status"],
     mobileCardMapping:{primary:"scope",identifier:"reconciliation_date",meta:["high_risk_returns","missing_case_count"],status:"reconciliation_status",date:"reconciliation_date"},
@@ -472,7 +507,6 @@ export function AuditModulePage() {
   const trailConfig: AuditTableConfig = {
     title:t("pages.trail.title"),
     description:t("pages.trail.description"),
-    note:t("pages.trail.note"),
     rows:AUDIT_TRAIL_ROWS,
     columns:[
       fc("timestamp_utc",t("columns.timestampUtc")),fc("event_id",t("columns.eventId"),{mono:true}),
@@ -487,8 +521,8 @@ export function AuditModulePage() {
       fc("classification_version",t("columns.classificationVersion")),fc("rule_config_version",t("columns.ruleConfigVersion")),
     ],
     filters:[
-      {field:"actor_role",label:t("filters.role"),options:opts(["DCT","Range Officer"])},
-      {field:"return_id",label:t("filters.return"),options:opts(["RET-2026-10539"])},
+      { key:"actor_role", label:t("filters.role"), type:"select", options:opts(["DCT","Range Officer"]) },
+      { key:"return_id", label:t("filters.return"), type:"select", options:opts(["RET-2026-10539"]) },
     ],
     clickableKeys:["return_version"],
     mobileCardMapping:{primary:"action",identifier:"event_id",meta:["actor_role","return_id"],date:"timestamp_utc"},
