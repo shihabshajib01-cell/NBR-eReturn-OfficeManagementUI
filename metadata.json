@@ -1,0 +1,8 @@
+{
+  "name": "NBR eReturn Office Management UI",
+  "description": "National Board of Revenue eReturn Office Management System for managing tax returns, PSR verification, taxpayer registrations, and case management.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
