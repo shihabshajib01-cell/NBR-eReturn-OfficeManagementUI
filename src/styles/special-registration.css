@@ -460,7 +460,7 @@
   border: 1px solid var(--color-border);
   border-radius: 4px;
   padding: 1px 6px;
-  text-transform: uppercase;
+
   letter-spacing: 0.04em;
 }
 
@@ -606,7 +606,7 @@
   border-radius: 4px;
   padding: 1px 7px;
   letter-spacing: 0.03em;
-  text-transform: uppercase;
+
 }
 
 /* ── File upload external error ─────────────────────────────────────────── */
@@ -1820,7 +1820,7 @@
 
 .sr-sample__doc-field-label {
   font-size: 9px; font-weight: 700; color: rgba(0,0,0,0.4);
-  letter-spacing: 0.05em; text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 .sr-sample__doc-field-value {
   height: 8px; background: rgba(0,0,0,0.15); border-radius: 2px; width: 90%;
@@ -1858,7 +1858,7 @@
 .sr-sample__doc-seal { display: flex; align-items: center; justify-content: center; }
 .sr-sample__doc-seal-outer { width: 100px; height: 100px; border-radius: 50%; border: 3px solid rgba(0,0,120,0.3); display: flex; align-items: center; justify-content: center; }
 .sr-sample__doc-seal-inner { width: 80px; height: 80px; border-radius: 50%; border: 2px solid rgba(0,0,120,0.2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
-.sr-sample__doc-seal-text { font-size: 8px; font-weight: 800; color: rgba(0,0,120,0.55); letter-spacing: 0.06em; text-transform: uppercase; }
+.sr-sample__doc-seal-text { font-size: 8px; font-weight: 800; color: rgba(0,0,120,0.55); letter-spacing: 0.06em; }
 .sr-sample__doc-seal-text--sm { font-size: 7px; }
 .sr-sample__doc-seal-date { width: 44px; height: 7px; background: rgba(0,0,120,0.2); border-radius: 2px; }
 .sr-sample__doc-seal-caption { font-size: 11px; color: var(--color-text-secondary); text-align: center; }

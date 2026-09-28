@@ -189,29 +189,41 @@ const isEmpty = (val: unknown): boolean => {
 };
 
 // Given an ordered list of columns, compute whether each should span 2 cols.
-// Wide keys always span 2. A normal key spans 2 when it would be alone in its row.
+// Wide keys always span 2. A normal key also spans 2 whenever it would be the
+// only item in its visual row, including when the next field is already wide.
 const computeSpans = (cols: ColumnDef[]): boolean[] => {
   const spans: boolean[] = new Array(cols.length).fill(false);
   let gridCol = 0; // 0 = left, 1 = right
 
   for (let i = 0; i < cols.length; i++) {
-    if (isWide(cols[i].key)) {
+    const currentIsWide = isWide(cols[i].key);
+
+    if (currentIsWide) {
       spans[i] = true;
       gridCol = 0;
       continue;
     }
-    // Would the next normal (non-wide) item exist in the same row?
-    const nextNormal = cols.slice(i + 1).find(c => !isWide(c.key));
-    const isAlone = gridCol === 0 && !nextNormal;
-    if (isAlone) {
-      spans[i] = true;
-      gridCol = 0;
-    } else {
+
+    if (gridCol === 0) {
+      const nextCol = cols[i + 1];
+      const hasPairInSameRow = !!nextCol && !isWide(nextCol.key);
+
+      if (!hasPairInSameRow) {
+        spans[i] = true;
+        gridCol = 0;
+        continue;
+      }
+
       spans[i] = false;
-      gridCol = (gridCol + 1) % 2;
-      // Wide item after this would reset the column on next iteration
+      gridCol = 1;
+      continue;
     }
+
+    // This field completes a two-item row.
+    spans[i] = false;
+    gridCol = 0;
   }
+
   return spans;
 };
 
