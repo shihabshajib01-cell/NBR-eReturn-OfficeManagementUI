@@ -176,6 +176,13 @@ export const NAVIGATION: MainNavDef[] = [
     ],
   },
   {
+    id: "audit",
+    label: "Audit",
+    labelKey: "navigation.audit.main",
+    icon: FileSearch,
+    children: [],
+  },
+  {
     id: "administration",
     label: "Administration & Requests",
     labelKey: "navigation.administration.main",
@@ -239,5 +246,6 @@ export const NAV_DISPLAY_LABEL: Record<string, string> = {
   "psr-verification": "PSR & Verif.",
   "misfiled-returns": "Misfiled",
   "case-financial": "Case & Fin.",
+  audit: "Audit",
   administration: "Admin & Req.",
 };

@@ -143,6 +143,7 @@ export const router = createBrowserRouter([
       { path: "psr-verification",Component: PlaceholderPage },
       { path: "misfiled-returns",Component: PlaceholderPage },
       { path: "case-financial",  Component: PlaceholderPage },
+      { path: "audit",           Component: PlaceholderPage },
       { path: "administration",  Component: PlaceholderPage },
 
       // Dashboard

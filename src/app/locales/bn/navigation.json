@@ -71,6 +71,9 @@
     "approval": "অনুমোদন",
     "refundAdjustment": "ফেরত ও সমন্বয়"
   },
+  "audit": {
+    "main": "অডিট"
+  },
   "administration": {
     "main": "প্রশাসন ও অনুরোধ",
     "certificateRequests": "সার্টিফিকেট অনুরোধ",

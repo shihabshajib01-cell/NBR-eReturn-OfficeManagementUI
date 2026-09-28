@@ -71,6 +71,9 @@
     "approval": "Approval",
     "refundAdjustment": "Refund & Adjustment"
   },
+  "audit": {
+    "main": "Audit"
+  },
   "administration": {
     "main": "Administration & Requests",
     "certificateRequests": "Certificate Requests",
