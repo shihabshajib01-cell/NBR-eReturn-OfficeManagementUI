@@ -1,0 +1,237 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "View key returns, approvals, collections, and user activity for the selected assessment year."
+  },
+  "psrDashboard": {
+    "title": "PSR Dashboard",
+    "subtitle": "Monitor PSR entries, approvals, rejections, and circle-wise progress."
+  },
+  "combinedDashboard": {
+    "title": "Double Entry Dashboard",
+    "subtitle": "View a consolidated summary across all report categories for the selected assessment year."
+  },
+  "offlineReturnReport": {
+    "title": "Offline Return Report",
+    "desc": "Review offline return entries by circle, type, payment, and submission status."
+  },
+  "taxCategoryReport": {
+    "title": "Tax Category Report",
+    "desc": "Track return submissions by income category, source, and channel."
+  },
+  "expressCertDisposal": {
+    "title": "Express Cert. Disposal",
+    "desc": "Review express certificate requests, disposal status, and pending items."
+  },
+  "userActivityReport": {
+    "title": "User Activity Report",
+    "desc": "Monitor user actions, login activity, and system usage records."
+  },
+  "litigationArrear": {
+    "title": "Litigation Arrear",
+    "desc": "Review arrear case entries, approvals, rejections, and related revenue."
+  },
+  "litigationWritCase": {
+    "title": "Litigation Writ Case",
+    "desc": "Track writ case records by circle, court, status, and revenue."
+  },
+  "litigationDeptCase": {
+    "title": "Litigation Dept Case",
+    "desc": "Review department case records and approval status by circle."
+  },
+  "litigationTaxpayerCase": {
+    "title": "Litigation Taxpayer Case",
+    "desc": "Track taxpayer case records, hearings, status, and related revenue."
+  },
+  "appealReport": {
+    "title": "Appeal Report",
+    "desc": "Review appeal records by taxpayer, ground, hearing date, and status."
+  },
+  "tribunalReport": {
+    "title": "Tribunal Report",
+    "desc": "Track tribunal cases by bench, case type, date, and decision status."
+  },
+  "paymentDemandReport": {
+    "title": "Payment & Demand Report",
+    "desc": "Review demand notices, taxpayer ledgers, payments, and outstanding amounts."
+  },
+  "register5Report": {
+    "title": "Register-5 Report",
+    "desc": "Track Register-5 records, approval status, and related entries."
+  },
+  "returnRegisterHub": {
+    "title": "Return Register",
+    "subtitle": "Review return approvals, online submissions, offline submissions, and archived returns."
+  },
+  "workflow": {
+    "subtitle": "View and manage approval workflow records."
+  },
+  "returnViewApproval": {
+    "title": "Return View & Approval",
+    "desc": "Review and approve pending return submissions."
+  },
+  "onlineReturnRegister": {
+    "title": "Online Return Register",
+    "desc": "Track online return submissions by taxpayer, type, year, and payment status."
+  },
+  "offlineReturnRegister": {
+    "title": "Offline Return Register",
+    "desc": "Manage offline return entries and approval workflows."
+  },
+  "onlineArchive": {
+    "title": "Online Archive",
+    "desc": "View archived online return records."
+  },
+  "register4": {
+    "title": "Register-4",
+    "desc": "Track book issuance, serial numbers, and stock movements."
+  },
+  "stockRegister": {
+    "title": "Stock Register",
+    "desc": "Monitor return book stock levels and inventory movements."
+  },
+  "taxRegistry": {
+    "title": "Tax Registry",
+    "desc": "Maintain registered taxpayer records and business details."
+  },
+  "register5": {
+    "title": "Register-5",
+    "desc": "Track assessment cases and pending actions."
+  },
+  "register5Approval": {
+    "title": "Register-5 Approval",
+    "desc": "Review and approve Register-5 entries."
+  },
+  "psrApproval": {
+    "title": "PSR Approval",
+    "desc": "Review and approve PSR submissions."
+  },
+  "psrEditRequest": {
+    "title": "PSR Edit Request",
+    "desc": "Manage edit requests for PSR entries."
+  },
+  "doubleEntryStatus": {
+    "title": "Double Entry Status",
+    "desc": "View double entry verification status."
+  },
+  "doubleEntryVerification": {
+    "title": "Double Entry Verification",
+    "desc": "Verify matched and mismatched double entries."
+  },
+  "psrDormant": {
+    "title": "PSR Dormant",
+    "desc": "Track dormant taxpayer accounts."
+  },
+  "outOfJurisdiction": {
+    "title": "Out of Jurisdiction",
+    "desc": "Manage taxpayers outside jurisdiction."
+  },
+  "otherCirclesEntry": {
+    "title": "Other Circles Entry",
+    "desc": "Track entries from other tax circles."
+  },
+  "misfiledReturns": {
+    "title": "Misfiled Returns",
+    "desc": "Identify and resolve misfiled return submissions."
+  },
+  "invalidList": {
+    "title": "Invalid List",
+    "desc": "Review invalid entries and errors."
+  },
+  "approvalList": {
+    "title": "Approval List",
+    "desc": "Manage pending approval requests."
+  },
+  "transferHistory": {
+    "title": "Transfer History",
+    "desc": "View taxpayer transfer records."
+  },
+  "litigationArrearApproval": {
+    "title": "Arrear Approval",
+    "desc": "Review and approve litigation arrear cases."
+  },
+  "litigationWritApproval": {
+    "title": "Writ Case Approval",
+    "desc": "Manage writ case approvals."
+  },
+  "litigationDeptApproval": {
+    "title": "Dept Case Approval",
+    "desc": "Review department litigation cases."
+  },
+  "litigationTaxpayerApproval": {
+    "title": "Taxpayer Case Approval",
+    "desc": "Manage taxpayer litigation cases."
+  },
+  "appealRegView": {
+    "title": "Appeal Register View",
+    "desc": "View appeal records and hearing details."
+  },
+  "appealApproval": {
+    "title": "Appeal Approval",
+    "desc": "Review and approve appeal submissions."
+  },
+  "tribunalRegView": {
+    "title": "Tribunal Register View",
+    "desc": "View tribunal case records."
+  },
+  "tribunalApproval": {
+    "title": "Tribunal Approval",
+    "desc": "Review and approve tribunal cases."
+  },
+  "demandEntry": {
+    "title": "Demand Entry",
+    "desc": "Record demand notices and tax assessments."
+  },
+  "demandRegister": {
+    "title": "Demand Register",
+    "desc": "Review demand notices by taxpayer, date, amount, and status."
+  },
+  "taxpayerLedger": {
+    "title": "Taxpayer Ledger",
+    "desc": "View taxpayer transaction history and balances."
+  },
+  "demandApproval": {
+    "title": "Demand Approval",
+    "desc": "Review and approve demand entries."
+  },
+  "refundAdjustment": {
+    "title": "Refund & Adjustment",
+    "desc": "Process refund requests and adjustments."
+  },
+  "dataEntryRequest": {
+    "title": "Data Entry Request",
+    "desc": "Manage certificate data entry requests."
+  },
+  "approvalRequest": {
+    "title": "Approval Request",
+    "desc": "Review and approve certificate requests."
+  },
+  "editRequest": {
+    "title": "Edit Request",
+    "desc": "Manage certificate edit requests."
+  },
+  "disposalHistory": {
+    "title": "Disposal History",
+    "desc": "View certificate disposal records."
+  },
+  "userManagement": {
+    "title": "User Management",
+    "desc": "Manage system users and access."
+  },
+  "roleManagement": {
+    "title": "Role Management",
+    "desc": "Configure user roles and permissions."
+  },
+  "specialRegistration": {
+    "title": "Special Registration List",
+    "desc": "Track special registration records."
+  },
+  "timeExtension": {
+    "title": "Time Extension",
+    "desc": "Manage deadline extension requests."
+  },
+  "auditSelection": {
+    "title": "Audit Selection",
+    "desc": "Select taxpayers for audit review."
+  }
+}

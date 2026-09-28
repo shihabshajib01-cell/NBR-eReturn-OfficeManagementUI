@@ -1,0 +1,274 @@
+/* ================================================================
+   APPEARANCE PANEL
+   ================================================================ */
+
+.appearance-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Mobile variant */
+.appearance-panel--mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 20px 20px 0 0;
+  max-height: 90dvh;
+  z-index: 201;
+}
+
+/* Desktop variant */
+.appearance-panel--desktop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 380px;
+  max-width: calc(100vw - 24px);
+  max-height: min(720px, calc(100vh - 96px));
+  border-radius: 16px;
+  z-index: 200;
+}
+
+.appearance-panel {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.appearance-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+/* Section divider row */
+.appearance-panel__section-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.appearance-panel__section-label {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+}
+
+.appearance-panel__divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.appearance-panel__header-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.appearance-panel__header-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.appearance-panel__close {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.14s, color 0.14s;
+  outline: none;
+  cursor: pointer;
+  border: none;
+}
+
+.appearance-panel__body {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  scrollbar-width: thin;
+}
+
+/* Scrollbar styles for webkit browsers */
+.appearance-panel__body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.appearance-panel__body::-webkit-scrollbar-track {
+  border-radius: 3px;
+}
+
+.appearance-panel__body::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+}
+
+.appearance-panel__body::-webkit-scrollbar-thumb:hover {
+  /* Color set via inline style for theme */
+}
+
+/* ================================================================
+   APPEARANCE SECTIONS
+   ================================================================ */
+
+.appearance-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.appearance-section__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.appearance-section__title {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.appearance-section__divider {
+  flex: 1;
+  height: 1px;
+}
+
+/* ================================================================
+   OPTION CARDS
+   ================================================================ */
+
+/* Theme grid */
+.appearance-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.625rem;
+}
+
+/* Font list */
+.appearance-font-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Font size list */
+.appearance-size-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ================================================================
+   FOOTER NOTE
+   ================================================================ */
+
+.appearance-panel__footer-note {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.appearance-panel__footer-text {
+  font-size: 12px;
+  line-height: 1.625;
+}
+
+/* ================================================================
+   MOBILE OVERLAY
+   ================================================================ */
+
+.appearance-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+
+/* ================================================================
+   LANGUAGE OPTION CARDS
+   ================================================================ */
+
+.language-option-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  text-align: left;
+  transition: all 0.1s;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.language-option-card--selected {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-alpha-6);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-8);
+}
+
+.language-option-card:not(.language-option-card--selected):hover {
+  border-color: var(--color-primary-alpha-12);
+  background-color: var(--color-primary-alpha-3);
+}
+
+.language-option-card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.language-option-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.language-option-card__icon-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.language-option-card__icon {
+  font-size: 18px;
+}
+
+.language-option-card__title {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.language-option-card__title--selected {
+  font-weight: 600;
+}
+
+.language-option-card__title--default {
+  font-weight: 500;
+}
+
+.language-option-card__subtitle {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.3;
+}

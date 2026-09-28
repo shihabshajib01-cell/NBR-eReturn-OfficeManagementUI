@@ -1,0 +1,519 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   User Management Page Styles
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Page Layout ─────────────────────────────────────────────────────────── */
+
+.user-management {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+}
+
+.user-management__header {
+  margin-bottom: 24px;
+}
+
+.user-management__header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.user-management__title {
+  font-size: var(--typ-heading-lg-size, 22px);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.user-management__subtitle {
+  font-size: var(--typ-body-sm-size, 13px);
+  color: var(--color-text-secondary);
+}
+
+.user-management__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.user-management__stats {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .user-management__stats {
+    grid-auto-flow: row;
+    grid-template-rows: unset;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ─── Note: Table styles removed - using shared table-card component ───────── */
+
+/* ─── User Detail Drawer ──────────────────────────────────────────────────── */
+
+.user-details-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.user-details-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--color-surface);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+
+.user-details-drawer__header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.user-details-drawer__title-section {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-details-drawer__title {
+  font-size: var(--typ-heading-md-size, 18px);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.user-details-drawer__subtitle {
+  font-size: var(--typ-body-sm-size, 13px);
+  color: var(--color-text-secondary);
+}
+
+.user-details-drawer__close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.user-details-drawer__close:hover {
+  --bg-close-hover: rgba(0, 0, 0, 0.08);
+  background-color: var(--bg-close-hover);
+}
+
+.user-details-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.user-details-drawer__section {
+  margin-bottom: 24px;
+}
+
+.user-details-drawer__section-title {
+  font-size: var(--typ-body-md-size, 14px);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 12px;
+}
+
+.user-details-drawer__info-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.user-details-drawer__info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.user-details-drawer__info-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-text-secondary);
+}
+
+.user-details-drawer__info-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-details-drawer__info-label {
+  font-size: var(--typ-label-sm-size, 12px);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.user-details-drawer__info-value {
+  font-size: var(--typ-body-md-size, 14px);
+  color: var(--color-text-primary);
+  word-break: break-word;
+}
+
+.user-details-drawer__footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ─── User Form Modal ─────────────────────────────────────────────────────── */
+
+.user-form-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media (min-width: 640px) {
+  .user-form-modal-overlay {
+    align-items: center;
+    padding: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .user-form-modal-overlay {
+    padding: 24px;
+  }
+}
+
+.user-form-modal {
+  background-color: var(--color-surface);
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+@media (min-width: 640px) {
+  .user-form-modal {
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+.user-form-modal__header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.user-form-modal__title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-form-modal__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  --bg-icon: rgba(0, 0, 0, 0.1);
+  background-color: var(--bg-icon);
+  flex-shrink: 0;
+}
+
+.user-form-modal__title {
+  font-size: var(--typ-heading-md-size, 18px);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.user-form-modal__close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.user-form-modal__close:hover {
+  --bg-close-hover: rgba(0, 0, 0, 0.08);
+  background-color: var(--bg-close-hover);
+}
+
+.user-form-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  min-height: 0;
+}
+
+.user-form-modal__grid {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 1024px) {
+  .user-form-modal__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.user-form-modal__col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-form-modal__section-title {
+  font-size: var(--typ-body-md-size, 15px);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+}
+
+.user-form-modal__role-preview {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.user-form-modal__role-preview-title {
+  font-size: var(--typ-body-sm-size, 13px);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 12px;
+}
+
+.user-form-modal__role-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.user-form-modal__role-module-chip {
+  font-size: var(--typ-label-xs-size, 11px);
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  --bg-chip: rgba(0, 0, 0, 0.08);
+  background-color: var(--bg-chip);
+  color: var(--color-primary);
+}
+
+.user-form-modal__footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* ─── Re-Assign Role Modal ────────────────────────────────────────────────── */
+
+.reassign-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.reassign-modal {
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.reassign-modal__header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.reassign-modal__title {
+  font-size: var(--typ-heading-md-size, 18px);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.reassign-modal__subtitle {
+  font-size: var(--typ-body-sm-size, 13px);
+  color: var(--color-text-secondary);
+}
+
+.reassign-modal__body {
+  padding: 24px;
+}
+
+.reassign-modal__footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────────── */
+
+@keyframes drawer-enter {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.drawer-enter {
+  animation: drawer-enter 250ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ─── Action Buttons (User Management) ────────────────────────────────────── */
+
+.user-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: var(--typ-button-size, 12px);
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 140ms cubic-bezier(0.2, 0, 0, 1);
+  outline: none;
+}
+
+.user-action-btn--secondary {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.user-action-btn--primary {
+  border: none;
+  background: var(--color-primary);
+  color: white;
+}
+
+.user-action-btn--primary:hover {
+  opacity: 0.88;
+}
+
+/* ─── Responsive Font Scaling ─────────────────────────────────────────────── */
+
+/* Compact Mode - Tighter spacing and smaller elements */
+:root[data-font-scale="compact"] .user-management {
+  padding: 16px 20px;
+}
+
+:root[data-font-scale="compact"] .user-details-drawer__header {
+  padding: 16px 20px;
+}
+
+:root[data-font-scale="compact"] .user-details-drawer__body {
+  padding: 20px;
+}
+
+:root[data-font-scale="compact"] .user-details-drawer__footer {
+  padding: 14px 20px;
+}
+
+:root[data-font-scale="compact"] .user-form-modal__header {
+  padding: 16px 20px;
+}
+
+:root[data-font-scale="compact"] .user-form-modal__body {
+  padding: 20px;
+}
+
+:root[data-font-scale="compact"] .user-form-modal__footer {
+  padding: 14px 20px;
+}
+
+/* Large Mode - More generous spacing and larger elements */
+:root[data-font-scale="large"] .user-management {
+  padding: 24px 28px;
+}
+
+:root[data-font-scale="large"] .user-details-drawer__header {
+  padding: 24px 28px;
+}
+
+:root[data-font-scale="large"] .user-details-drawer__body {
+  padding: 28px;
+}
+
+:root[data-font-scale="large"] .user-details-drawer__footer {
+  padding: 18px 28px;
+}
+
+:root[data-font-scale="large"] .user-form-modal__header {
+  padding: 24px 28px;
+}
+
+:root[data-font-scale="large"] .user-form-modal__body {
+  padding: 28px;
+}
+
+:root[data-font-scale="large"] .user-form-modal__footer {
+  padding: 18px 28px;
+}
+
+/* Theme colors applied via inline styles for runtime theming */

@@ -1,0 +1,337 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Unified Modal System — Material Design 3 aligned
+   Single source of truth for all modal/dialog UI.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Animations ────────────────────────────────────────────────────────── */
+@keyframes overlayEnter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modalEnter {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes mobile-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* ── Backdrop ──────────────────────────────────────────────────────────── */
+.app-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  background: rgba(15, 23, 42, 0.46);
+}
+
+/* Raised layer — use for modals opened from inside a drawer or overlay */
+.app-modal-backdrop--top {
+  z-index: 500;
+}
+
+/* ── Panel ─────────────────────────────────────────────────────────────── */
+.app-modal-panel {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22), 0 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* Size variants */
+.app-modal--sm  { max-width: 400px; }
+.app-modal--md  { max-width: 580px; }
+.app-modal--lg  { max-width: 800px; }
+.app-modal--xl  { max-width: 1000px; }
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.app-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
+
+.app-modal-header__leading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.app-modal-header__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-alpha-10);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.app-modal-header__title {
+  font-size: var(--fs-body-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Close button ──────────────────────────────────────────────────────── */
+.app-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard);
+  outline: none;
+}
+
+.app-modal-close:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.app-modal-close:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Body ──────────────────────────────────────────────────────────────── */
+.app-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.app-modal-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
+
+/* Danger button inside modal footer → separated to the far left */
+.app-modal-footer .app-btn--danger {
+  margin-right: auto;
+}
+
+/* ── Confirm modal body text ───────────────────────────────────────────── */
+.app-modal-confirm__message {
+  font-size: var(--fs-body-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Form modal header variant ────────────────────────────────────────── */
+.modal-form-header {
+  background: var(--color-primary-alpha-3);
+}
+
+.modal-form-header__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-alpha-12);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.modal-form-header__title {
+  font-size: var(--fs-body-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.modal-form-header__subtitle {
+  font-size: var(--fs-caption);
+  color: var(--color-text-secondary);
+  margin: 2px 0 0;
+}
+
+/* ── Desktop animation ─────────────────────────────────────────────────── */
+.overlay-enter { animation: overlayEnter var(--motion-base) var(--ease-standard); }
+.modal-enter   { animation: modalEnter var(--motion-medium) var(--ease-enter); }
+
+/* ── Mobile: bottom-sheet override ────────────────────────────────────── */
+@media (max-width: 640px) {
+  .app-modal-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .app-modal-panel {
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+    max-height: 92dvh;
+    max-width: 100%;
+    animation: mobile-slide-up var(--motion-medium) var(--ease-enter);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.16);
+  }
+
+  .app-modal-footer {
+    flex-direction: row;
+    gap: 8px;
+    padding: 14px 16px 20px;
+  }
+
+  /* ≤2 buttons: each takes equal share of the row */
+  .app-modal-footer > .app-btn:only-child,
+  .app-modal-footer > .app-btn:first-child:nth-last-child(2),
+  .app-modal-footer > .app-btn:first-child:nth-last-child(2) ~ .app-btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+/* ── Legacy aliases — keep old class names working ─────────────────────── */
+/* These point to the new system so old JSX doesn't need changing yet.    */
+.modal-overlay          { position: fixed; inset: 0; z-index: var(--z-modal); display: flex; align-items: center; justify-content: center; padding: var(--space-4); background: rgba(15,23,42,0.46); }
+.modal-content          { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); box-shadow: var(--shadow-xl); max-width: 90vw; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; }
+.modal-header           { padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.modal-title            { font-size: var(--fs-h3); font-weight: 600; color: var(--color-text-primary); }
+.modal-close            { background: none; border: none; cursor: pointer; padding: var(--space-2); color: var(--color-text-secondary); transition: color var(--motion-fast) var(--ease-standard); }
+.modal-close:hover      { color: var(--color-text-primary); }
+.modal-body             { padding: var(--space-6); overflow-y: auto; flex: 1; }
+.modal-footer           { padding: var(--space-5) var(--space-6); border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: flex-end; gap: var(--space-3); }
+.modal-sm               { width: 400px; }
+.modal-md               { width: 600px; }
+.modal-lg               { width: 800px; }
+.modal-xl               { width: 1000px; }
+
+/* Legacy mobile-modal-* shims — keep so existing UserFormModal etc. render correctly */
+.mobile-modal-backdrop  {
+  position: fixed; inset: 0; z-index: var(--z-modal);
+  display: flex; align-items: flex-end;
+  background: rgba(15,23,42,0.48);
+}
+@media (min-width: 641px) {
+  .mobile-modal-backdrop { align-items: center; padding: var(--space-4); }
+}
+.mobile-modal-wrapper {
+  background: var(--color-surface);
+  border-radius: 20px 20px 0 0;
+  width: 100%; max-height: 92dvh;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.16);
+  animation: mobile-slide-up var(--motion-medium) var(--ease-enter);
+}
+@media (min-width: 641px) {
+  .mobile-modal-wrapper {
+    border-radius: var(--radius-xl);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+    animation: modalEnter var(--motion-medium) var(--ease-enter);
+    max-height: 90vh;
+  }
+}
+.mobile-modal-header  { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--color-border); flex-shrink: 0; }
+.mobile-modal-title   { font-size: var(--fs-body-md); font-weight: 600; color: var(--color-text-primary); margin: 0; }
+.mobile-modal-close   { width: 32px; height: 32px; border-radius: var(--radius-md); border: none; background: transparent; color: var(--color-text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background-color var(--motion-fast) var(--ease-standard); }
+.mobile-modal-close:hover { background: var(--color-surface-hover); }
+.mobile-modal-body    { flex: 1; overflow-y: auto; padding: 20px; }
+.mobile-modal-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+/* Danger button → separated left */
+.mobile-modal-footer .app-btn--danger,
+.mobile-modal-footer .mobile-modal-btn--danger {
+  margin-right: auto;
+}
+@media (max-width: 640px) {
+  .mobile-modal-footer { padding: 14px 16px 20px; }
+  /* ≤2 buttons: equal split in the row */
+  .mobile-modal-footer > *:only-child,
+  .mobile-modal-footer > *:first-child:nth-last-child(2),
+  .mobile-modal-footer > *:first-child:nth-last-child(2) ~ * {
+    flex: 1;
+    justify-content: center;
+  }
+}
+.mobile-modal-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; font-weight: 600; border-radius: var(--radius-md);
+  padding: 0 16px; height: 36px; font-size: var(--fs-label-md);
+  cursor: pointer; border: none; outline: none;
+  transition: background-color var(--motion-fast) var(--ease-standard), opacity var(--motion-fast);
+}
+@media (max-width: 640px) {
+  .mobile-modal-btn { height: 44px; width: 100%; }
+}
+.mobile-modal-btn--primary   { background: var(--color-primary); color: var(--color-text-on-primary); }
+.mobile-modal-btn--primary:hover { background: var(--color-primary-dark); }
+.mobile-modal-btn--secondary { background: var(--color-primary-light); color: var(--color-primary); border: 1px solid var(--color-primary-alpha-10); }
+.mobile-modal-btn--secondary:hover { background: var(--color-primary-alpha-12); }
+.mobile-modal-btn--danger    { background: var(--color-error); color: #fff; }
+.mobile-modal-btn--danger:hover { background: var(--color-error-dark, #b71c1c); }
+.mobile-modal-confirm { max-height: none !important; }
+.mobile-modal-large   { max-height: 95dvh !important; }
+
+/* signout/confirm legacy overrides */
+.signout-modal-overlay,
+.confirm-modal-overlay { display: flex; }
+.signout-modal-panel,
+.confirm-modal-panel { }
+.signout-modal-title,
+.confirm-modal-title  { font-size: var(--fs-body-md); font-weight: 600; color: var(--color-text-primary); margin: 0 0 8px; }
+.signout-modal-message,
+.confirm-modal-message { font-size: var(--fs-body-sm); color: var(--color-text-secondary); line-height: 1.6; margin: 0; }
+.signout-modal-icon {
+  width: 36px; height: 36px; border-radius: var(--radius-md);
+  background: rgba(198,40,40,0.1); color: var(--color-error);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}

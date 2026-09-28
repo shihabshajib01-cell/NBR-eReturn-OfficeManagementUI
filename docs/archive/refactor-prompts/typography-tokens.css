@@ -1,0 +1,296 @@
+Audit and standardize the typography system across the full government office management web application.
+
+Important:
+Do not redesign the full UI. Do not change navigation structure, page logic, components, colors, theme selector, font selector, tables, modals, drawers, or working flows. Only fix typography, font sizes, spacing related to text, readability, and hierarchy.
+
+Golden Rules:
+- Each page must feel like part of one continuous process.
+- Never break something that is already working.
+- Use one unified design system across all pages and flows.
+- Keep icons, font sizes, colors, shadows, spacing, cards, forms, tables, drawers, modals, filters, navigation, and interaction patterns consistent.
+- Follow accessibility best practices and WCAG 2.1 AA where possible.
+- No clumsy or cluttered UX.
+- Every screen must be fully responsive from large desktop to laptop, tablet, and mobile.
+- No all-caps text anywhere.
+- Every text element in the system must follow the approved typography scale.
+- Keep typography hierarchy consistent across every page.
+- Use readable line-height, proper letter spacing, and enough spacing between text blocks.
+- Build with code-level thinking. Keep typography tokens modular and reusable.
+- Changing one typography token should update related components without breaking layout.
+- Reuse existing components and tokens as much as possible.
+
+Main Goal:
+Create a consistent responsive typography system for all pages, components, forms, tables, cards, modals, drawers, navigation, filters, buttons, badges, tooltips, empty states, and settings panels.
+
+Typography System:
+All text in the system must fall into this responsive typography scale.
+
+Desktop and large desktop:
+- H1 / Main Heading: 36px to 48px
+- H2 / Section Heading: 24px to 32px
+- H3 / Card or panel title: 20px to 24px
+- Body Text: 16px to 18px
+- Buttons / Inputs: 16px
+- Table Header: 14px to 16px
+- Table Body: 14px to 16px
+- Navigation Label: 13px to 15px
+- Captions / Footnotes / Helper Text: 12px to 14px
+- Badge Text: 12px to 14px
+- Tooltip Text: 12px to 14px
+
+Tablet:
+- H1 / Main Heading: 30px to 36px
+- H2 / Section Heading: 22px to 28px
+- H3 / Card or panel title: 18px to 22px
+- Body Text: 15px to 17px
+- Buttons / Inputs: 15px to 16px
+- Table Header: 13px to 15px
+- Table Body: 13px to 15px
+- Navigation Label: 12px to 14px
+- Captions / Footnotes / Helper Text: 12px to 13px
+- Badge Text: 12px to 13px
+- Tooltip Text: 12px to 13px
+
+Mobile:
+- H1 / Main Heading: 24px to 30px
+- H2 / Section Heading: 20px to 24px
+- H3 / Card or panel title: 18px to 20px
+- Body Text: 14px to 16px
+- Buttons / Inputs: 14px to 16px
+- Table Header: 12px to 14px
+- Table Body: 13px to 14px
+- Navigation Label: 12px to 13px
+- Captions / Footnotes / Helper Text: 12px to 14px
+- Badge Text: 12px
+- Tooltip Text: 12px
+
+Recommended Typography Tokens:
+Create these reusable typography tokens:
+
+- text-display-lg
+- text-display-md
+- text-h1
+- text-h2
+- text-h3
+- text-body-lg
+- text-body-md
+- text-body-sm
+- text-label-md
+- text-label-sm
+- text-button
+- text-input
+- text-table-header
+- text-table-body
+- text-caption
+- text-badge
+- text-tooltip
+
+Suggested Token Values:
+
+Large desktop / desktop:
+- text-h1: 40px, line-height 48px, weight 700
+- text-h2: 28px, line-height 36px, weight 600
+- text-h3: 22px, line-height 30px, weight 600
+- text-body-lg: 18px, line-height 28px, weight 400
+- text-body-md: 16px, line-height 24px, weight 400
+- text-body-sm: 14px, line-height 20px, weight 400
+- text-label-md: 14px, line-height 20px, weight 500
+- text-label-sm: 12px, line-height 16px, weight 500
+- text-button: 16px, line-height 24px, weight 600
+- text-input: 16px, line-height 24px, weight 400
+- text-table-header: 14px, line-height 20px, weight 600
+- text-table-body: 14px, line-height 20px, weight 400
+- text-caption: 12px, line-height 16px, weight 400
+- text-badge: 12px, line-height 16px, weight 600
+- text-tooltip: 12px, line-height 16px, weight 500
+
+Tablet:
+- text-h1: 32px, line-height 40px, weight 700
+- text-h2: 24px, line-height 32px, weight 600
+- text-h3: 20px, line-height 28px, weight 600
+- text-body-lg: 17px, line-height 26px, weight 400
+- text-body-md: 15px, line-height 22px, weight 400
+- text-body-sm: 13px, line-height 18px, weight 400
+- text-label-md: 13px, line-height 18px, weight 500
+- text-label-sm: 12px, line-height 16px, weight 500
+- text-button: 15px, line-height 22px, weight 600
+- text-input: 15px, line-height 22px, weight 400
+- text-table-header: 13px, line-height 18px, weight 600
+- text-table-body: 13px, line-height 18px, weight 400
+- text-caption: 12px, line-height 16px, weight 400
+
+Mobile:
+- text-h1: 28px, line-height 36px, weight 700
+- text-h2: 22px, line-height 30px, weight 600
+- text-h3: 18px, line-height 26px, weight 600
+- text-body-lg: 16px, line-height 24px, weight 400
+- text-body-md: 14px, line-height 22px, weight 400
+- text-body-sm: 13px, line-height 18px, weight 400
+- text-label-md: 13px, line-height 18px, weight 500
+- text-label-sm: 12px, line-height 16px, weight 500
+- text-button: 14px, line-height 20px, weight 600
+- text-input: 14px, line-height 20px, weight 400
+- text-table-header: 12px, line-height 16px, weight 600
+- text-table-body: 13px, line-height 18px, weight 400
+- text-caption: 12px, line-height 16px, weight 400
+
+Apply Typography To System:
+
+Page titles:
+- Use text-h1 only for main page titles such as Dashboard, Report Workspace, User Management, Role Management.
+- Do not use oversized headings inside cards or tables.
+
+Section headings:
+- Use text-h2 for major page sections.
+- Examples:
+  - Available Reports
+  - Basic Information
+  - Access Setup
+  - Account Setup
+  - Permissions
+
+Card titles:
+- Use text-h3 or text-label-md depending on card size.
+- Report cards should use text-label-md or text-body-md, not H1/H2.
+
+Body text:
+- Use body tokens for subtitles, descriptions, helper text, empty states, and summaries.
+
+Navigation:
+- First-layer navigation label uses text-label-sm or text-label-md.
+- Second-layer navigation label uses text-label-md.
+- Active navigation should use weight 600, not oversized text.
+- Tooltip text uses text-tooltip.
+
+Forms:
+- Field labels use text-label-sm or text-label-md.
+- Input text uses text-input.
+- Placeholder text uses text-input but with lower contrast.
+- Helper/error text uses text-caption.
+- Do not use placeholder as the only label.
+
+Buttons:
+- Button text uses text-button.
+- Button height must remain accessible.
+- Do not use all-caps button labels.
+- Use labels like:
+  - Add User
+  - Save User
+  - Create Role
+  - Cancel
+  - Export
+
+Tables:
+- Table headers use text-table-header.
+- Table body uses text-table-body.
+- Secondary metadata inside table cells uses text-caption.
+- Keep row height comfortable.
+- Avoid very small dense text.
+- Long text should wrap or truncate with tooltip where needed.
+
+Modals and drawers:
+- Modal title uses text-h3 or text-h2 depending on modal size.
+- Modal subtitle uses text-body-sm or text-body-md.
+- Section titles use text-label-md or text-h3.
+- Drawer title uses text-h3.
+- Drawer field labels use text-label-sm.
+- Drawer values use text-body-md.
+
+Badges and status pills:
+- Use text-badge.
+- Keep text readable.
+- Do not rely only on color.
+- Use words like Active, Inactive, Pending, Approved, Rejected.
+
+Empty states:
+- Empty state heading uses text-h3.
+- Empty state description uses text-body-md.
+- Keep enough line-height and spacing.
+
+Accessibility Typography Rules:
+- Minimum body text should not go below 14px on mobile.
+- Captions may be 12px but must have strong enough contrast.
+- Maintain line-height around 1.4 to 1.6 for readability.
+- Avoid tight letter spacing.
+- Avoid thin font weights for important content.
+- Use 400 for body, 500 for labels, 600 for buttons and section titles, 700 for main headings.
+- Keep heading hierarchy logical. Do not skip heading levels visually.
+- Ensure text remains readable at 200% zoom.
+- Do not use color alone to communicate meaning.
+- Keep enough spacing between labels, inputs, paragraphs, and rows.
+
+Font Family Rule:
+Keep the existing font selector in Appearance Settings.
+
+Font options:
+- Poppins
+- Noto Sans
+- Google Sans
+
+Default:
+- Poppins
+
+Fallback:
+- Use Noto Sans Bengali for Bangla text.
+
+Font family token mapping:
+- font-family-base
+- font-family-heading
+- font-family-body
+- font-family-label
+- font-family-table
+- font-family-button
+
+No All-Caps Rule:
+Remove all unnecessary uppercase styling.
+Do not use all-caps labels such as:
+- USER MANAGEMENT
+- BASIC INFORMATION
+- ACCESS SETUP
+- ROLE DETAILS
+- PERMISSIONS
+
+Use natural readable case:
+- User Management
+- Basic Information
+- Access Setup
+- Role Details
+- Permissions
+
+Component Update Rule:
+Update every reusable component to use typography tokens:
+- AppShell
+- FirstLayerNavigation
+- SecondaryNavigation
+- TopBar
+- PageHeader
+- SectionHeader
+- ReportCard
+- StatCard
+- FilterPanel
+- DataTable
+- TableHeader
+- TableRow
+- FormField
+- Button
+- Badge
+- Modal
+- Drawer
+- Tooltip
+- PermissionAccordion
+- EmptyState
+- Pagination
+- AppearanceSettingsPanel
+
+Do Not Change:
+- Do not change layout structure unless text is overflowing.
+- Do not change colors or theme palettes.
+- Do not remove theme chooser or font chooser.
+- Do not change navigation items.
+- Do not change table columns.
+- Do not change Report page logic.
+- Do not change User Management or Role Management flows.
+- Do not add Role Group.
+
+Final Result:
+A fully consistent typography system where every text element follows responsive typography tokens, all pages use a clear hierarchy, no text is all-caps, accessibility is improved, and the UI remains clean, readable, responsive, and component-based.

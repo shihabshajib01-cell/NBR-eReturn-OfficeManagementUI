@@ -1,0 +1,191 @@
+# Master Prompt — Improve Country-Specific Phone Validation and Fix Autofill Color
+
+Work inside **NBR-eReturn-Office Management UI (58)**. Make only these focused fixes.
+
+## 1. Show specific country-based phone errors
+
+Update:
+
+* `src/app/utils/phoneNumber.ts`
+* `src/app/components/special-registration/SpecialRegistrationForm.tsx`
+* EN/BN `specialRegistration.json`
+
+Keep using `libphonenumber-js/max` and `validatePhoneNumberLength()`. Validate only the national digits entered after the existing country code.
+
+Add a cached helper:
+
+```ts
+getPhoneLengthRule(countryCode)
+```
+
+It must determine all supported national-number lengths by checking lengths `1–20` with `validatePhoneNumberLength()`.
+
+Return:
+
+```ts
+{
+  allowedLengths: number[];
+  minDigits: number;
+  maxDigits: number;
+}
+```
+
+Do not manually maintain country phone lengths.
+
+Replace generic messages such as:
+
+* Phone number is too short.
+* Phone number is too long.
+* Phone number has an invalid number of digits.
+
+With one precise translated message:
+
+**English**
+
+```text
+For {{country}}, enter {{allowedLengths}} digits after {{dialCode}}. You entered {{enteredDigits}}.
+```
+
+Example:
+
+```text
+For Bangladesh, enter 10 digits after +880. You entered 11.
+```
+
+For multiple valid lengths:
+
+```text
+For Andorra, enter 6, 8, or 9 digits after +376. You entered 7.
+```
+
+Format consecutive lengths as a range where appropriate, such as `6–10 digits`.
+
+Use the localized country name in EN/BN.
+
+Do not count the country code as part of the entered digit length.
+
+## 2. Stop input after the country maximum
+
+Calculate:
+
+```ts
+const phoneRule = getPhoneLengthRule(form.countryCode);
+```
+
+Pass:
+
+```tsx
+maxLength={phoneRule?.maxDigits}
+```
+
+to the existing `AppPhoneField`.
+
+Also guard `handlePhoneChange()`:
+
+```ts
+if (candidate.length > phoneRule.maxDigits) {
+  setPhoneLengthError(countrySpecificMessage);
+  return;
+}
+```
+
+This must:
+
+* Prevent typing beyond the maximum
+* Prevent oversized pasted values
+* Keep the previous valid field value
+* Preserve leading zeroes
+* Continue supporting Bangla digits
+* Allow deletion and correction
+* Recalculate the maximum when the country changes
+
+If an existing number becomes too long after changing country, do not truncate it automatically. Show the country-specific error and let the user correct it.
+
+## 3. Verify the current validation logic
+
+The current approach is correct only when:
+
+* The displayed country code remains outside the editable value
+* Validation runs against `phoneNational`
+* E.164 conversion happens only during save
+* No strict carrier or prefix-pattern validation is added
+
+Keep validation on:
+
+* Blur
+* Form submission
+* Country change when digits already exist
+* Input changes after the field has been touched
+
+A length accepted by `validatePhoneNumberLength()` must pass. `TOO_SHORT`, `TOO_LONG`, and `INVALID_LENGTH` must show the same precise country-specific guidance.
+
+## 4. Fix the browser-suggested/autofilled field background
+
+The grey-blue suggested-value background is caused by browser autofill styling, especially on multiline fields.
+
+Update the shared MUI styling in:
+
+`src/app/components/forms/muiFieldSx.ts`
+
+Handle both `input` and `textarea` autofill states:
+
+```ts
+"& input:-webkit-autofill, \
+ & input:-webkit-autofill:hover, \
+ & input:-webkit-autofill:focus, \
+ & input:-webkit-autofill:active, \
+ & textarea:-webkit-autofill, \
+ & textarea:-webkit-autofill:hover, \
+ & textarea:-webkit-autofill:focus, \
+ & textarea:-webkit-autofill:active": {
+  WebkitBoxShadow:
+    "0 0 0 1000px var(--color-surface) inset !important",
+  WebkitTextFillColor:
+    "var(--color-text-primary) !important",
+  caretColor: "var(--color-text-primary)",
+  transition: "background-color 5000s ease-in-out 0s",
+}
+```
+
+Remove or merge the duplicate public-page-only autofill rule from `special-registration.css`.
+
+The fix must work for:
+
+* Text inputs
+* Email
+* Address textarea
+* Browser suggestions
+* Light Mode
+* Dark Mode
+* Public form
+* Admin Edit modal
+
+Do not disable browser autofill.
+
+## Tests
+
+Verify:
+
+* Bangladesh accepts the national digit lengths returned by library metadata
+* An extra Bangladesh digit is blocked
+* Andorra rejects unsupported intermediate lengths
+* Specific error text includes country, calling code, allowed length, and entered length
+* Changing country recalculates validation
+* Pasted oversized numbers are rejected
+* The country-code prefix remains unchanged
+* Autofilled inputs and textareas keep normal theme colors
+* Public submission, admin editing, and E.164 storage still work
+* EN/BN key parity passes
+
+## Golden Rules
+
+* Do not break solved issues.
+* Do not change country codes, flags, or country selection.
+* Do not install another phone library.
+* Do not manually maintain country digit lengths.
+* Do not add strict carrier or number-pattern validation.
+* Do not silently truncate phone numbers.
+* Do not move the calling code into the editable value.
+* Do not change APIs, repository models, approval, rejection, or uploads.
+* Reuse the existing form fields and theme tokens.
+* Preserve EN/BN, Light Mode, Dark Mode, desktop, mobile, and all working features.

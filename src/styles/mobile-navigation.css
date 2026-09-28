@@ -1,0 +1,599 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Mobile Navigation & Components
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ═══ Mobile Navigation Drawer Container ═══ */
+.mobile-nav-drawer {
+  width: 280px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+/* ═══ Mobile Navigation Header ═══ */
+.mobile-nav-drawer__header {
+  flex: 0 0 auto;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ═══ Mobile Navigation Content ═══ */
+.mobile-nav-drawer__nav {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-2) 0;
+}
+
+/* ═══ Mobile Navigation Section (1st Layer Item + Its Children) ═══ */
+.mobile-nav-drawer__section {
+  margin-bottom: var(--space-1);
+}
+
+/* ═══ 1st Layer - Main Navigation Item ═══ */
+.mobile-nav-drawer__main-item {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-nav-drawer__main-item:hover {
+  background: var(--color-hover);
+  color: var(--color-text-primary);
+}
+
+.mobile-nav-drawer__main-item:active {
+  background: var(--color-active);
+}
+
+.mobile-nav-drawer__main-item--active {
+  background: var(--color-primary-subtle);
+  border-left-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.mobile-nav-drawer__main-item--active:hover {
+  background: var(--color-primary-subtle-hover);
+}
+
+/* ═══ Main Item Content (Icon + Label wrapper) ═══ */
+.mobile-nav-drawer__main-item-content {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* ═══ Main Item Icon ═══ */
+.mobile-nav-drawer__main-item-icon {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+}
+
+/* ═══ Main Item Label ═══ */
+.mobile-nav-drawer__main-item-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ═══ Main Item Chevron (Expand/Collapse Indicator) ═══ */
+.mobile-nav-drawer__main-chevron,
+.mobile-nav-drawer__chevron {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  transition: transform 150ms ease;
+}
+
+.mobile-nav-drawer__main-chevron--expanded,
+.mobile-nav-drawer__chevron--expanded {
+  transform: rotate(90deg);
+}
+
+/* ═══ 2nd Layer - Submenu Container ═══ */
+.mobile-nav-drawer__submenu {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  border-left: 3px solid var(--color-border);
+  margin-left: var(--space-4);
+  overflow: hidden;
+  animation: slideDown 200ms ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+/* ═══ 2nd Layer - Sub Section ═══ */
+.mobile-nav-drawer__sub-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══ 2nd Layer - Sub Navigation Item ═══ */
+.mobile-nav-drawer__sub-item {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-nav-drawer__sub-item:hover {
+  background: var(--color-hover);
+  color: var(--color-text-primary);
+}
+
+.mobile-nav-drawer__sub-item:active {
+  background: var(--color-active);
+}
+
+.mobile-nav-drawer__sub-item--active {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.mobile-nav-drawer__sub-item--active:hover {
+  background: var(--color-primary-subtle-hover);
+}
+
+/* ═══ Sub Item Content (Icon + Label wrapper) ═══ */
+.mobile-nav-drawer__sub-item-content {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* ═══ Sub Item Icon ═══ */
+.mobile-nav-drawer__sub-item-icon {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+}
+
+/* ═══ Sub Item Label ═══ */
+.mobile-nav-drawer__sub-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ═══ Sub Item Chevron (for 3rd layer) ═══ */
+.mobile-nav-drawer__sub-chevron {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  transition: transform 150ms ease;
+}
+
+.mobile-nav-drawer__sub-chevron--expanded {
+  transform: rotate(180deg);
+}
+
+/* ═══ 3rd Layer - Third Level Container ═══ */
+.mobile-nav-drawer__third-menu {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border-left: 2px solid var(--color-border);
+  margin-left: var(--space-3);
+  padding-left: var(--space-2);
+  overflow: hidden;
+  animation: slideDown 180ms ease;
+}
+
+/* ═══ 3rd Layer - Third Navigation Item ═══ */
+.mobile-nav-drawer__third-item {
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--color-text-tertiary);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-nav-drawer__third-item:hover {
+  background: var(--color-hover);
+  color: var(--color-text-primary);
+}
+
+.mobile-nav-drawer__third-item:active {
+  background: var(--color-active);
+}
+
+.mobile-nav-drawer__third-item--active {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.mobile-nav-drawer__third-item--active:hover {
+  background: var(--color-primary-subtle-hover);
+}
+
+/* ═══ Third Item Icon ═══ */
+.mobile-nav-drawer__third-item-icon {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+}
+
+/* ═══ Third Item Dot (for items without icon) ═══ */
+.mobile-nav-drawer__third-item-dot {
+  flex: 0 0 auto;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-text-tertiary);
+}
+
+/* ═══ Third Item Label ═══ */
+.mobile-nav-drawer__third-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ═══ Mobile Topbar ═══ */
+.mobile-topbar {
+  display: none;
+  width: 100%;
+  min-height: 56px;
+  padding: 24px 0;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 14px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 60;
+}
+
+/* ═══ Mobile Topbar - Menu Button ═══ */
+.mobile-topbar__menu-btn {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-topbar__menu-btn:hover {
+  background: var(--color-hover);
+  color: var(--color-text-primary);
+}
+
+.mobile-topbar__menu-btn:active {
+  background: var(--color-active);
+}
+
+/* ═══ Mobile Topbar - Assessment Year Wrapper ═══ */
+.mobile-topbar__assessment-year-wrapper {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* ═══ Mobile Topbar - Assessment Year Select ═══ */
+.mobile-topbar__assessment-year {
+  max-width: 180px;
+  height: 38px;
+  padding: 0 var(--space-6) 0 var(--space-3);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 120ms ease;
+  appearance: none;
+}
+
+.mobile-topbar__assessment-year:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+.mobile-topbar__assessment-year-chevron {
+  position: absolute;
+  right: calc(50% - 72px);
+  pointer-events: none;
+  color: var(--color-text-tertiary);
+}
+
+/* ═══ Mobile Topbar - Notification Wrapper ═══ */
+.mobile-topbar__notification-wrapper {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+/* ═══ Mobile Topbar - Notification Button (matches desktop style) ═══ */
+.mobile-topbar__notification-button {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-topbar__notification-button:hover {
+  background-color: var(--color-primary-alpha-8);
+  border-color: var(--color-primary);
+}
+
+.mobile-topbar__notification-button:active {
+  background-color: var(--color-primary-alpha-10);
+}
+
+/* Notification icon color */
+.mobile-topbar__notification-button-icon {
+  color: var(--color-text-secondary);
+  transition: color 120ms ease;
+}
+
+.mobile-topbar__notification-button:hover .mobile-topbar__notification-button-icon {
+  color: var(--color-primary);
+}
+
+.mobile-topbar__notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9999px;
+  background: var(--color-error);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  line-height: 1;
+  border: 2px solid var(--color-surface);
+}
+
+.mobile-topbar__notification-dot {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: var(--color-error);
+  border: 2px solid var(--color-surface);
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(198, 40, 40, 0.3);
+}
+
+/* ═══ Mobile Topbar - Appearance Wrapper ═══ */
+.mobile-topbar__appearance-wrapper {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+/* ═══ Mobile Topbar - Profile Wrapper ═══ */
+.mobile-topbar__profile-wrapper {
+  flex: 0 0 auto;
+  position: relative;
+}
+
+/* ═══ Mobile Topbar - Profile Button ═══ */
+.mobile-topbar__profile-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-topbar__profile-button:hover {
+  background: var(--color-hover);
+}
+
+.mobile-topbar__profile-button:active {
+  background: var(--color-active);
+}
+
+/* ═══ Mobile Topbar - Profile Avatar ═══ */
+.mobile-topbar__profile-avatar {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border-radius: 50%;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ═══ Mobile Search Filter ═══ */
+.mobile-search-filter {
+  display: none;
+  width: 100%;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-surface);
+}
+
+.mobile-search-filter__search {
+  flex: 1 1 auto;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-search-filter__search-icon {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+}
+
+.mobile-search-filter__input {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--space-3) 0 var(--space-8);
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  transition: all 120ms ease;
+}
+
+.mobile-search-filter__input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.mobile-search-filter__input:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+  border-color: var(--color-primary);
+}
+
+.mobile-search-filter__filter-btn {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-search-filter__filter-btn:hover {
+  background: var(--color-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.mobile-search-filter__filter-btn:active {
+  background: var(--color-active);
+}
+
+.mobile-search-filter__filter-btn--active {
+  background: var(--color-primary-subtle);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.mobile-search-filter__filter-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  border: 2px solid var(--color-background);
+  border-radius: 50%;
+}
+
+/* ═══ Mobile Responsive (< 1024px) ═══ */
+@media (max-width: 1023px) {
+  .mobile-topbar {
+    display: flex;
+  }
+
+  /* Hide mobile search filter on mobile - per user request */
+  .mobile-search-filter {
+    display: none;
+  }
+}

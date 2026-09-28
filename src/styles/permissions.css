@@ -1,0 +1,28 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Permission List Page & Create/Edit Permission Modal
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Add/Edit Permission form ────────────────────────────────────────────── */
+.perm-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.perm-form__field {
+  margin-bottom: 16px;
+}
+
+.perm-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.perm-form__field--half {
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .perm-form__row { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,38 @@
+{
+  "general": {
+    "error": "An error occurred",
+    "unknownError": "An unknown error occurred",
+    "tryAgain": "Please try again",
+    "contactSupport": "If the problem persists, please contact support"
+  },
+  "network": {
+    "connectionError": "Connection error",
+    "timeout": "Request timed out",
+    "serverError": "Server error",
+    "notFound": "Resource not found"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidFormat": "Invalid format",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "minLength": "Minimum {{count}} characters required",
+    "maxLength": "Maximum {{count}} characters allowed",
+    "passwordMismatch": "Passwords do not match"
+  },
+  "authentication": {
+    "loginFailed": "Login failed",
+    "invalidCredentials": "Invalid credentials",
+    "sessionExpired": "Your session has expired",
+    "unauthorized": "You are not authorized to perform this action",
+    "accessDenied": "Access denied"
+  },
+  "operations": {
+    "saveFailed": "Failed to save",
+    "deleteFailed": "Failed to delete",
+    "updateFailed": "Failed to update",
+    "loadFailed": "Failed to load data",
+    "exportFailed": "Failed to export",
+    "printFailed": "Failed to print"
+  }
+}

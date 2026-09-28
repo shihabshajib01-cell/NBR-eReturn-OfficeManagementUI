@@ -1,0 +1,511 @@
+Refine the current government office management UI into one consistent design system.
+
+Important:
+Do not rebuild the product from scratch.
+Do not change the current information architecture.
+Do not remove any page, table, navigation item, workflow, data, or feature.
+Do not create placeholder pages.
+Do not move navigation into the page body.
+Do not redesign the whole application randomly.
+
+This task is a controlled design-system correction.
+
+Main Goal:
+Fix all visual and interaction inconsistencies across the current UI while preserving the existing structure.
+
+Focus Areas:
+- card consistency
+- table consistency
+- action consistency
+- drawer consistency
+- navigation hierarchy consistency
+- icon consistency
+- spacing consistency
+- typography consistency
+- theme consistency
+- dark mode consistency
+- responsive behavior
+
+Golden Rules:
+- Each page must feel like part of one continuous process.
+- Never break something that is already working.
+- Use one unified design system across all pages, modules, and flows.
+- Keep the existing first-layer navigation.
+- Keep the existing second-layer and third-layer navigation pattern.
+- Keep the existing breadcrumb pattern.
+- Keep breadcrumbs below the top bar and above the page title.
+- Keep the existing top bar structure.
+- No all-caps text anywhere.
+- No clumsy or cluttered UX.
+- Every screen must be responsive from large desktop to laptop, tablet, and mobile.
+- Follow WCAG 2.1 AA accessibility where possible.
+- Use readable contrast, visible focus states, keyboard-friendly controls, and clear hierarchy.
+- All reusable components must look, feel, and behave the same everywhere.
+- All design decisions must be token-based.
+- Do not hardcode one-off colors, spacing, shadows, borders, radius, or typography.
+- Scrollbar design must follow the selected theme.
+- Dark mode must follow the Gmail-inspired charcoal style, not the loud blue version.
+- Keep theme selector, font selector, and font size selector working globally.
+- Font size changes must apply across the full system.
+- Do not invent legal, tax, or workflow rules.
+- Use uploaded PDF/screenshots only as source of truth for table structure, page names, and visible data logic.
+
+Approved Navigation Rule:
+Navigation belongs only in the left navigation area.
+
+Use:
+- first-layer navigation for main modules
+- second-layer navigation for child pages
+- third-layer nested navigation only where needed
+
+Do not use page-body tabs for items that already exist in the left navigation.
+
+Main navigation:
+- Dashboard
+- Report
+- Return Register
+- Register & Stock
+- PSR & Verification
+- Case & Financial Management
+- Administration & Requests
+
+Keep the main navigation names unchanged.
+
+Breadcrumb Rule:
+Keep the current breadcrumb style.
+
+Pattern:
+Home › Module › Parent Page › Current Page
+
+Examples:
+- Home › Report › Litigation Arrear
+- Home › Return Register › Return Register › Online Return Register
+- Home › Case & Financial Management › Litigation Management › Arrear Approval
+- Home › Administration & Requests › Certificate Req › Data Entry Request
+
+Do not redesign breadcrumbs.
+Do not remove breadcrumbs.
+Do not move breadcrumbs into the sidebar.
+
+Card System Correction:
+Create one reusable card grammar and apply it everywhere.
+
+Fix:
+- dashboard KPI cards
+- summary cards
+- report cards
+- section cards
+- filter cards
+- table container cards
+
+All cards must use:
+- same radius system
+- same border style
+- same shadow/elevation level
+- same padding rhythm
+- same icon placement logic
+- same title/value/label alignment
+- same badge placement logic
+- same responsive grid behavior
+
+KPI Card Rules:
+- KPI cards should have equal width within the same row.
+- Use a consistent grid system.
+- On desktop, use 4 equal cards per row where space allows.
+- On tablet, use 2 cards per row.
+- On mobile, use 1 card per row.
+- Keep icon, value, label, and trend badge placement consistent.
+- Do not let cards stretch randomly.
+- Do not mix different KPI card styles on different dashboard pages.
+
+Dashboard Card Style:
+Dashboard cards should feel clean, calm, and premium.
+Use:
+- soft white or theme surface background
+- subtle border
+- light shadow
+- consistent spacing
+- readable large value
+- small supporting label
+- optional trend badge in one fixed position
+
+Table System Correction:
+Create one reusable table system and apply it to every table/list page.
+
+All tables must use:
+- one shared table container style
+- one shared header style
+- one shared row style
+- one shared cell padding
+- one shared row height rhythm
+- one shared status badge system
+- one shared action pattern
+- one shared pagination style
+- one shared horizontal scroll behavior
+- one shared responsive behavior
+
+Approved Table Style:
+Use the cleaner Double Entry Dashboard table style as the benchmark.
+
+Tables should have:
+- clean card container
+- soft rounded corners
+- subtle border
+- clear section header
+- optional meaningful section icon
+- optional contextual badge like AY 2024-25
+- lightweight table header
+- readable row spacing
+- soft separators
+- no heavy spreadsheet-like grid
+- no cluttered action columns
+
+Grouped Table Headers:
+For report tables with grouped headers:
+- preserve the exact PDF table header text where visible
+- improve spacing and readability
+- keep grouped headers visually clear
+- use subtle background separation
+- avoid heavy borders
+- support horizontal scrolling for wide tables
+
+Table Action Rule:
+Simplify row actions across all tables.
+
+In the table row:
+- show only one primary row action: View Details
+- use one clean icon/button
+- optionally allow row click to open details
+- show tooltip on hover/focus
+
+Move additional actions into the right-side details drawer.
+
+Do not show 3–4 repeated row action buttons in every table row by default.
+
+Drawer Action Rule:
+All extra record actions must appear inside the details drawer.
+
+Examples:
+- Download
+- Print
+- Edit
+- Approve
+- Reject
+- Process
+- View history
+- Copy ID
+
+Show only relevant actions based on the selected page, role, and record status.
+
+Record Details Drawer:
+Create one reusable Record Details Drawer component.
+
+Drawer structure:
+- header with title and close button
+- record ID or main identifier
+- status badge
+- grouped detail sections
+- clean label/value rows
+- optional audit/history section
+- sticky footer action area
+- responsive full-screen behavior on mobile
+
+Drawer visual style:
+- consistent width
+- clean spacing
+- strong information hierarchy
+- subtle section dividers
+- theme-aware background and borders
+- no plain unstructured field list
+- no random action placement
+
+Page Layout Rule:
+Every table/list page should follow this order:
+
+1. Breadcrumb
+2. Page title
+3. Short description
+4. Summary cards if useful
+5. Toolbar with search, filter, export, print
+6. Applied filter summary if filters are active
+7. Table/list workspace
+8. Pagination
+9. Details drawer when a record is opened
+
+Do not leave empty canvas areas.
+Do not show placeholder messages on pages that should have real tables.
+
+Toolbar Rule:
+Use one shared toolbar pattern:
+- search field
+- filter button
+- export button
+- print button where relevant
+
+Toolbar actions must use the same size, radius, spacing, icon style, hover state, focus state, and disabled state.
+
+Filter Rule:
+Use one reusable Filter Panel component.
+
+Filter panel should support:
+- assessment year
+- zone
+- circle
+- status
+- date range
+- type
+- TIN/user/request ID where relevant
+
+After applying filters, show applied filter chips.
+
+Applied filter card text:
+“Now showing filtered results based on following(s)”
+
+Include:
+- selected filter chips
+- Clear Result action
+
+Status Badge Rule:
+Create one shared badge system.
+
+Use consistent:
+- radius
+- padding
+- font size
+- color logic
+- icon usage if needed
+
+Status examples:
+- Approved
+- Pending
+- Rejected
+- Active
+- Inactive
+- Verified
+- Issued
+- Under Review
+- Paid
+- Unpaid
+- Partially Paid
+
+Do not use random badge sizes or random colors.
+
+Icon Rule:
+All navigation and page icons must be meaningful and consistent.
+
+Use:
+- one outlined icon style
+- same stroke weight
+- same size scale
+- same alignment
+- same active/inactive treatment
+
+Every secondary navigation item must have a relevant icon.
+Do not use generic repeated icons for unrelated items.
+
+Typography Rule:
+All text must follow the approved responsive typography scale.
+
+Desktop:
+- H1: 36px–48px
+- H2: 24px–32px
+- Body: 16px–18px
+- Buttons / Inputs: 16px
+- Captions / Footnotes: 12px–14px
+
+Mobile:
+- H1: 24px–30px
+- H2: 20px–24px
+- Body: 14px–16px
+- Buttons / Inputs: 14px–16px
+- Captions / Footnotes: 12px–14px
+
+Apply typography consistently to:
+- navigation
+- breadcrumbs
+- page titles
+- subtitles
+- card titles
+- KPI values
+- table headers
+- table rows
+- badges
+- buttons
+- forms
+- drawers
+- modals
+- tooltips
+
+No all-caps labels.
+Use sentence case or title case where appropriate.
+
+Theme System:
+Keep the existing 5 light palettes:
+1. Indigo Blue — #4B5694
+2. Government Blue — #2C5EAD
+3. Slate Purple — #4A4466
+4. Plum Executive — #744577
+5. Fresh Teal — #36ADA3
+
+Keep Dark Mode as the 6th palette.
+
+Dark Mode Direction:
+Dark Mode must be Gmail-inspired:
+- charcoal
+- neutral
+- soft
+- readable
+- low-glare
+- no neon
+- no loud blue-heavy dashboard look
+- no pure black large surfaces
+
+Gmail-inspired dark tokens:
+- app background: #202124
+- sidebar background: #171717
+- surface: #282A2D
+- surface 2: #2D2F31
+- elevated surface: #35363A
+- hover: #3C4043
+- border: #3C4043
+- text primary: #E8EAED
+- text secondary: #BDC1C6
+- text muted: #9AA0A6
+- primary accent: #8AB4F8
+- primary hover: #AECBFA
+- primary soft: rgba(138,180,248,0.14)
+
+Dark mode must apply to:
+- app shell
+- navigation
+- top bar
+- breadcrumbs
+- cards
+- tables
+- drawers
+- modals
+- filters
+- inputs
+- buttons
+- badges
+- pagination
+- tooltips
+- appearance panel
+- scrollbars
+
+Appearance Panel Rule:
+Keep the Appearance panel focused only on global settings.
+
+It should contain:
+- Color Theme
+- Font
+- Font Size
+- footer note: “Changes apply immediately across the entire application.”
+
+Do not show current page names like “Report Workspace” inside the Appearance panel.
+Do not mix page-specific content inside global settings.
+
+Font System:
+Keep the font selector:
+- Poppins
+- Noto Sans
+- Google Sans
+
+Font Size Selector:
+Keep the 3 preset font sizes:
+- Compact
+- Standard
+- Large
+
+Font size changes must apply globally to:
+- navigation
+- breadcrumbs
+- page titles
+- tables
+- cards
+- buttons
+- inputs
+- filters
+- modals
+- drawers
+- badges
+- tooltips
+
+Responsive Rules:
+Large desktop:
+- use available width wisely
+- keep content aligned to a grid
+- do not leave awkward empty space
+
+Desktop:
+- first and second navigation visible
+- tables use full workspace
+- cards align in consistent grids
+
+Tablet:
+- second navigation can collapse
+- tables support horizontal scroll
+- filters wrap cleanly
+
+Mobile:
+- navigation becomes drawer
+- table becomes horizontal scroll or card-list
+- details drawer becomes full-screen
+- modals become full-screen where needed
+- buttons and touch targets remain accessible
+
+Accessibility Rules:
+- Follow WCAG 2.1 AA where possible.
+- Maintain readable contrast.
+- Keep visible focus rings.
+- Support keyboard navigation.
+- Icon-only buttons must have tooltips and accessible labels.
+- Do not rely on color alone for status.
+- Ensure text remains readable at 200% zoom.
+- Keep touch targets large enough on mobile.
+
+What To Fix Specifically:
+- Normalize all dashboard card widths.
+- Normalize all KPI card styles.
+- Normalize all table containers.
+- Make all table styles match the approved Double Entry Dashboard direction.
+- Replace multiple row action buttons with one View Details action.
+- Move additional row actions into the details drawer.
+- Improve the details drawer as a reusable component.
+- Improve secondary/third-layer navigation hierarchy.
+- Ensure all secondary nav items have meaningful icons.
+- Make page titles match the selected page.
+- Remove duplicate page-body tabs where left navigation already handles that level.
+- Make theme colors apply consistently everywhere.
+- Make Dark Mode Gmail-inspired and less loud.
+- Keep the breadcrumb style unchanged.
+- Keep the app shell unchanged.
+
+Do Not:
+- Do not rebuild the whole UI.
+- Do not remove features.
+- Do not rename navigation items.
+- Do not create blank pages.
+- Do not move navigation items into page content.
+- Do not use page-body tabs for navigation.
+- Do not invent table columns if PDF headers are visible.
+- Do not hardcode component styles.
+- Do not create different card/table styles for each page.
+- Do not make dark mode neon or overly blue.
+
+Final Result:
+The current UI should remain structurally the same, but visually corrected into one unified system.
+
+Every page should now feel consistent:
+- same card system
+- same table system
+- same drawer system
+- same toolbar system
+- same action logic
+- same typography
+- same icon logic
+- same theme behavior
+- same responsive behavior
+- same accessibility standard
+
+The final design should feel premium, calm, professional, government-grade, and easy to maintain.

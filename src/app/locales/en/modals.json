@@ -1,0 +1,38 @@
+{
+  "confirmation": {
+    "title": "Confirm Action",
+    "message": "Are you sure you want to proceed?",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "deleteConfirmation": {
+    "title": "Delete Confirmation",
+    "message": "Are you sure you want to delete this item? This action cannot be undone.",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "approveConfirmation": {
+    "title": "Approve Confirmation",
+    "message": "Are you sure you want to approve this item?",
+    "confirm": "Approve",
+    "cancel": "Cancel"
+  },
+  "rejectConfirmation": {
+    "title": "Reject Confirmation",
+    "message": "Are you sure you want to reject this item?",
+    "confirm": "Reject",
+    "cancel": "Cancel"
+  },
+  "signOut": {
+    "title": "Sign out",
+    "message": "You will need to sign in again to access your account.",
+    "confirm": "Sign Out",
+    "cancel": "Cancel"
+  },
+  "unsavedChanges": {
+    "title": "Unsaved Changes",
+    "message": "You have unsaved changes. Are you sure you want to leave?",
+    "confirm": "Leave",
+    "cancel": "Stay"
+  }
+}

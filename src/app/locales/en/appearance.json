@@ -1,0 +1,32 @@
+{
+  "appearance": "Appearance",
+  "closePanel": "Close Appearance Settings",
+  "language": "Language",
+  "colorTheme": "Color Theme",
+  "font": "Font",
+  "fontSize": "Font Size",
+  "changesApply": "Changes apply immediately across the entire application.",
+  "themes": {
+    "indigoBlue": "Indigo Blue",
+    "govBlue": "Government Blue",
+    "slatePurple": "Slate Purple",
+    "plumExecutive": "Plum Executive",
+    "freshTeal": "Fresh Teal",
+    "darkMode": "Dark Mode"
+  },
+  "fonts": {
+    "inter": "Inter",
+    "poppins": "Poppins",
+    "notoSans": "Noto Sans",
+    "googleSans": "Google Sans"
+  },
+  "fontSizes": {
+    "compact": "Compact",
+    "standard": "Standard",
+    "large": "Large"
+  },
+  "languages": {
+    "en": "English",
+    "bn": "বাংলা"
+  }
+}

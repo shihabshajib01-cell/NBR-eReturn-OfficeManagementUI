@@ -1,0 +1,182 @@
+{
+  "profile": {
+    "viewProfile": "View Profile",
+    "accountSettings": "Account Settings",
+    "activityLog": "Activity Log",
+    "security": "Security",
+    "changePassword": "Change Password",
+    "manage2FA": "Manage 2FA",
+    "loginDeviceActivity": "Login & Device Activity",
+    "employeeId": "Employee ID",
+    "role": "Role",
+    "zoneCircle": "Zone / Circle",
+    "lastLogin": "Last Login",
+    "today": "Today"
+  },
+  "management": {
+    "title": "User Management",
+    "subtitle": "Manage system users, roles, and permissions",
+    "addUser": "Add User",
+    "exportUsers": "Download",
+    "searchPlaceholder": "Search by name, email, or employee ID…",
+    "totalUsers": "Total Users",
+    "activeUsers": "Active Users",
+    "inactiveUsers": "Inactive Users",
+    "pendingUsers": "Pending",
+    "noResults": "No users match your criteria.",
+    "resultsCount_one": "{{count}} result",
+    "resultsCount_other": "{{count}} results"
+  },
+  "table": {
+    "user": "User",
+    "employeeId": "Employee ID",
+    "email": "Email",
+    "role": "Role",
+    "circle": "Circle",
+    "zone": "Zone",
+    "level": "Level",
+    "status": "Status",
+    "lastActivity": "Last Activity",
+    "actions": "Actions"
+  },
+  "form": {
+    "addUser": "Add User",
+    "editUser": "Edit User",
+    "addUserSubtitle": "Create a user account and assign access",
+    "editUserSubtitle": "Editing {{name}}",
+    "basicInformation": "Basic Information",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Full name",
+    "employeeId": "Employee ID",
+    "employeeIdPlaceholder": "EMP-000",
+    "email": "Email",
+    "emailPlaceholder": "user@gov.bd",
+    "phone": "Phone",
+    "phonePlaceholder": "01XXX-XXXXXX",
+    "designation": "Designation",
+    "designationPlaceholder": "Select designation",
+    "accessSetup": "Access Setup",
+    "circle": "Circle",
+    "circlePlaceholder": "Select circle",
+    "zone": "Zone",
+    "zonePlaceholder": "Select zone",
+    "level": "Level",
+    "levelPlaceholder": "Select level",
+    "role": "Role",
+    "rolePlaceholder": "Select role",
+    "manageRoles": "Manage Roles",
+    "manageRolesLink": "Manage Roles →",
+    "viewPermissions": "View permissions",
+    "permissionsCount": "permissions",
+    "noModulesAssigned": "No modules assigned to this role",
+    "accountSetup": "Account Setup",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "sendInvitation": "Send invite email to user",
+    "twoFactorAuth": "Require Two-Factor Authentication (2FA)",
+    "saveChanges": "Save Changes",
+    "saveUser": "Save User",
+    "cancel": "Cancel"
+  },
+  "details": {
+    "title": "User Details",
+    "closeDetails": "Close user details",
+    "overview": "Overview",
+    "permissions": "Permissions",
+    "activity": "Activity",
+    "totalPermissions": "Total Permissions",
+    "lastActive": "Last Active",
+    "employeeId": "Employee ID",
+    "email": "Email",
+    "phone": "Phone",
+    "circle": "Circle",
+    "zone": "Zone",
+    "personalInfo": "Personal Information",
+    "roleAccess": "Role & Access",
+    "role": "Role",
+    "level": "Level",
+    "twoFactorEnabled": "2FA Enabled",
+    "yes": "Yes",
+    "no": "No",
+    "edit": "Edit",
+    "resetPassword": "Reset Password",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "reassign": "Reassign",
+    "export": "Download",
+    "print": "Print",
+    "deleteUser": "Delete User"
+  },
+  "actions": {
+    "edit": "Edit",
+    "manageRoles": "Manage Roles",
+    "resetPassword": "Reset Password",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "delete": "Delete"
+  },
+  "reassignRole": {
+    "title": "Re-Assign Role",
+    "subtitle": "Change the role assigned to this user",
+    "currentRole": "Current Role",
+    "newRole": "New Role",
+    "selectRole": "Select new role…",
+    "rolePreview": "Role Preview",
+    "permissionsCount": "permissions",
+    "confirm": "Confirm Re-Assign",
+    "cancel": "Cancel",
+    "warning": "This will change the user's permissions. Ensure the new role matches their responsibilities."
+  },
+  "filters": {
+    "allStatus": "All Status",
+    "allZones": "All Zones",
+    "allLevels": "All Levels",
+    "allRoles": "All Roles",
+    "filterByStatus": "Filter by status",
+    "filterByZone": "Filter by zone",
+    "filterByLevel": "Filter by level",
+    "filterByRole": "Filter by role"
+  },
+  "userFilters": {
+    "status": "Status",
+    "zone": "Zone",
+    "level": "Level",
+    "role": "Role"
+  },
+  "userTable": {
+    "employeeId": "Employee ID",
+    "user": "User",
+    "email": "Email",
+    "role": "Role",
+    "level": "Level",
+    "circle": "Circle",
+    "zone": "Zone",
+    "lastActivity": "Last Activity"
+  },
+  "tableAria": {
+    "systemUsers": "System users",
+    "usersPagination": "Users pagination",
+    "viewDetailsFor": "View details for {{name}}"
+  },
+  "modals": {
+    "deleteUser": {
+      "title": "Delete User",
+      "message": "Delete \"{{name}}\"? This action cannot be undone.",
+      "confirm": "Delete User"
+    },
+    "activateUser": {
+      "title": "Activate User",
+      "message": "Activate \"{{name}}\"? They will regain system access.",
+      "confirm": "Activate"
+    },
+    "deactivateUser": {
+      "title": "Deactivate User",
+      "message": "Deactivate \"{{name}}\"? They will lose system access.",
+      "confirm": "Deactivate"
+    }
+  },
+  "pagination": {
+    "pageOf": "Page {{page}} of {{total}}"
+  }
+}

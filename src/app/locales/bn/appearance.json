@@ -1,0 +1,32 @@
+{
+  "appearance": "প্রদর্শন সেটিংস",
+  "closePanel": "প্রদর্শন সেটিংস বন্ধ করুন",
+  "language": "ভাষা",
+  "colorTheme": "রঙের থিম",
+  "font": "ফন্ট",
+  "fontSize": "ফন্টের আকার",
+  "changesApply": "পরিবর্তনগুলি সম্পূর্ণ অ্যাপ্লিকেশন জুড়ে অবিলম্বে প্রয়োগ হবে।",
+  "themes": {
+    "indigoBlue": "ইন্ডিগো নীল",
+    "govBlue": "সরকারি নীল",
+    "slatePurple": "স্লেট বেগুনি",
+    "plumExecutive": "প্লাম এক্সিকিউটিভ",
+    "freshTeal": "ফ্রেশ টিল",
+    "darkMode": "ডার্ক মোড"
+  },
+  "fonts": {
+    "inter": "ইন্টার",
+    "poppins": "পপিন্স",
+    "notoSans": "নোটো স্যান্স",
+    "googleSans": "গুগল স্যান্স"
+  },
+  "fontSizes": {
+    "compact": "সংক্ষিপ্ত",
+    "standard": "স্বাভাবিক",
+    "large": "বড়"
+  },
+  "languages": {
+    "en": "English",
+    "bn": "বাংলা"
+  }
+}

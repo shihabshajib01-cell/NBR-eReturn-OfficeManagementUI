@@ -1,0 +1,57 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Badge Styles
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.badge {
+  display: inline-block;
+  padding: 3px 9px;
+  font-size: var(--fs-badge);
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+.badge-primary {
+  background: var(--color-primary-alpha-10);
+  color: var(--color-primary);
+}
+
+.badge-success {
+  background: var(--color-success-alpha-10);
+  color: var(--color-success);
+}
+
+.badge-warning {
+  background: var(--color-warning-alpha-10);
+  color: var(--color-warning);
+}
+
+.badge-error {
+  background: var(--color-error-alpha-10);
+  color: var(--color-error);
+}
+
+.badge-neutral {
+  background: var(--color-text-secondary-alpha-9);
+  color: var(--color-text-secondary);
+}
+
+.badge-sm {
+  padding: 2px 6px;
+  font-size: var(--fs-caption);
+}
+
+.badge-md {
+  padding: 3px 9px;
+  font-size: var(--fs-badge);
+}
+
+.badge-lg {
+  padding: 4px 12px;
+  font-size: var(--fs-caption);
+}
+
+.badge-secondary {
+  background: var(--color-secondary-alpha-12);
+  color: var(--color-secondary);
+}

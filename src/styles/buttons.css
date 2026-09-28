@@ -1,0 +1,278 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Unified Button System — Material Design 3 aligned
+   All interactive buttons must use .app-btn or .app-icon-btn classes.
+   Do NOT add parallel button styles outside this file.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Base ──────────────────────────────────────────────────────────────── */
+.app-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  outline: none;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard),
+    box-shadow var(--motion-fast) var(--ease-standard),
+    opacity var(--motion-fast) var(--ease-standard);
+}
+
+/* MD3 state layer (ripple overlay on hover/press) */
+.app-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-standard);
+  pointer-events: none;
+}
+
+.app-btn:hover::before  { opacity: 0.08; }
+.app-btn:active::before { opacity: 0.12; }
+
+.app-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.app-btn:disabled,
+.app-btn--loading {
+  opacity: 0.42;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Sizes ─────────────────────────────────────────────────────────────── */
+.app-btn--sm {
+  height: 30px;
+  padding: 0 12px;
+  font-size: var(--fs-caption);
+  border-radius: var(--radius-md);
+}
+
+.app-btn--md {
+  height: auto;
+  padding: 16px;
+  width: 100%;
+  font-size: var(--fs-label-md);
+  border-radius: var(--radius-md);
+}
+
+.app-btn--lg {
+  height: 44px;
+  padding: 0 20px;
+  font-size: var(--fs-body-sm);
+  border-radius: var(--radius-lg);
+}
+
+.app-btn--full {
+  width: 100%;
+}
+
+/* ── Primary (filled, elevated) ─────────────────────────────────────────── */
+.app-btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+  box-shadow: 0 1px 3px var(--color-primary-shadow, rgba(54,173,163,0.3));
+}
+
+.app-btn--primary:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: 0 2px 6px var(--color-primary-shadow, rgba(54,173,163,0.4));
+}
+
+/* ── Secondary (tonal) ───────────────────────────────────────────────────── */
+.app-btn--secondary {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary-alpha-10);
+}
+
+.app-btn--secondary:hover {
+  background-color: var(--color-primary-alpha-12);
+  border-color: var(--color-primary-alpha-20, rgba(54,173,163,0.2));
+}
+
+/* ── Danger ──────────────────────────────────────────────────────────────── */
+.app-btn--danger {
+  background-color: var(--color-error);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(198,40,40,0.25);
+}
+
+.app-btn--danger:hover {
+  background-color: var(--color-error-dark, #b71c1c);
+  box-shadow: 0 2px 6px rgba(198,40,40,0.35);
+}
+
+/* ── Ghost (outlined) ─────────────────────────────────────────────────── */
+.app-btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.app-btn--ghost:hover {
+  background-color: var(--color-primary-alpha-5);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ── Loading spinner ─────────────────────────────────────────────────────── */
+.app-btn__spinner {
+  animation: app-btn-spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes app-btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Icon Button ──────────────────────────────────────────────────────── */
+.app-icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  outline: none;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  transition:
+    background-color var(--motion-fast) var(--ease-standard),
+    color var(--motion-fast) var(--ease-standard);
+}
+
+.app-icon-btn--sm { width: 28px; height: 28px; }
+.app-icon-btn--md { width: 32px; height: 32px; }
+.app-icon-btn--lg { width: 38px; height: 38px; }
+
+.app-icon-btn--default:hover,
+.app-icon-btn--default.app-icon-btn--active {
+  background-color: var(--color-primary-alpha-8);
+  color: var(--color-primary);
+}
+
+.app-icon-btn--ghost:hover,
+.app-icon-btn--ghost.app-icon-btn--active {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.app-icon-btn--danger:hover {
+  background-color: rgba(198, 40, 40, 0.08);
+  color: var(--color-error);
+}
+
+.app-icon-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.app-icon-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Filter action buttons (filter panels) ────────────────────────────── */
+.filter-btn-reset {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard);
+  outline: none;
+}
+
+.filter-btn-reset:hover {
+  background-color: var(--color-primary-alpha-6);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.filter-btn-reset:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.filter-btn-apply {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-standard);
+  outline: none;
+}
+
+.filter-btn-apply:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.filter-btn-apply:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Legacy aliases (do not use in new code) ─────────────────────────── */
+/* These keep old class names working so existing markup doesn't break. */
+.btn-app-primary {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; font-weight: 600; letter-spacing: 0.01em; border: none;
+  border-radius: var(--radius-md); cursor: pointer; outline: none; flex-shrink: 0; overflow: hidden;
+  transition: background-color var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard);
+  background-color: var(--color-primary); color: var(--color-text-on-primary);
+  box-shadow: 0 1px 3px var(--color-primary-shadow, rgba(54,173,163,0.3));
+  height: 36px; padding: 0 16px; font-size: var(--fs-label-md);
+}
+.btn-app-primary:hover { background-color: var(--color-primary-dark); }
+.btn-app-primary--sm   { height: 30px; padding: 0 12px; font-size: var(--fs-caption); }
+.btn-app-primary--md   { height: 36px; padding: 0 16px; font-size: var(--fs-label-md); }
+
+.btn-app-secondary {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; font-weight: 600; letter-spacing: 0.01em; border: 1px solid var(--color-primary-alpha-10);
+  border-radius: var(--radius-md); cursor: pointer; outline: none; flex-shrink: 0; overflow: hidden;
+  transition: background-color var(--motion-fast) var(--ease-standard), border-color var(--motion-fast) var(--ease-standard);
+  background-color: var(--color-primary-light); color: var(--color-primary);
+  height: 36px; padding: 0 16px; font-size: var(--fs-label-md);
+}
+.btn-app-secondary:hover { background-color: var(--color-primary-alpha-12); }
+.btn-app-secondary--sm   { height: 30px; padding: 0 12px; font-size: var(--fs-caption); }
+.btn-app-secondary--md   { height: 36px; padding: 0 16px; font-size: var(--fs-label-md); }
+
+.icon-btn {
+  width: 32px; height: 32px; border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  border: none; background: transparent; color: var(--color-text-secondary);
+  cursor: pointer; outline: none; flex-shrink: 0;
+  transition: background-color var(--motion-fast) var(--ease-standard), color var(--motion-fast) var(--ease-standard);
+}
+.icon-btn:hover, .icon-btn--active {
+  background-color: var(--color-primary-alpha-8);
+  color: var(--color-primary);
+}
+.icon-btn:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }

@@ -1,0 +1,246 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Responsive Overlay - Unified Modal/Drawer/Sheet Component
+   Desktop: Right-side drawer | Mobile: Bottom sheet
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Backdrop ──────────────────────────────────────────────────────────── */
+.responsive-overlay__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.48);
+  z-index: 200;
+  animation: overlay-backdrop-in 200ms ease-out;
+}
+
+@keyframes overlay-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Desktop: Right Drawer ────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .responsive-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--overlay-desktop-width, 480px);
+    max-width: 90vw;
+    background: var(--color-surface);
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12);
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow-x: hidden;
+    animation: overlay-drawer-in 200ms cubic-bezier(0.2, 0, 0, 1);
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  @keyframes overlay-drawer-in {
+    from { transform: translateX(100%); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+  }
+
+  .responsive-overlay__header {
+    flex-shrink: 0;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .responsive-overlay__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .responsive-overlay__close {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--color-text-secondary);
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 140ms ease;
+  }
+
+  .responsive-overlay__close:hover {
+    background: var(--color-surface-hover, rgba(0, 0, 0, 0.04));
+  }
+
+  .responsive-overlay__close:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .responsive-overlay__body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 24px;
+    min-height: 0;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .responsive-overlay__footer {
+    flex-shrink: 0;
+    padding: 16px 24px;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Grouped footer (drawer-action-footer) must fill the full footer width */
+  .responsive-overlay__footer .drawer-action-footer {
+    flex: 1 1 100%;
+  }
+}
+
+/* ── Mobile: Bottom Sheet ──────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .responsive-overlay {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    max-height: var(--overlay-mobile-max-height, 90vh) !important;
+    width: 100% !important;
+    background: var(--color-surface);
+    border-radius: 20px 20px 0 0 !important;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.16);
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    animation: overlay-sheet-in 200ms cubic-bezier(0.2, 0, 0, 1);
+    transform: translateY(0);
+  }
+
+  @keyframes overlay-sheet-in {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  .responsive-overlay__header {
+    flex-shrink: 0;
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .responsive-overlay__title {
+    font-size: var(--fs-h3, 18px);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .responsive-overlay__close {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface-hover, rgba(0, 0, 0, 0.04));
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 140ms ease;
+  }
+
+  .responsive-overlay__close:active {
+    transform: scale(0.95);
+  }
+
+  .responsive-overlay__body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px;
+    min-height: 0;
+    min-width: 0;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .responsive-overlay__footer {
+    flex-shrink: 0;
+    padding: 16px 20px 20px;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Mobile touch targets: boost height for app-btn inside footer only.
+     Do NOT override color, background, border-radius, or border —
+     those come from the design system's .app-btn--primary / --secondary. */
+  .responsive-overlay__footer .app-btn {
+    min-height: 48px;
+  }
+
+  /* Font scaling support */
+  :root[data-font-scale="large"] .responsive-overlay__title {
+    font-size: calc(var(--fs-h3, 18px) * 1.2);
+  }
+
+  :root[data-font-scale="large"] .responsive-overlay__close {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ── Closing Animations ───────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .responsive-overlay--closing {
+    animation: overlay-drawer-out 160ms cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  @keyframes overlay-drawer-out {
+    from { transform: translateX(0);    opacity: 1; }
+    to   { transform: translateX(100%); opacity: 0; }
+  }
+}
+
+@media (max-width: 1023px) {
+  .responsive-overlay--closing {
+    animation: overlay-sheet-out 160ms cubic-bezier(0.4, 0, 1, 1);
+  }
+
+  @keyframes overlay-sheet-out {
+    from { transform: translateY(0);    opacity: 1; }
+    to   { transform: translateY(100%); opacity: 0; }
+  }
+}
+
+.responsive-overlay__backdrop--closing {
+  animation: overlay-backdrop-out 160ms ease-in;
+}
+
+@keyframes overlay-backdrop-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}

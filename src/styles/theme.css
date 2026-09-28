@@ -1,0 +1,253 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  /* Default: Indigo Blue — overridden at runtime via JS for other themes */
+  --background: #F7F8FC;
+
+  /* Runtime color tokens — static fallbacks matching indigo-blue defaults.
+     useAppearance overrides these via setProperty() once mounted. */
+  --color-text-primary:   #202338;
+  --color-text-secondary: #626981;
+  --color-surface:        #FFFFFF;
+  --color-surface-hover:  rgba(75, 86, 148, 0.06);
+  --color-surface-secondary: rgba(75, 86, 148, 0.045);
+  --color-background:     #F7F8FC;
+  --color-border:         #E2E5F0;
+  --color-primary:        #4B5694;
+  --color-primary-dark:   #343D73;
+  --color-primary-light:  #EEF0FA;
+  --color-primary-alpha-2:  rgba(75, 86, 148, 0.02);
+  --color-primary-alpha-3:  rgba(75, 86, 148, 0.03);
+  --color-primary-alpha-4:  rgba(75, 86, 148, 0.04);
+  --color-primary-alpha-6:  rgba(75, 86, 148, 0.06);
+  --color-primary-alpha-8:  rgba(75, 86, 148, 0.08);
+  --color-primary-alpha-10: rgba(75, 86, 148, 0.10);
+  --color-primary-alpha-12: rgba(75, 86, 148, 0.12);
+  --color-text-on-primary:  #FFFFFF;
+  --color-text-secondary-alpha-4: rgba(98, 105, 129, 0.04);
+  --color-text-secondary-alpha-8: rgba(98, 105, 129, 0.08);
+  --color-text-primary-alpha-2:   rgba(32, 35, 56, 0.02);
+  --color-text-primary-alpha-3:   rgba(32, 35, 56, 0.03);
+  --color-text-primary-alpha-12:  rgba(32, 35, 56, 0.12);
+  --color-success: #2E7D32;
+  --color-warning: #EF8F22;
+  --color-error:   #C62828;
+  --color-success-bg: rgba(46, 125, 50, 0.12);
+  --color-warning-bg: rgba(239, 143, 34, 0.12);
+  --color-error-bg:   rgba(198, 40, 40, 0.12);
+  --color-error-alpha-8:  rgba(198, 40, 40, 0.08);
+  --color-error-alpha-10: rgba(198, 40, 40, 0.10);
+  --color-error-alpha-15: rgba(198, 40, 40, 0.15);
+  --color-error-alpha-30: rgba(198, 40, 40, 0.30);
+  --color-warning-alpha-8:  rgba(239, 143, 34, 0.08);
+  --color-warning-alpha-10: rgba(239, 143, 34, 0.10);
+  --color-warning-alpha-15: rgba(239, 143, 34, 0.15);
+  --color-warning-alpha-20: rgba(239, 143, 34, 0.20);
+  --color-warning-alpha-30: rgba(239, 143, 34, 0.30);
+  --color-secondary-alpha-12: rgba(124, 139, 214, 0.12);
+  --color-background-subtle: rgba(75, 86, 148, 0.035);
+  --color-background-zebra:  rgba(32, 35, 56, 0.015);
+  --color-border-subtle:  rgba(226, 229, 240, 0.55);
+  --color-border-alpha-5: rgba(226, 229, 240, 0.5);
+  --color-text-muted: rgba(98, 105, 129, 0.75);
+  --color-primary-shadow: rgba(75, 86, 148, 0.24);
+  --foreground: #202338;
+  --card: #FFFFFF;
+  --card-foreground: #202338;
+  --popover: #FFFFFF;
+  --popover-foreground: #202338;
+  --primary: #4B5694;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EEF0FA;
+  --secondary-foreground: #202338;
+  --muted: #EEF0FA;
+  --muted-foreground: #626981;
+  --accent: #F2B880;
+  --accent-foreground: #202338;
+  --destructive: #C62828;
+  --destructive-foreground: #ffffff;
+  --border: #E2E5F0;
+  --input: transparent;
+  --input-background: #EEF0FA;
+  --switch-background: #A0AADB;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #4B5694;
+  --scrollbar-track: #F7F8FC;
+  --scrollbar-thumb: rgba(75, 86, 148, 0.35);
+  --scrollbar-thumb-hover: #343D73;
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.75rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #202338;
+  --sidebar-primary: #4B5694;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #EEF0FA;
+  --sidebar-accent-foreground: #202338;
+  --sidebar-border: rgba(75, 86, 148, 0.12);
+  --sidebar-ring: #4B5694;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /**
+  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
+  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: var(--typ-h1-size, 40px);
+    font-weight: var(--typ-h1-weight, 700);
+    line-height: var(--typ-h1-lh, 48px);
+  }
+
+  h2 {
+    font-size: var(--typ-h2-size, 28px);
+    font-weight: var(--typ-h2-weight, 600);
+    line-height: var(--typ-h2-lh, 36px);
+  }
+
+  h3 {
+    font-size: var(--typ-h3-size, 22px);
+    font-weight: var(--typ-h3-weight, 600);
+    line-height: var(--typ-h3-lh, 30px);
+  }
+
+  h4 {
+    font-size: var(--typ-label-md-size, 14px);
+    font-weight: 600;
+    line-height: var(--typ-label-md-lh, 20px);
+  }
+
+  label {
+    font-size: var(--typ-label-md-size, 14px);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--typ-label-md-lh, 20px);
+  }
+
+  button {
+    font-size: var(--typ-button-size, 15px);
+    font-weight: var(--typ-button-weight, 600);
+    line-height: var(--typ-button-lh, 24px);
+  }
+
+  input, select, textarea {
+    font-size: var(--typ-input-size, 14px);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--typ-input-lh, 24px);
+  }
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

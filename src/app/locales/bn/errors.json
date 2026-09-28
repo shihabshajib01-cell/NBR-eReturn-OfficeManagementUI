@@ -1,0 +1,38 @@
+{
+  "general": {
+    "error": "একটি ত্রুটি ঘটেছে",
+    "unknownError": "একটি অজানা ত্রুটি ঘটেছে",
+    "tryAgain": "আবার চেষ্টা করুন",
+    "contactSupport": "সমস্যা অব্যাহত থাকলে, দয়া করে সহায়তায় যোগাযোগ করুন"
+  },
+  "network": {
+    "connectionError": "সংযোগ ত্রুটি",
+    "timeout": "অনুরোধ সময় শেষ",
+    "serverError": "সার্ভার ত্রুটি",
+    "notFound": "রিসোর্স পাওয়া যায়নি"
+  },
+  "validation": {
+    "required": "এই ক্ষেত্রটি প্রয়োজনীয়",
+    "invalidFormat": "অবৈধ বিন্যাস",
+    "invalidEmail": "অবৈধ ইমেইল ঠিকানা",
+    "invalidPhone": "অবৈধ ফোন নম্বর",
+    "minLength": "ন্যূনতম {{count}} অক্ষর প্রয়োজন",
+    "maxLength": "সর্বোচ্চ {{count}} অক্ষর অনুমোদিত",
+    "passwordMismatch": "পাসওয়ার্ড মিলছে না"
+  },
+  "authentication": {
+    "loginFailed": "লগইন ব্যর্থ",
+    "invalidCredentials": "অবৈধ পরিচয়পত্র",
+    "sessionExpired": "আপনার সেশন মেয়াদ শেষ হয়েছে",
+    "unauthorized": "আপনি এই কার্যক্রম সম্পাদনের জন্য অনুমোদিত নন",
+    "accessDenied": "প্রবেশাধিকার প্রত্যাখ্যাত"
+  },
+  "operations": {
+    "saveFailed": "সংরক্ষণ ব্যর্থ",
+    "deleteFailed": "মুছে ফেলা ব্যর্থ",
+    "updateFailed": "আপডেট ব্যর্থ",
+    "loadFailed": "ডেটা লোড ব্যর্থ",
+    "exportFailed": "ডাউনলোড ব্যর্থ",
+    "printFailed": "প্রিন্ট ব্যর্থ"
+  }
+}

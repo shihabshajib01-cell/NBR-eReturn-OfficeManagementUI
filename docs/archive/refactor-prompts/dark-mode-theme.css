@@ -1,0 +1,286 @@
+Add a 6th color palette to the existing Appearance > Color Theme system.
+
+Important:
+Do not replace the existing 5 color palettes.
+Do not redesign the whole system.
+Do not change navigation, breadcrumbs, typography, page layouts, tables, modals, drawers, filters, or working flows.
+Only add a new dark theme palette and make sure it works across the full application.
+
+Existing Color Palettes:
+Keep these 5 existing palettes:
+1. Indigo Blue — #4B5694
+2. Government Blue — #2C5EAD
+3. Slate Purple — #4A4466
+4. Plum Executive — #744577
+5. Fresh Teal — #36ADA3
+
+New 6th Palette:
+Add:
+6. Dark Mode
+
+Dark Mode must be a full system theme, not only a dark background.
+
+Golden Rules:
+- Each page must feel like part of one continuous process.
+- Never break something that is already working.
+- Do not replace or remove the existing 5 palettes.
+- Use one unified design system across all pages, modules, and flows.
+- Keep icons, font sizes, colors, shadows, spacing, cards, forms, tables, drawers, modals, filters, navigation, breadcrumbs, badges, buttons, and interaction patterns consistent.
+- Follow accessibility best practices and WCAG 2.1 AA where possible.
+- No clumsy or cluttered UX.
+- Every screen must be fully responsive from large desktop to laptop, tablet, and mobile.
+- No all-caps text anywhere.
+- Every text element must follow the approved responsive typography scale.
+- All color changes must be token-based.
+- Do not hardcode dark colors inside individual components.
+- Every reusable component must support light themes and dark mode.
+- Add, edit, delete, view, approve, reject, print, export, filter, search, pagination, drawer, modal, tooltip, and confirmation actions must stay visually consistent.
+- Keep theme-aware custom scrollbars.
+- Dark mode must not reduce readability.
+- Do not use pure black backgrounds.
+- Do not use harsh neon colors.
+- Keep the UI professional, calm, and government-grade.
+
+Dark Mode Palette Name:
+Dark Mode
+
+Dark Mode Base Tokens:
+Use these values as the starting palette:
+
+- dark-bg-main: #0F172A
+- dark-bg-surface: #111827
+- dark-bg-surface-soft: #1E293B
+- dark-bg-elevated: #243044
+- dark-border: #334155
+- dark-border-soft: #475569
+- dark-text-primary: #F8FAFC
+- dark-text-secondary: #CBD5E1
+- dark-text-muted: #94A3B8
+- dark-primary: #38BDF8
+- dark-primary-hover: #0EA5E9
+- dark-primary-soft: #082F49
+- dark-primary-subtle: #0C4A6E
+- dark-success: #22C55E
+- dark-success-soft: #052E16
+- dark-warning: #F59E0B
+- dark-warning-soft: #451A03
+- dark-danger: #EF4444
+- dark-danger-soft: #450A0A
+- dark-info: #38BDF8
+- dark-info-soft: #082F49
+- dark-focus-ring: #7DD3FC
+- dark-shadow: rgba(0, 0, 0, 0.35)
+
+Dark Mode Visual Direction:
+- Use deep navy as the main background.
+- Use slightly lighter navy/charcoal for cards, tables, modals, drawers, and navigation panels.
+- Use sky-blue accent for primary actions and active states.
+- Keep text bright but not glaring.
+- Use soft borders instead of strong outlines.
+- Use subtle shadows only where needed.
+- Keep the UI calm, premium, and operational.
+
+Apply Dark Mode To:
+- app background
+- first-layer navigation
+- second-layer navigation
+- top bar
+- breadcrumbs
+- page headers
+- summary cards
+- report cards
+- table containers
+- table headers
+- table rows
+- card-style rows
+- filters
+- applied filter chips
+- dropdowns
+- inputs
+- buttons
+- status badges
+- pagination
+- modals
+- drawers
+- confirmation dialogs
+- tooltips
+- appearance panel
+- permission accordions
+- custom scrollbars
+
+Appearance Panel Update:
+Inside Appearance > Color Theme, add a 6th theme card:
+
+Theme name:
+Dark Mode
+
+Preview dots:
+- #0F172A
+- #38BDF8
+- #F8FAFC
+
+The Dark Mode card should use the same selection behavior as the other theme cards:
+- selected border
+- checkmark
+- hover state
+- focus state
+- keyboard accessibility
+
+Theme Switching Rule:
+When Dark Mode is selected:
+- the entire application switches to dark mode immediately
+- all components must use dark mode tokens
+- no light background should remain inside cards, tables, modals, drawers, filters, or navigation
+- text must remain readable
+- icons must remain visible
+- borders must remain subtle but clear
+- status badges must remain understandable
+- custom scrollbars must switch to dark mode styling
+
+Dark Mode Scrollbar:
+Use a theme-aware scrollbar:
+- scrollbar track: #111827
+- scrollbar thumb: #38BDF8
+- scrollbar thumb hover: #0EA5E9
+- scrollbar radius: rounded
+- scrollbar width: thin and subtle
+
+Navigation In Dark Mode:
+First-layer navigation:
+- background: #0F172A or #111827
+- inactive icons/text: #CBD5E1
+- active icon container: #38BDF8
+- active icon/text: #F8FAFC or #0F172A depending on contrast
+- hover: #1E293B
+- focus ring: #7DD3FC
+
+Second-layer navigation:
+- background: #111827
+- inactive text/icon: #CBD5E1
+- active item background: #0C4A6E or #38BDF8 depending on contrast
+- active label: #F8FAFC
+- active icon: #F8FAFC
+- hover: #1E293B
+- nested items must remain readable
+
+Tables In Dark Mode:
+- table/card container: #111827
+- table header background: #1E293B
+- table row background: #111827
+- alternate/hover row: #1E293B
+- row border: #334155
+- header text: #CBD5E1
+- body text: #F8FAFC
+- secondary text: #94A3B8
+- action icons: #38BDF8
+- selected row: #082F49
+
+Status Badges In Dark Mode:
+Use soft badge backgrounds with readable text:
+- Approved: background #052E16, text #86EFAC
+- Pending: background #451A03, text #FCD34D
+- Rejected: background #450A0A, text #FCA5A5
+- Active: background #052E16, text #86EFAC
+- Inactive: background #334155, text #CBD5E1
+- Under Review: background #082F49, text #7DD3FC
+
+Forms In Dark Mode:
+- input background: #0F172A
+- input border: #334155
+- input text: #F8FAFC
+- placeholder text: #94A3B8
+- focus border: #38BDF8
+- focus ring: #7DD3FC
+- disabled background: #1E293B
+- disabled text: #64748B
+
+Buttons In Dark Mode:
+Primary:
+- background: #38BDF8
+- text: #0F172A
+- hover: #0EA5E9
+
+Secondary:
+- background: #1E293B
+- border: #334155
+- text: #F8FAFC
+- hover: #243044
+
+Danger:
+- background: #EF4444
+- text: #FFFFFF
+- hover: #DC2626
+
+Modals And Drawers In Dark Mode:
+- overlay: rgba(0, 0, 0, 0.55)
+- modal background: #111827
+- drawer background: #111827
+- header border: #334155
+- footer border: #334155
+- text: #F8FAFC
+- secondary text: #CBD5E1
+
+Accessibility Rules:
+- Dark mode must pass WCAG 2.1 AA contrast where possible.
+- Do not use low-contrast grey text on dark backgrounds.
+- Do not rely on color alone for status meaning.
+- Keep visible focus states.
+- Keep keyboard navigation unchanged.
+- Ensure selected, hover, disabled, and focus states remain clear.
+- Text must remain readable at 200% zoom.
+- Icons must remain visible in active and inactive states.
+
+Component Token Requirement:
+Update these reusable components to support dark mode tokens:
+- AppShell
+- FirstLayerNavigation
+- SecondaryNavigation
+- TopBar
+- Breadcrumb
+- PageHeader
+- SummaryCard
+- ReportCard
+- FilterPanel
+- AppliedFilterSummary
+- DataTable
+- TableHeader
+- TableRow
+- TableCell
+- StatusBadge
+- Button
+- Input
+- Select
+- Dropdown
+- Pagination
+- Modal
+- Drawer
+- Tooltip
+- AppearanceSettingsPanel
+- PermissionAccordion
+- ConfirmationDialog
+- EmptyState
+- LoadingState
+- ErrorState
+
+Do Not Change:
+- Do not remove the 5 existing palettes.
+- Do not rename existing palettes.
+- Do not replace Fresh Teal.
+- Do not change the navigation structure.
+- Do not change breadcrumb style.
+- Do not change table headers.
+- Do not change page logic.
+- Do not create new pages.
+- Do not use pure black #000000 as the main background.
+- Do not use harsh neon colors.
+
+Final Result:
+Appearance > Color Theme should now have 6 palettes:
+1. Indigo Blue
+2. Government Blue
+3. Slate Purple
+4. Plum Executive
+5. Fresh Teal
+6. Dark Mode
+
+Selecting Dark Mode should immediately apply a complete dark theme across the whole application through reusable design tokens, while preserving the existing layout, navigation, typography, components, interactions, responsiveness, accessibility, and golden rules.

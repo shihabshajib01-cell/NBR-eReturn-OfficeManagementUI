@@ -1,0 +1,35 @@
+{
+  "title": "Notifications",
+  "markAllAsRead": "Mark all as read",
+  "clearAll": "Clear all",
+  "filters": {
+    "all": "All",
+    "unread": "Unread",
+    "approvals": "Approvals",
+    "assigned": "Assigned",
+    "security": "Security",
+    "system": "System"
+  },
+  "new": "new",
+  "seeAll": "See all notifications",
+  "allCaughtUp": "You are all caught up.",
+  "empty": {
+    "title": "No notifications",
+    "description": "You have no notifications at this time"
+  },
+  "types": {
+    "approval": "Approval",
+    "assignment": "Assignment",
+    "security": "Security",
+    "system": "System",
+    "info": "Info",
+    "warning": "Warning",
+    "error": "Error"
+  },
+  "actions": {
+    "view": "View",
+    "dismiss": "Dismiss",
+    "markAsRead": "Mark as read",
+    "markAsUnread": "Mark as unread"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "main": {
+    "title": "ড্যাশবোর্ড",
+    "subtitle": "নির্বাচিত মূল্যায়ন বছরের মূল রিটার্ন, অনুমোদন, সংগ্রহ এবং ব্যবহারকারীর কার্যকলাপ দেখুন।",
+    "welcome": "স্বাগতম",
+    "overview": "সংক্ষিপ্ত বিবরণ"
+  },
+  "kpis": {
+    "totalReturnsFiled": "মোট রিটার্ন দাখিল",
+    "totalRequests": "মোট অনুরোধ",
+    "totalPsr": "মোট PSR",
+    "pendingApprovals": "অপেক্ষমান অনুমোদন",
+    "approvedToday": "আজ অনুমোদিত",
+    "rejectedToday": "আজ প্রত্যাখ্যাত",
+    "taxCollectedBdt": "কর সংগৃহীত (টাকা)",
+    "totalTaxCollected": "মোট কর সংগৃহীত",
+    "activeUsers": "সক্রিয় ব্যবহারকারী",
+    "totalPsrEntries": "মোট PSR এন্ট্রি",
+    "pendingApproval": "অপেক্ষমান অনুমোদন"
+  },
+  "sections": {
+    "recentSubmissions": "সাম্প্রতিক জমা",
+    "recentPsrEntries": "সাম্প্রতিক PSR এন্ট্রি",
+    "circlewiseSummary": "সার্কেলওয়ারি সারাংশ",
+    "circlewisePsrStatus": "সার্কেলওয়ারি PSR অবস্থা",
+    "offlineReturnsToday": "অফলাইন রিটার্ন (আজ)",
+    "litigationArrearToday": "মামলা বকেয়া (আজ)",
+    "taxCategorySubmissions": "কর বিভাগ জমা"
+  },
+  "psr": {
+    "title": "পিএসআর ড্যাশবোর্ড",
+    "subtitle": "PSR এন্ট্রি, অনুমোদন, প্রত্যাখ্যান এবং সার্কেলওয়ারি অগ্রগতি ট্র্যাক করুন",
+    "kpis": {
+      "totalPsrEntries": "মোট PSR এন্ট্রি",
+      "pendingApproval": "অপেক্ষমান অনুমোদন",
+      "approvedToday": "আজ অনুমোদিত",
+      "rejectedToday": "আজ প্রত্যাখ্যাত"
+    },
+    "sections": {
+      "circlewisePsrStatus": "সার্কেলওয়ারি PSR অবস্থা",
+      "recentPsrEntries": "সাম্প্রতিক PSR এন্ট্রি"
+    }
+  },
+  "combined": {
+    "title": "দ্বৈত এন্ট্রি ড্যাশবোর্ড",
+    "subtitle": "মূল্যায়ন বছর {{assessmentYear}}-এর সমস্ত রিপোর্ট বিভাগের সংক্ষিপ্ত বিবরণ",
+    "kpis": {
+      "totalReturnsFiled": "মোট রিটার্ন দাখিল",
+      "pendingApprovals": "অপেক্ষমান অনুমোদন",
+      "totalTaxCollected": "মোট কর সংগৃহীত",
+      "activeUsers": "সক্রিয় ব্যবহারকারী"
+    },
+    "sections": {
+      "offlineReturnsToday": "অফলাইন রিটার্ন (আজ)",
+      "litigationArrearToday": "মামলা বকেয়া (আজ)",
+      "taxCategorySubmissions": "কর বিভাগ জমা"
+    }
+  },
+  "combineDashboard": {
+    "title": "কম্বাইন ড্যাশবোর্ড",
+    "subtitle": "নির্বাচিত মূল্যায়ন বছরের অনলাইন ও অফলাইন জমা এবং করের সমন্বিত তথ্য দেখুন।",
+    "reportTitle": "অনলাইন এবং অফলাইন (সম্মিলিত রিপোর্ট)"
+  },
+  "stats": {
+    "totalReturns": "মোট রিটার্ন",
+    "pendingApprovals": "অপেক্ষমান অনুমোদন",
+    "completedCases": "সম্পন্ন মামলা",
+    "activePSR": "সক্রিয় PSR",
+    "revenue": "রাজস্ব",
+    "growth": "বৃদ্ধি",
+    "change": "পরিবর্তন"
+  },
+  "charts": {
+    "monthlyReturns": "মাসিক রিটার্ন",
+    "revenueByCategory": "বিভাগ অনুসারে রাজস্ব",
+    "approvalStatus": "অনুমোদন অবস্থা",
+    "activityTrend": "কার্যকলাপের প্রবণতা"
+  },
+  "recent": {
+    "recentActivity": "সাম্প্রতিক কার্যকলাপ",
+    "recentApprovals": "সাম্প্রতিক অনুমোদন",
+    "recentReturns": "সাম্প্রতিক রিটার্ন",
+    "viewAll": "সব দেখুন"
+  },
+  "actions": {
+    "seeMore": "আরও দেখুন",
+    "seeLess": "কম দেখুন"
+  },
+  "labels": {
+    "asOf": "হিসাব অনুযায়ী",
+    "paidBy": "{{count}} করদাতা দ্বারা পরিশোধিত",
+    "paidByZero": "০ করদাতা দ্বারা পরিশোধিত",
+    "claimedBy": "{{count}} করদাতা দ্বারা দাবিকৃত",
+    "claimedByZero": "০ করদাতা দ্বারা দাবিকৃত"
+  }
+}

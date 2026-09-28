@@ -1,0 +1,37 @@
+
+/* TabBar */
+.tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: 20px;
+}
+
+.tab-bar__tab {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  padding: 9px 18px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  background: transparent;
+  cursor: pointer;
+  transition: color 150ms, border-color 150ms;
+  outline: none;
+}
+
+.tab-bar__tab--active {
+  font-weight: 700;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-bar__tab:hover:not(.tab-bar__tab--active) {
+  color: var(--color-text-primary);
+}
+
+.tab-bar__tab:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}

@@ -1,0 +1,88 @@
+{
+  "dashboard": {
+    "main": "Dashboard",
+    "dashboard": "Dashboard",
+    "psrDashboard": "PSR Dashboard",
+    "combinedDashboard": "Double Entry Dashboard",
+    "combineDashboard": "Combine Dashboard"
+  },
+  "report": {
+    "main": "Report",
+    "offlineReturnReport": "Offline Return Report",
+    "taxCategoryReport": "Tax Category Report",
+    "expressCertDisposal": "Express Cert. Disposal",
+    "userActivityReport": "User Activity Report",
+    "litigationArrear": "Litigation Arrear",
+    "litigationWritCase": "Litigation Writ Case",
+    "litigationDeptCase": "Litigation Dept Case",
+    "litigationTaxpayerCase": "Litigation Taxpayer Case",
+    "appealReport": "Appeal Report",
+    "tribunalReport": "Tribunal Report",
+    "paymentDemandReport": "Payment & Demand Report",
+    "register5Report": "Register-5 Report"
+  },
+  "returnRegister": {
+    "main": "Return Register",
+    "returnViewApproval": "Return View & Approval",
+    "onlineReturnRegister": "Online Return Register",
+    "offlineReturnRegister": "Offline Return Register",
+    "onlineArchive": "Online Archive"
+  },
+  "registerStock": {
+    "main": "Register & Stock",
+    "register4": "Register-4",
+    "stockRegister": "Stock Register",
+    "taxRegistry": "Tax Registry",
+    "register5": "Register-5",
+    "register5Approval": "Register-5 Approval"
+  },
+  "psrVerification": {
+    "main": "PSR & Verification",
+    "psrApproval": "PSR Approval",
+    "psrEditRequest": "PSR Edit Request",
+    "doubleEntryStatus": "Double Entry Status",
+    "doubleEntryVerification": "Double Entry Verification",
+    "psrDormant": "PSR Dormant",
+    "outOfJurisdiction": "Out of Jurisdiction",
+    "otherCirclesEntry": "Other Circles Entry"
+  },
+  "misfiledReturns": {
+    "main": "Misfiled Returns",
+    "invalidList": "Invalid List",
+    "approvalList": "Approval List",
+    "transferHistory": "Transfer History"
+  },
+  "caseFinancial": {
+    "main": "Case & Financial Management",
+    "litigationManagement": "Litigation Management",
+    "arrearApproval": "Arrear Approval",
+    "writCaseApproval": "Writ Case Approval",
+    "deptCaseApproval": "Dept Case Approval",
+    "taxpayerCaseApproval": "Taxpayer Case Approval",
+    "appealRegister": "Appeal Register",
+    "appealRegisterView": "Appeal Register View",
+    "appealApproval": "Appeal Approval",
+    "tribunalRegister": "Tribunal Register",
+    "tribunalRegisterView": "Tribunal Register View",
+    "tribunalApproval": "Tribunal Approval",
+    "demandPayment": "Demand & Payment",
+    "entry": "Entry",
+    "taxpayerLedger": "Taxpayer Ledger",
+    "approval": "Approval",
+    "refundAdjustment": "Refund & Adjustment"
+  },
+  "administration": {
+    "main": "Administration & Requests",
+    "certificateRequests": "Certificate Requests",
+    "dataEntryRequest": "Data Entry Request",
+    "approvalRequest": "Approval Request",
+    "editRequest": "Edit Request",
+    "disposalHistory": "Disposal History",
+    "userManagement": "User Management",
+    "roleManagement": "Role Management",
+    "permissionList": "Permission List",
+    "specialRegistrationList": "Special Registration List",
+    "timeExtension": "Time Extension",
+    "auditSelection": "Audit Selection"
+  }
+}

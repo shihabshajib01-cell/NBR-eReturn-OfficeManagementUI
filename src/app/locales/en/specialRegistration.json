@@ -1,0 +1,273 @@
+{
+  "pageTitle": "Special Registration for NRB",
+  "appName": "eReturn",
+  "backToLogin": "Back to Login",
+  "intro": {
+    "description": "This form is for Bangladeshi taxpayers living abroad who cannot use a Bangladesh-registered mobile number for eReturn special registration.",
+    "supportLabel": "Support",
+    "supportEmail": "ereturn@etaxnbr.gov.bd"
+  },
+  "form": {
+    "declarationSection": "Declaration",
+    "expandSection": "Expand",
+    "collapseSection": "Collapse"
+  },
+  "passportType": {
+    "bangladeshi": "Bangladeshi",
+    "foreign": "Foreign",
+    "dual": "Dual"
+  },
+  "applicantDetails": {
+    "sectionTaxpayer": "Taxpayer Information",
+    "sectionOverseas": "Overseas Details",
+    "fullName": "Full Name (as shown on your TIN Certificate)",
+    "fullNameHelper": "",
+    "nidNumber": "Enter Your NID Number",
+    "nidNumberHelper": "",
+    "tin": "Enter your 12-digit TIN",
+    "tinHelper": "",
+    "passportType": "Passport Type",
+    "passportTypeLabel": "Passport Type",
+    "passportTypeHelper": "Select the type of passport you currently hold.",
+    "country": "Residing Country",
+    "countryHelper": "",
+    "countrySearch": "Search country, code, or calling code",
+    "countryNoResults": "No countries found",
+    "address": "Current Overseas Address",
+    "addressHelper": "",
+    "phone": "Phone Number used in residing country",
+    "phoneHelper": "",
+    "phoneDisabled": "Select country first",
+    "phoneNoCountry": "Select country first",
+    "passportBangladeshi": "Bangladeshi",
+    "passportForeign": "Foreign",
+    "passportDual": "Dual",
+    "departureDate": "Last Date of Departure from Bangladesh",
+    "departureDateMobile": "Last Departure Date",
+    "departureDateHelper": "",
+    "email": "Enter Your Email Address",
+    "emailHelper": ""
+  },
+  "drawer": {
+    "passportTypeLabel": "Passport Type"
+  },
+  "documents": {
+    "sectionTitle": "Documents",
+    "sectionHelper": "Upload clear and readable copies in PDF, JPG, JPEG, or PNG format. Maximum size is 2 MB per file.",
+    "nid": {
+      "label": "Copy of NID/Smart ID",
+      "helper": "Upload clear JPG, PNG or PDF files. Maximum file size: 2 MB each. Maximum 2 files."
+    },
+    "passport": {
+      "label": "Copy of Bio-page of passport",
+      "helper": "Upload the passport page containing the holder's photo and personal details. Maximum file size: 2 MB."
+    },
+    "visa": {
+      "label": "Copy of Visa page of residing country",
+      "optionalBadge": "Optional",
+      "helper": "Upload the current visa or residence page, if available. Maximum file size: 2 MB."
+    },
+    "departure": {
+      "label": "Copy of Passport page with latest departure seal as proof of departure from Bangladesh",
+      "helper": "Upload the passport page containing the latest Bangladesh departure seal. Maximum file size: 2 MB."
+    },
+    "viewSample": "View sample",
+    "sampleDocument": "Sample document",
+    "prevSample": "Previous",
+    "nextSample": "Next",
+    "closeSample": "Close sample"
+  },
+  "review": {
+    "declaration": "I confirm that the information and documents provided are correct. I authorize NBR to verify my email against my TIN and process this application.",
+    "submitButton": "Submit Application",
+    "submitting": "Submitting...",
+    "submitError": "Submission failed. Please try again.",
+    "retry": "Retry"
+  },
+  "validation": {
+    "required": "This field is required.",
+    "nameMaxLength": "Name must not exceed 120 characters.",
+    "tinFormat": "TIN must be exactly 12 digits.",
+    "emailFormat": "Please enter a valid email address.",
+    "departureFuture": "Departure date cannot be in the future.",
+    "declarationRequired": "You must accept the declaration before submitting.",
+    "documentRequired": "This document is required.",
+    "filesValidating": "Please wait for file validation to complete.",
+    "passportTypeRequired": "Please select a passport type.",
+    "phoneNoCountry": "Please select a country first.",
+    "phoneRequired": "Phone number is required.",
+    "phoneExactError": "For {{country}}, enter exactly {{requiredDigits}} digits after {{dialCode}}. Entered: {{enteredDigits}}.",
+    "phoneInvalidLength": "Phone number has an invalid number of digits.",
+    "phoneInvalid": "Please enter a valid phone number for the selected country.",
+    "nidFormat": "NID must contain 10, 13 or 17 digits.",
+    "countryBDExcluded": "Select your current country of residence outside Bangladesh."
+  },
+  "manual": {
+    "title": "eReturn Special Registration নির্দেশনা",
+    "userManual": "User Manual",
+    "close": "Close",
+    "apply": "Continue to Registration",
+    "userManual": "User Manual",
+    "instructionsTitle": "Special Registration Instructions"
+  },
+  "success": {
+    "heading": "Application Submitted",
+    "applicationNumber": "Application Number",
+    "submittedAt": "Submitted",
+    "email": "Email Address",
+    "status": "Pending Review",
+    "message": "Your application is under review. Keep the application number. Updates will be sent by email.",
+    "backToLogin": "Back to Login",
+    "submitAnother": "Submit Another Application"
+  },
+  "internal": {
+    "pageTitle": "Special Registration Applications",
+    "pageDesc": "Review and process NRB special registration applications.",
+    "loading": "Loading applications...",
+    "retry": "Retry",
+    "loadError": "Failed to load applications. Please try again.",
+    "searchPlaceholder": "Search application, NID, TIN or name",
+    "noApplications": "No special registration applications have been submitted yet.",
+    "noResults": "No applications match your search or filters.",
+    "clearFilters": "Clear Filters",
+    "kpi": {
+      "total": "Total Applications",
+      "pending": "Pending Review",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "table": {
+      "applicationNo": "Application No.",
+      "tin": "TIN",
+      "applicantName": "Applicant Name",
+      "country": "Residing Country",
+      "email": "Email",
+      "submittedOn": "Submitted On",
+      "status": "Status",
+      "actions": "Actions",
+      "viewDetails": "View Details"
+    },
+    "filters": {
+      "status": "Status",
+      "allStatuses": "All Statuses",
+      "country": "Residing Country",
+      "countryPlaceholder": "Filter by country",
+      "fromDate": "From Date",
+      "toDate": "To Date",
+      "pendingReview": "Pending Review",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "statuses": {
+      "PENDING_REVIEW": "Pending Review",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "drawer": {
+      "title": "Application Details",
+      "copyAppNo": "Copy application number",
+      "copyNid": "Copy NID",
+      "copyTin": "Copy TIN",
+      "copyEmail": "Copy email",
+      "copyPhone": "Copy phone",
+      "sections": {
+        "applicationInfo": "Application Information",
+        "taxpayerInfo": "Taxpayer Information",
+        "overseasContact": "Overseas Residence and Contact",
+        "departureInfo": "Departure Information",
+        "documents": "Submitted Documents",
+        "declaration": "Applicant Declaration",
+        "reviewInfo": "Review Information",
+        "decisionHistory": "Decision History"
+      },
+      "fields": {
+        "applicationNo": "Application Number",
+        "submittedAt": "Submission Date and Time",
+        "status": "Current Status",
+        "fullName": "Full Name",
+        "nidNumber": "NID Number",
+        "tin": "TIN",
+        "country": "Residing Country",
+        "address": "Full Overseas Address",
+        "phone": "Foreign Mobile or Telephone",
+        "email": "Email Address",
+        "departureDate": "Last Date of Departure from Bangladesh",
+        "declarationText": "Declaration",
+        "declarationAccepted": "Accepted",
+        "declarationTimestamp": "Declaration Timestamp",
+        "yes": "Yes"
+      },
+      "documents": {
+        "nid": "NID or Smart ID Copy",
+        "passport": "Passport Bio Page",
+        "visa": "Visa or Residence Page of Current Country",
+        "departure": "Passport Page with Latest Bangladesh Departure Seal",
+        "required": "Required",
+        "optional": "Optional",
+        "noFile": "No document submitted"
+      },
+      "review": {
+        "notYetReviewed": "Not yet reviewed.",
+        "reviewedBy": "Reviewed By",
+        "designation": "Designation",
+        "reviewedAt": "Review Date and Time",
+        "approvalNote": "Approval Note",
+        "rejectionReason": "Rejection Reason",
+        "finalDecision": "Final Decision"
+      },
+      "history": {
+        "submitted": "Application Submitted",
+        "approved": "Application Approved",
+        "rejected": "Application Rejected",
+        "edited": "Application Updated",
+        "officer": "Officer",
+        "timestamp": "Date and Time",
+        "note": "Note",
+        "reason": "Reason"
+      },
+      "incomplete": {
+        "warning": "Incomplete Application",
+        "description": "This application is missing required information or documents. Approval is disabled until all required fields are present.",
+        "missingFields": "Missing required fields",
+        "missingDocuments": "Missing required documents"
+      }
+    },
+    "allApplications": "All Applications",
+    "editTitle": "Edit Special Registration Application",
+    "updateSuccess": "Application updated successfully.",
+    "updateError": "Failed to update application. Please try again.",
+    "editedHistoryNote": "Application information updated",
+    "conflictEdit": "This application has already been processed and can no longer be edited.",
+    "approve": {
+      "modalTitle": "Approve Application",
+      "applicant": "Applicant",
+      "applicationNo": "Application Number",
+      "email": "Email Address",
+      "noteLabel": "Internal Approval Note",
+      "notePlaceholder": "Optional note for internal records",
+      "effect": "After approval, the applicant may receive registration instructions or an OTP through the verified email address.",
+      "confirmButton": "Confirm Approval",
+      "cancel": "Cancel",
+      "processing": "Approving...",
+      "successToast": "Application approved successfully.",
+      "errorToast": "Approval failed. Please try again.",
+      "conflictToast": "This application has already been processed by another officer."
+    },
+    "reject": {
+      "modalTitle": "Reject Application",
+      "applicant": "Applicant",
+      "applicationNo": "Application Number",
+      "reasonLabel": "Rejection Reason",
+      "reasonPlaceholder": "State the reason for rejection clearly (minimum 10 characters).",
+      "reasonHelper": "Required. Minimum 10 characters, maximum 500.",
+      "reasonTooShort": "Rejection reason must be at least 10 characters.",
+      "reasonRequired": "A rejection reason is required.",
+      "confirmButton": "Confirm Rejection",
+      "cancel": "Cancel",
+      "processing": "Rejecting...",
+      "successToast": "Application rejected.",
+      "errorToast": "Rejection failed. Please try again.",
+      "conflictToast": "This application has already been processed by another officer."
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "title": "Help & User Guide",
+  "aria": {
+    "dialog": "Help & User Guide",
+    "close": "Close help",
+    "searchInput": "Search help documentation",
+    "clearSearch": "Clear search"
+  },
+  "search": {
+    "placeholder": "Search documentation…",
+    "resultCount_one": "{{count}} result",
+    "resultCount_other": "{{count}} results",
+    "noResults": "No results for \"{{query}}\"",
+    "noResultsHint": "Try shorter keywords like \"PSR\", \"approve\", \"demand\", or \"certificate\".",
+    "resultTypes": {
+      "faq": "FAQ",
+      "page": "Page Guide",
+      "role": "Role Guide",
+      "module": "Module Doc",
+      "action": "Quick Action"
+    }
+  },
+  "sections": {
+    "quickActions": "Quick Actions",
+    "currentPageGuide": "Current Page Guide",
+    "pageGuide": "Page Guide",
+    "pageGuideContext": "Select a specific page from the sidebar to view its contextual guide here. Use the search above to find documentation on any topic.",
+    "roleBasedGuides": "Role-Based Guides",
+    "moduleDocumentation": "Module Documentation",
+    "whatsNew": "What's New"
+  },
+  "pageGuide": {
+    "workflow": "Step-by-Step Workflow",
+    "actions": "Available Actions",
+    "statuses": "Status Definitions",
+    "commonMistakes": "Common Mistakes to Avoid",
+    "bestPractices": "Best Practices",
+    "faqs": "FAQs ({{count}})"
+  },
+  "roleGuide": {
+    "responsibilities": "Responsibilities",
+    "actions": "Available Actions",
+    "modules": "Accessible Modules",
+    "approvalFlow": "Approval Flow",
+    "escalationFlow": "Escalation Flow"
+  },
+  "moduleDoc": {
+    "workflow": "Workflow",
+    "statusMeanings": "Status Meanings",
+    "actions": "Available Actions",
+    "commonErrors": "Common Errors",
+    "bestPractices": "Best Practices",
+    "relatedModules": "Related Modules"
+  },
+  "releaseNotes": {
+    "newFeatures": "New Features",
+    "uiChanges": "UI Changes",
+    "bugFixes": "Bug Fixes",
+    "systemUpdates": "System Updates"
+  }
+}

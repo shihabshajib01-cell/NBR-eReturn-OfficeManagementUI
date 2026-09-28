@@ -1,0 +1,757 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Form Styles — Material Design 3 aligned
+   All form fields use this file as the single source of truth.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── FormField wrapper (from FormField.tsx) ───────────────────────────── */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-field__label {
+  display: block;
+  font-size: var(--fs-label-md);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  line-height: var(--lh-label-md);
+  letter-spacing: 0.01em;
+}
+
+.form-field--error .form-field__label {
+  color: var(--color-error);
+}
+
+.form-field__required {
+  color: var(--color-error);
+}
+
+.form-field__control {
+  width: 100%;
+}
+
+.form-field__error {
+  font-size: var(--fs-caption);
+  color: var(--color-error);
+  line-height: var(--lh-caption);
+  margin: 0;
+}
+
+.form-field__helper {
+  font-size: var(--fs-caption);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-caption);
+  margin: 0;
+}
+
+/* ── MD3 Outlined input base ──────────────────────────────────────────── */
+.form-input,
+.form-select,
+.form-textarea,
+.s-input,
+.filter-field {
+  width: 100%;
+  font-size: var(--fs-input);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.form-input,
+.s-input {
+  height: 52px;
+  padding: 0 16px;
+}
+
+.form-input:hover:not(:focus):not(:disabled),
+.s-input:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+.form-input:focus,
+.s-input:focus {
+  border-color: var(--color-primary);
+  outline: 1px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
+.form-input::placeholder,
+.s-input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.55;
+}
+
+.form-input:disabled,
+.s-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Textarea */
+.form-textarea {
+  min-height: 100px;
+  padding: 14px 16px;
+  resize: vertical;
+  height: auto;
+  line-height: var(--lh-input);
+}
+
+.form-textarea:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+.form-textarea:focus {
+  border-color: var(--color-primary);
+  outline: 1px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
+/* Select */
+.form-select {
+  height: 52px;
+  padding: 0 16px;
+  cursor: pointer;
+  appearance: none;
+}
+
+.s-select-wrapper {
+  position: relative;
+}
+
+.s-select {
+  width: 100%;
+  appearance: none;
+  height: 52px;
+  padding: 0 2.5rem 0 16px;
+  font-size: var(--fs-input);
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-primary);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 150ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.s-select:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+.s-select:focus {
+  border-color: var(--color-primary);
+  outline: 1px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
+.s-select-chevron {
+  position: absolute;
+  right: 0.625rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--color-text-secondary);
+}
+
+.form-select:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+.form-select:focus {
+  border-color: var(--color-primary);
+  outline: 1px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
+/* Checkbox & radio */
+.form-checkbox,
+.form-radio {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+/* Error/helper text */
+.form-error {
+  color: var(--color-error);
+  font-size: var(--fs-caption);
+  margin-top: var(--space-1);
+}
+
+.form-helper {
+  color: var(--color-text-secondary);
+  font-size: var(--fs-caption);
+  margin-top: var(--space-1);
+}
+
+/* Legacy label */
+.form-label {
+  display: block;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: var(--fs-label-md);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+/* ── Filter panel compact fields ──────────────────────────────────────── */
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.filter-label {
+  display: block;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.filter-field {
+  height: 38px;
+  padding: 0 12px;
+  font-size: var(--fs-body-sm);
+  border-radius: 4px;
+}
+
+.filter-field:hover:not(:focus):not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+.filter-field:focus {
+  border-color: var(--color-primary);
+  outline: 1px solid var(--color-primary);
+  outline-offset: -1px;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ── Applied filter chips ─────────────────────────────────────────────── */
+.applied-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-primary-alpha-3);
+  border-radius: 10px;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+}
+
+.applied-chips--in-card {
+  border-radius: 0;
+  margin-bottom: 0;
+  padding: 8px 16px;
+  border-top: 1px solid var(--color-primary-alpha-10);
+  border-bottom: 1px solid var(--color-primary-alpha-10);
+}
+
+.applied-chips__label {
+  font-size: var(--fs-caption);
+  color: var(--color-text-secondary);
+}
+
+.applied-chips__tag {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  background: var(--color-primary-alpha-10);
+  color: var(--color-primary);
+  padding: 2px 10px;
+  border-radius: 9999px;
+}
+
+.applied-chips__clear {
+  margin-left: auto;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--color-error);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: opacity var(--motion-fast);
+  outline: none;
+}
+
+.applied-chips__clear:hover { opacity: 0.75; }
+
+/* ── Toggle switch ────────────────────────────────────────────────────── */
+.s-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.s-toggle-track {
+  position: relative;
+  flex-shrink: 0;
+  width: 38px;
+  height: 22px;
+  border-radius: 9999px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 150ms;
+  background-color: var(--color-border);
+}
+
+.s-toggle-track[aria-checked="true"] {
+  background-color: var(--color-success);
+}
+
+.s-toggle-track:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.s-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: left 150ms;
+}
+
+.s-toggle-track[aria-checked="true"] .s-toggle-thumb {
+  left: 19px;
+}
+
+.s-toggle-label {
+  font-size: var(--fs-body-sm);
+  cursor: pointer;
+  user-select: none;
+  color: var(--color-text-primary);
+}
+
+/* ── Form section cards ───────────────────────────────────────────────── */
+.form-section {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.form-section__header {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem 1rem;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-primary-alpha-3);
+}
+
+.form-section__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: var(--color-primary-alpha-12);
+  color: var(--color-primary);
+}
+
+.form-section__title {
+  font-size: var(--fs-label-md);
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.form-section__body--grid {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.25rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .form-section__body--grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.form-section__body--stack {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Entry form grid ──────────────────────────────────────────────────── */
+.entry-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.entry-form__field--span {
+  grid-column: 1 / -1;
+}
+
+.entry-form__textarea {
+  resize: vertical;
+  height: auto;
+  min-height: 72px;
+}
+
+.entry-form__actions,
+.entry-form__footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+.entry-form__footer .app-btn--danger {
+  margin-right: auto;
+}
+
+/* Legacy alias */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ── AppFieldGroup — labelled sub-group inside a form section ─────────── */
+.field-group {
+  display: contents;
+}
+
+.field-group--full {
+  grid-column: 1 / -1;
+}
+
+.field-group__label {
+  grid-column: 1 / -1;
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 2px;
+}
+
+.field-group__fields {
+  display: contents;
+}
+
+/* ── Spec: 48px field height for native inputs (non-MUI) ──────────────── */
+.form-input,
+.s-input,
+.form-select {
+  height: 48px;
+  border-radius: var(--radius-lg);
+  padding: 0 16px;
+}
+
+.form-input:focus,
+.s-input:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+}
+
+.form-textarea {
+  border-radius: var(--radius-lg);
+  min-height: 96px;
+}
+
+.form-textarea:focus {
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+}
+
+/* ── SearchField focus ring ───────────────────────────────────────────── */
+.search-field--focused {
+  box-shadow: 0 0 0 3px var(--color-primary-alpha-10);
+  border-radius: var(--radius-lg);
+}
+
+/* ── AppFileUpload ────────────────────────────────────────────────────────── */
+.file-upload { display: flex; flex-direction: column; gap: 8px; }
+
+.file-upload__label {
+  font-size: 13px; font-weight: 500; color: var(--color-text-secondary);
+}
+
+.file-upload__dropzone {
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  cursor: pointer; text-align: center;
+  background: var(--color-background-subtle);
+  transition: border-color 140ms ease, background 140ms ease;
+}
+.file-upload__dropzone:hover,
+.file-upload__dropzone:focus-visible {
+  border-color: var(--color-primary);
+  background: var(--color-primary-alpha-4);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+.file-upload__dropzone--dragging {
+  border-color: var(--color-primary);
+  background: var(--color-primary-alpha-8);
+}
+.file-upload__dropzone--disabled {
+  opacity: 0.45; cursor: not-allowed;
+}
+.file-upload__input { display: none; }
+.file-upload__icon { color: var(--color-primary); }
+.file-upload__icon--spin { animation: file-upload-spin 0.9s linear infinite; }
+@keyframes file-upload-spin { to { transform: rotate(360deg); } }
+.file-upload__text { display: flex; flex-direction: column; gap: 3px; }
+.file-upload__title { font-size: 13px; font-weight: 600; color: var(--color-text-primary); }
+.file-upload__helper { font-size: 11px; color: var(--color-text-secondary); }
+
+.file-upload__meta { font-size: 12px; color: var(--color-text-secondary); }
+
+.file-upload__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+
+.file-upload__item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  min-width: 0;
+}
+.file-upload__item-icon { flex-shrink: 0; color: var(--color-text-secondary); }
+.file-upload__item-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.file-upload__item-name { font-size: 12px; font-weight: 500; color: var(--color-text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-upload__item-meta { font-size: 11px; color: var(--color-text-secondary); }
+.file-upload__item-status { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--color-success); flex-shrink: 0; }
+
+.file-upload__remove {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 6px;
+  border: none; background: transparent; color: var(--color-text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 120ms ease, color 120ms ease;
+}
+.file-upload__remove:hover { background: var(--color-error-alpha-8); color: var(--color-error); }
+.file-upload__remove:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+
+.file-upload__errors { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.file-upload__error { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-error); }
+.file-upload__error-external { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-error); margin-top: 4px; }
+
+/* ── Custom Date Picker ────────────────────────────────────────────────── */
+
+.app-date-picker__popup {
+  /* position + top/left set via inline style (portal, position:fixed) */
+  z-index: 1500;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 12px;
+  width: 288px;
+  max-width: calc(100vw - 16px);
+  user-select: none;
+}
+
+.app-date-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.app-date-picker__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: background 0.12s, color 0.12s;
+  padding: 0;
+}
+
+.app-date-picker__nav:hover {
+  background: var(--color-primary-alpha-8);
+  color: var(--color-primary);
+}
+
+.app-date-picker__month-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.app-date-picker__month-label--btn {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 2px 6px;
+  transition: background 0.12s, color 0.12s;
+}
+
+.app-date-picker__month-label--btn:hover {
+  background: var(--color-primary-alpha-8);
+  color: var(--color-primary);
+}
+
+/* Month picker grid (3×4) */
+.app-date-picker__month-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.app-date-picker__month-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  padding: 0;
+}
+
+.app-date-picker__month-btn:hover:not(:disabled):not(.app-date-picker__month-btn--selected) {
+  background: var(--color-primary-alpha-8);
+  color: var(--color-primary);
+}
+
+.app-date-picker__month-btn--selected {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.app-date-picker__month-btn--disabled {
+  color: var(--color-text-secondary);
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+.app-date-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.app-date-picker__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.app-date-picker__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  padding: 0;
+}
+
+.app-date-picker__day:hover:not(:disabled):not(.app-date-picker__day--selected) {
+  background: var(--color-primary-alpha-8);
+  color: var(--color-primary);
+}
+
+.app-date-picker__day--other {
+  color: var(--color-text-secondary);
+  opacity: 0.4;
+}
+
+.app-date-picker__day--today {
+  font-weight: 700;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary-alpha-12);
+  background: var(--color-primary-alpha-4);
+}
+
+.app-date-picker__day--selected {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  font-weight: 600;
+  border: none;
+}
+
+.app-date-picker__day--disabled {
+  color: var(--color-text-secondary);
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+.app-date-picker__footer {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border-subtle);
+  display: flex;
+  justify-content: center;
+}
+
+.app-date-picker__today-btn {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: background 0.12s;
+}
+
+.app-date-picker__today-btn:hover:not(:disabled) {
+  background: var(--color-primary-alpha-8);
+}
+
+.app-date-picker__today-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}

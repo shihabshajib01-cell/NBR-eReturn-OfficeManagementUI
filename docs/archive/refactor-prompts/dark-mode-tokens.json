@@ -1,0 +1,342 @@
+Refine the 6th color palette only.
+
+Important:
+We already have 5 existing light palettes.
+Do not remove them.
+Do not rename them.
+Do not replace the entire design system.
+Do not change layouts, flows, navigation structure, breadcrumbs, typography system, tables, cards, filters, drawers, or modals.
+Only improve the 6th palette: Dark Mode.
+
+Goal:
+The current dark mode feels too loud, too blue, and too intense.
+Redesign it so it feels closer to Gmail dark mode:
+- soft charcoal background
+- neutral dark surfaces
+- subtle layered contrast
+- muted borders
+- light grey text
+- restrained blue accents
+- clean and calm enterprise feel
+- no glowing or neon effect
+- no overly saturated navy dashboard look
+
+Design Direction:
+Use Gmail dark mode as inspiration, not as a direct copy.
+The mood should be:
+- quiet
+- modern
+- highly readable
+- low-glare
+- professional
+- balanced
+- neutral
+- operational
+- refined
+
+Golden Rules:
+- Keep the existing 5 color palettes unchanged.
+- Keep Dark Mode as the 6th palette.
+- Do not redesign the product structure.
+- Do not move navigation into page content.
+- Follow the established navigation pattern.
+- Keep breadcrumbs as they are.
+- Keep all existing spacing, hierarchy, component structure, and typography logic.
+- Use token-based theming only.
+- Do not hardcode dark colors inside components.
+- Every component must support the dark tokens.
+- Keep the system fully responsive.
+- Maintain accessibility and strong readability.
+- Avoid harsh visual contrast.
+- Avoid pure black large surfaces.
+- Avoid neon blue, cyan-glow, or electric accents.
+- Avoid overly colorful dark mode.
+- Dark mode should feel like Gmail dark mode mixed with an enterprise government system.
+
+Theme Name:
+Dark Mode
+
+Updated Gmail-Inspired Dark Palette Tokens:
+
+Core Backgrounds:
+- color-bg-app: #202124
+- color-bg-sidebar: #171717
+- color-bg-topbar: #202124
+- color-bg-surface: #282A2D
+- color-bg-surface-2: #2D2F31
+- color-bg-elevated: #35363A
+- color-bg-hover: #3C4043
+- color-bg-selected: #3C4043
+- color-bg-overlay: rgba(0,0,0,0.52)
+
+Borders:
+- color-border: #3C4043
+- color-border-soft: #4A4D52
+- color-divider: #3C4043
+
+Text:
+- color-text-primary: #E8EAED
+- color-text-secondary: #BDC1C6
+- color-text-muted: #9AA0A6
+- color-text-disabled: #80868B
+- color-text-on-accent: #202124
+
+Primary Accent:
+Use restrained Gmail-style blue, not bright cyan.
+- color-primary: #8AB4F8
+- color-primary-hover: #AECBFA
+- color-primary-pressed: #669DF6
+- color-primary-soft: rgba(138,180,248,0.14)
+- color-primary-border: rgba(138,180,248,0.35)
+- color-focus-ring: rgba(138,180,248,0.38)
+
+Semantic Colors:
+Success:
+- color-success: #81C995
+- color-success-soft: rgba(129,201,149,0.14)
+- color-success-text: #81C995
+
+Warning:
+- color-warning: #FBCB6B
+- color-warning-soft: rgba(251,203,107,0.14)
+- color-warning-text: #FBCB6B
+
+Danger:
+- color-danger: #F28B82
+- color-danger-soft: rgba(242,139,130,0.14)
+- color-danger-text: #F28B82
+
+Info:
+- color-info: #8AB4F8
+- color-info-soft: rgba(138,180,248,0.14)
+- color-info-text: #8AB4F8
+
+Shadows:
+- shadow-sm: 0 1px 2px rgba(0,0,0,0.20)
+- shadow-md: 0 4px 12px rgba(0,0,0,0.24)
+- shadow-lg: 0 10px 24px rgba(0,0,0,0.28)
+
+How Dark Mode Should Feel:
+- app shell: charcoal, not navy
+- sidebar: slightly darker than main canvas
+- surfaces: subtle elevation through tone difference, not glow
+- cards and tables: soft contrast against page background
+- selected items: calm filled state
+- active states: restrained blue accent
+- text: light gray, not pure white everywhere
+- borders: visible but subtle
+- overall look: closer to Gmail dark, less like a neon analytics dashboard
+
+Apply Dark Mode Across:
+- main app shell
+- first-level navigation
+- second-level navigation
+- top bar
+- search bar
+- year selector
+- user profile area
+- breadcrumbs
+- page titles
+- helper text
+- cards
+- data tables
+- table headers
+- table rows
+- filter bars
+- search inputs
+- selects
+- dropdowns
+- buttons
+- badges
+- pagination
+- drawers
+- modals
+- confirmation dialogs
+- tooltip surfaces
+- settings / appearance panel
+- empty states
+- loading states
+- custom scrollbars
+
+Navigation Styling in Gmail-Inspired Dark Mode:
+
+First-Level Navigation:
+- background: #171717
+- inactive icon: #BDC1C6
+- inactive text: #BDC1C6
+- hover background: #2D2F31
+- active item background: #3C4043
+- active icon container can use a subtle blue fill or soft highlight
+- active icon: #8AB4F8
+- active text: #E8EAED
+- avoid thick glowing active borders
+
+Second-Level Navigation:
+- background: #202124 or #282A2D
+- inactive text/icon: #BDC1C6
+- hover background: #2D2F31
+- active item background: #3C4043
+- active text: #E8EAED
+- active icon: #8AB4F8
+- nested items remain readable and calm
+- meaningful icons must stay consistent for all secondary nav items
+
+Top Bar:
+- background: #202124
+- border-bottom: #3C4043
+- search box background: #303134
+- search box border: transparent or #3C4043
+- search text: #E8EAED
+- placeholder: #9AA0A6
+- icons: #BDC1C6
+
+Breadcrumbs:
+Do not change breadcrumb structure.
+Only restyle for dark mode:
+- background: transparent
+- text: #9AA0A6
+- current page: #E8EAED
+- separator: #5F6368
+
+Tables in Gmail-Inspired Dark Mode:
+Tables must feel like the cleaner direction we want from our design system.
+No harsh boxed look.
+No loud blue fills.
+
+Table Container:
+- background: #282A2D
+- border: 1px solid #3C4043
+- radius: keep existing system radius
+- shadow: subtle only
+
+Table Header:
+- background: #303134
+- text: #BDC1C6
+- bottom border: #3C4043
+
+Table Row:
+- default background: #282A2D
+- hover background: #2D2F31
+- selected background: rgba(138,180,248,0.10)
+- row border: #3C4043
+- primary text: #E8EAED
+- secondary text: #BDC1C6
+
+Table Action Icons:
+- default icon: #BDC1C6
+- hover icon: #E8EAED
+- active icon: #8AB4F8
+- action containers should be subtle, not glowing
+
+Status Badges:
+Use soft filled badges, not loud saturated pills.
+
+Approved / Success:
+- background: rgba(129,201,149,0.14)
+- text: #81C995
+
+Pending / Warning:
+- background: rgba(251,203,107,0.14)
+- text: #FBCB6B
+
+Rejected / Danger:
+- background: rgba(242,139,130,0.14)
+- text: #F28B82
+
+Info / Under Review:
+- background: rgba(138,180,248,0.14)
+- text: #8AB4F8
+
+Neutral:
+- background: rgba(189,193,198,0.12)
+- text: #BDC1C6
+
+Buttons:
+Primary:
+- background: #8AB4F8
+- text: #202124
+- hover: #AECBFA
+- border: none
+
+Secondary:
+- background: #2D2F31
+- text: #E8EAED
+- border: 1px solid #3C4043
+- hover: #3C4043
+
+Ghost:
+- background: transparent
+- text: #BDC1C6
+- hover background: #2D2F31
+
+Danger:
+- background: rgba(242,139,130,0.14)
+- text: #F28B82
+- border: 1px solid rgba(242,139,130,0.22)
+
+Inputs and Filters:
+- input background: #303134
+- input border: #3C4043
+- input text: #E8EAED
+- placeholder: #9AA0A6
+- focus border: #8AB4F8
+- focus ring: rgba(138,180,248,0.28)
+- disabled background: #2A2B2E
+- disabled text: #80868B
+
+Cards:
+- background: #282A2D
+- border: 1px solid #3C4043
+- title: #E8EAED
+- body text: #BDC1C6
+- supporting text: #9AA0A6
+
+Modal / Drawer / Panel:
+- background: #282A2D
+- header background: #282A2D
+- footer background: #282A2D
+- border: #3C4043
+- title: #E8EAED
+- body text: #BDC1C6
+- overlay: rgba(0,0,0,0.52)
+
+Appearance Panel Rule:
+The appearance settings modal/panel should not show random page-specific content like “Report Workspace”.
+Keep it generic.
+Use neutral preview content only.
+For example:
+- “Theme Preview”
+- “Sample table row”
+- “Sample button”
+- “Sample input”
+- “Sample badge”
+Do not inject actual module/page content inside appearance settings.
+
+Scrollbar:
+Keep it subtle and theme-aware:
+- track: #202124
+- thumb: #5F6368
+- thumb hover: #8AB4F8
+
+Accessibility:
+- Maintain WCAG-friendly contrast where possible
+- Do not use low-contrast grey on grey
+- Keep focus states visible
+- Do not rely only on color for meaning
+- Keep all interactions keyboard accessible
+
+Do Not Do:
+- do not use bright cyan
+- do not use glowing blue borders everywhere
+- do not use deep navy as the main app background
+- do not use black and electric blue contrast
+- do not make cards, tables, or nav look “louder” than Gmail dark mode
+- do not add page navigation inside the page body
+- do not break the established navigation pattern
+- do not change existing 5 palettes
+
+Final Result:
+Keep the 5 existing light palettes as they are.
+Keep Dark Mode as the 6th palette.
+But redesign that 6th palette into a Gmail-inspired dark theme:
+charcoal, muted, soft, readable, professional, and calm.

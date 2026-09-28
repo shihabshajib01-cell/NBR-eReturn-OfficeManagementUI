@@ -1,0 +1,182 @@
+{
+  "profile": {
+    "viewProfile": "প্রোফাইল দেখুন",
+    "accountSettings": "অ্যাকাউন্ট সেটিংস",
+    "activityLog": "কার্যকলাপ লগ",
+    "security": "নিরাপত্তা",
+    "changePassword": "পাসওয়ার্ড পরিবর্তন",
+    "manage2FA": "2FA পরিচালনা",
+    "loginDeviceActivity": "লগইন এবং ডিভাইস কার্যকলাপ",
+    "employeeId": "কর্মচারী আইডি",
+    "role": "ভূমিকা",
+    "zoneCircle": "জোন / সার্কেল",
+    "lastLogin": "শেষ লগইন",
+    "today": "আজ"
+  },
+  "management": {
+    "title": "ব্যবহারকারী ব্যবস্থাপনা",
+    "subtitle": "সিস্টেম ব্যবহারকারী, ভূমিকা এবং অনুমতি পরিচালনা করুন",
+    "addUser": "ব্যবহারকারী যোগ করুন",
+    "exportUsers": "ডাউনলোড",
+    "searchPlaceholder": "নাম, ইমেইল, বা কর্মচারী আইডি দ্বারা অনুসন্ধান করুন…",
+    "totalUsers": "মোট ব্যবহারকারী",
+    "activeUsers": "সক্রিয় ব্যবহারকারী",
+    "inactiveUsers": "নিষ্ক্রিয় ব্যবহারকারী",
+    "pendingUsers": "মুলতুবি",
+    "noResults": "আপনার মানদণ্ডের সাথে কোনো ব্যবহারকারী মেলে না।",
+    "resultsCount_one": "{{count}} ফলাফল",
+    "resultsCount_other": "{{count}} ফলাফল"
+  },
+  "table": {
+    "user": "ব্যবহারকারী",
+    "employeeId": "কর্মচারী আইডি",
+    "email": "ইমেইল",
+    "role": "ভূমিকা",
+    "circle": "সার্কেল",
+    "zone": "জোন",
+    "level": "স্তর",
+    "status": "অবস্থা",
+    "lastActivity": "সর্বশেষ কার্যকলাপ",
+    "actions": "কর্ম"
+  },
+  "form": {
+    "addUser": "ব্যবহারকারী যোগ করুন",
+    "editUser": "ব্যবহারকারী সম্পাদনা করুন",
+    "addUserSubtitle": "একটি ব্যবহারকারী অ্যাকাউন্ট তৈরি করুন এবং অ্যাক্সেস নির্ধারণ করুন",
+    "editUserSubtitle": "{{name}} সম্পাদনা করা হচ্ছে",
+    "basicInformation": "মৌলিক তথ্য",
+    "fullName": "পূর্ণ নাম",
+    "fullNamePlaceholder": "পূর্ণ নাম",
+    "employeeId": "কর্মচারী আইডি",
+    "employeeIdPlaceholder": "EMP-000",
+    "email": "ইমেইল",
+    "emailPlaceholder": "user@gov.bd",
+    "phone": "ফোন",
+    "phonePlaceholder": "01XXX-XXXXXX",
+    "designation": "পদবি",
+    "designationPlaceholder": "পদবি নির্বাচন করুন",
+    "accessSetup": "অ্যাক্সেস সেটআপ",
+    "circle": "সার্কেল",
+    "circlePlaceholder": "সার্কেল নির্বাচন করুন",
+    "zone": "জোন",
+    "zonePlaceholder": "জোন নির্বাচন করুন",
+    "level": "স্তর",
+    "levelPlaceholder": "স্তর নির্বাচন করুন",
+    "role": "ভূমিকা",
+    "rolePlaceholder": "ভূমিকা নির্বাচন করুন",
+    "manageRoles": "ভূমিকা পরিচালনা করুন",
+    "manageRolesLink": "ভূমিকা পরিচালনা করুন →",
+    "viewPermissions": "অনুমতি দেখুন",
+    "permissionsCount": "অনুমতি",
+    "noModulesAssigned": "এই ভূমিকায় কোনো মডিউল নির্ধারিত নেই",
+    "accountSetup": "অ্যাকাউন্ট সেটআপ",
+    "status": "অবস্থা",
+    "active": "সক্রিয়",
+    "inactive": "নিষ্ক্রিয়",
+    "sendInvitation": "ব্যবহারকারীকে আমন্ত্রণ ইমেইল পাঠান",
+    "twoFactorAuth": "দুই-ফ্যাক্টর প্রমাণীকরণ প্রয়োজন (2FA)",
+    "saveChanges": "পরিবর্তন সংরক্ষণ করুন",
+    "saveUser": "ব্যবহারকারী সংরক্ষণ করুন",
+    "cancel": "বাতিল"
+  },
+  "details": {
+    "title": "ব্যবহারকারীর বিবরণ",
+    "closeDetails": "ব্যবহারকারীর বিবরণ বন্ধ করুন",
+    "overview": "সংক্ষিপ্ত বিবরণ",
+    "permissions": "অনুমতি",
+    "activity": "কার্যকলাপ",
+    "totalPermissions": "মোট অনুমতি",
+    "lastActive": "সর্বশেষ সক্রিয়",
+    "employeeId": "কর্মচারী আইডি",
+    "email": "ইমেইল",
+    "phone": "ফোন",
+    "circle": "সার্কেল",
+    "zone": "জোন",
+    "personalInfo": "ব্যক্তিগত তথ্য",
+    "roleAccess": "ভূমিকা এবং অ্যাক্সেস",
+    "role": "ভূমিকা",
+    "level": "স্তর",
+    "twoFactorEnabled": "2FA সক্রিয়",
+    "yes": "হ্যাঁ",
+    "no": "না",
+    "edit": "সম্পাদনা",
+    "resetPassword": "পাসওয়ার্ড রিসেট",
+    "deactivate": "নিষ্ক্রিয় করুন",
+    "activate": "সক্রিয় করুন",
+    "reassign": "পুনঃনির্ধারণ",
+    "export": "ডাউনলোড",
+    "print": "প্রিন্ট",
+    "deleteUser": "ব্যবহারকারী মুছুন"
+  },
+  "actions": {
+    "edit": "সম্পাদনা",
+    "manageRoles": "ভূমিকা পরিচালনা করুন",
+    "resetPassword": "পাসওয়ার্ড রিসেট করুন",
+    "deactivate": "নিষ্ক্রিয় করুন",
+    "activate": "সক্রিয় করুন",
+    "delete": "মুছে ফেলুন"
+  },
+  "reassignRole": {
+    "title": "ভূমিকা পুনঃনির্ধারণ করুন",
+    "subtitle": "এই ব্যবহারকারীকে নির্ধারিত ভূমিকা পরিবর্তন করুন",
+    "currentRole": "বর্তমান ভূমিকা",
+    "newRole": "নতুন ভূমিকা",
+    "selectRole": "নতুন ভূমিকা নির্বাচন করুন…",
+    "rolePreview": "ভূমিকা প্রিভিউ",
+    "permissionsCount": "অনুমতি",
+    "confirm": "পুনঃনির্ধারণ নিশ্চিত করুন",
+    "cancel": "বাতিল",
+    "warning": "এটি ব্যবহারকারীর অনুমতি পরিবর্তন করবে। নিশ্চিত করুন যে নতুন ভূমিকা তাদের দায়িত্বের সাথে মেলে।"
+  },
+  "filters": {
+    "allStatus": "সকল অবস্থা",
+    "allZones": "সকল জোন",
+    "allLevels": "সকল স্তর",
+    "allRoles": "সকল ভূমিকা",
+    "filterByStatus": "অবস্থা অনুযায়ী ফিল্টার করুন",
+    "filterByZone": "জোন অনুযায়ী ফিল্টার করুন",
+    "filterByLevel": "স্তর অনুযায়ী ফিল্টার করুন",
+    "filterByRole": "ভূমিকা অনুযায়ী ফিল্টার করুন"
+  },
+  "userFilters": {
+    "status": "অবস্থা",
+    "zone": "জোন",
+    "level": "স্তর",
+    "role": "ভূমিকা"
+  },
+  "userTable": {
+    "employeeId": "কর্মচারী আইডি",
+    "user": "ব্যবহারকারী",
+    "email": "ইমেইল",
+    "role": "ভূমিকা",
+    "level": "স্তর",
+    "circle": "সার্কেল",
+    "zone": "জোন",
+    "lastActivity": "সর্বশেষ কার্যকলাপ"
+  },
+  "tableAria": {
+    "systemUsers": "সিস্টেম ব্যবহারকারী",
+    "usersPagination": "ব্যবহারকারী পৃষ্ঠানুক্রম",
+    "viewDetailsFor": "{{name}}-এর বিস্তারিত দেখুন"
+  },
+  "modals": {
+    "deleteUser": {
+      "title": "ব্যবহারকারী মুছে ফেলুন",
+      "message": "\"{{name}}\" মুছে ফেলবেন? এই কাজটি পূর্বাবস্থায় ফেরানো যাবে না।",
+      "confirm": "ব্যবহারকারী মুছে ফেলুন"
+    },
+    "activateUser": {
+      "title": "ব্যবহারকারী সক্রিয় করুন",
+      "message": "\"{{name}}\" সক্রিয় করবেন? তারা সিস্টেম অ্যাক্সেস ফিরে পাবে।",
+      "confirm": "সক্রিয় করুন"
+    },
+    "deactivateUser": {
+      "title": "ব্যবহারকারী নিষ্ক্রিয় করুন",
+      "message": "\"{{name}}\" নিষ্ক্রিয় করবেন? তারা সিস্টেম অ্যাক্সেস হারাবে।",
+      "confirm": "নিষ্ক্রিয় করুন"
+    }
+  },
+  "pagination": {
+    "pageOf": "পৃষ্ঠা {{page}} এর {{total}}"
+  }
+}
