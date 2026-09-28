@@ -10,6 +10,7 @@ interface AuditExplainerDrawerProps {
 
 export function AuditExplainerDrawer({ explanation, onClose }: AuditExplainerDrawerProps) {
   const { t: tc } = useTranslation("common");
+  const { t } = useTranslation("audit");
   if (!explanation) return null;
 
   return (
@@ -28,12 +29,12 @@ export function AuditExplainerDrawer({ explanation, onClose }: AuditExplainerDra
         </div>
 
         <div className="audit-explainer__block">
-          <h3>What it means</h3>
+          <h3>{t("explainer.whatItMeans")}</h3>
           <p>{explanation.definition}</p>
         </div>
 
         <div className="audit-explainer__block">
-          <h3>What it affects</h3>
+          <h3>{t("explainer.whatItAffects")}</h3>
           <p>{explanation.effect}</p>
         </div>
 
@@ -53,7 +54,7 @@ export function AuditExplainerDrawer({ explanation, onClose }: AuditExplainerDra
 
         {explanation.nextStep && (
           <div className="audit-explainer__block">
-            <h3>Next step</h3>
+            <h3>{t("explainer.nextStep")}</h3>
             <p>{explanation.nextStep}</p>
           </div>
         )}
