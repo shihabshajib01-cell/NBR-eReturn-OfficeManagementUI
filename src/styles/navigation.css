@@ -5,7 +5,7 @@
 
 /* ── Primary Sidebar (First Layer) ────────────────────────────────────── */
 .primary-sidebar {
-  width: 80px;
+  width: 88px;
   flex-shrink: 0;
   border-right: 1px solid var(--color-border);
   padding-top: 12px;
@@ -135,8 +135,8 @@
   font-size: var(--fs-nav-primary);
   line-height: var(--lh-nav-primary);
   text-align: center;
-  max-width: 64px;
-  transition: color 140ms cubic-bezier(0.2, 0, 0, 1), font-weight 140ms cubic-bezier(0.2, 0, 0, 1);
+  max-width: 72px;
+  transition: color 140ms cubic-bezier(0.2, 0, 0, 1);
 }
 
 .primary-nav-item__label--active {
@@ -150,7 +150,7 @@
 }
 
 .primary-nav-item__label--hover {
-  font-weight: 600;
+  font-weight: 400;
   color: var(--color-primary);
 }
 
@@ -401,10 +401,13 @@
   background-color: var(--color-primary);
   box-shadow: 0 2px 8px var(--color-primary-shadow);
 }
-.primary-nav-item--active .primary-nav-item__label,
-.primary-nav-item--hovered .primary-nav-item__label {
+.primary-nav-item--active .primary-nav-item__label {
   color: var(--color-primary);
   font-weight: 600;
+}
+.primary-nav-item--hovered:not(.primary-nav-item--active) .primary-nav-item__label {
+  color: var(--color-primary);
+  font-weight: 400;
 }
 
 /* ── SecondarySidebar Component Structure ─────────────────────────────── */
@@ -1160,7 +1163,7 @@
 @media (max-width: 1023px) {
   /* Mobile navigation: both primary and secondary sidebars visible in drawer */
   .primary-sidebar {
-    width: 80px;
+    width: 88px;
     flex-shrink: 0;
     height: 100vh;
     position: relative;
@@ -1198,7 +1201,7 @@
 
   /* Ensure secondary sidebar takes remaining space on mobile */
   .secondary-sidebar--expanded {
-    width: calc(100vw - 80px);
+    width: calc(100vw - 88px);
     max-width: 280px;
   }
 
