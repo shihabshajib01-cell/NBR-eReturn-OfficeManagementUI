@@ -157,5 +157,158 @@
     "whatItMeans": "What it means",
     "whatItAffects": "What it affects",
     "nextStep": "Next step"
+  },
+  "initiate": {
+    "title": "Initiate Audit",
+    "description": "Build this year's audit candidate population step by step using Circle scope, data readiness and the screening rules defined in the Audit framework.",
+    "progressLabel": "Audit initiation progress",
+    "stepLabels": {
+      "setup": "Audit setup",
+      "population": "Population",
+      "readiness": "Data readiness",
+      "criteria": "Audit criteria",
+      "preview": "Candidate preview",
+      "review": "Review & confirm"
+    },
+    "steps": {
+      "setup": {
+        "title": "Audit setup",
+        "desc": "Choose the assessment year and how this selection exercise will be built."
+      },
+      "population": {
+        "title": "Select population",
+        "desc": "Audit all Circles or combine any set of Circles. Circle is an operational filter, not an access limit for this officer."
+      },
+      "readiness": {
+        "title": "Data readiness & coverage",
+        "desc": "Decide which Data Quality states and Coverage Tiers are eligible before applying substantive audit criteria."
+      },
+      "criteria": {
+        "title": "Select audit criteria",
+        "desc": "Apply the relevant risk, control or manual-selection logic. The system keeps Control Flags separate from substantive Risk Signals."
+      },
+      "preview": {
+        "title": "Candidate preview",
+        "desc": "Inspect the matched taxpayers before confirmation. Audit concepts remain clickable for rule explanations."
+      },
+      "review": {
+        "title": "Review & confirm",
+        "desc": "Review the complete selection basis before adding taxpayers to this year's Audit Candidates register."
+      }
+    },
+    "fields": {
+      "assessmentYear": "Assessment Year",
+      "selectionTrack": "Selection track",
+      "circleScope": "Circle scope",
+      "selectCircles": "Select Circles",
+      "dataQuality": "Data Quality",
+      "coverageTier": "Coverage Tier",
+      "riskLevel": "Risk Level",
+      "riskSignals": "Risk Signals",
+      "controlFlags": "Control Flags",
+      "matchLogic": "Signal match logic",
+      "manualTaxpayers": "Taxpayers selected manually",
+      "searchTaxpayer": "Search TIN, Return ID, taxpayer or Circle"
+    },
+    "tracks": {
+      "population": {
+        "title": "Population / Circle-based Audit",
+        "desc": "Select the full eligible population from one Circle, multiple Circles or all Circles. This is an officer-directed selection, not a Risk Level."
+      },
+      "risk": {
+        "title": "Risk-based Audit",
+        "desc": "Select candidates using Coverage-eligible Risk Levels and A–E screening signals after the framework's separation and deduplication principles."
+      },
+      "control": {
+        "title": "Control / Data Quality Review",
+        "desc": "Select by F0–F5 filing, arithmetic or consistency controls. These controls remain separate from substantive Risk Level."
+      },
+      "manual": {
+        "title": "Manual Selection",
+        "desc": "Choose individual taxpayers directly from the eligible population. Final legal selection reason codes are not defined in the supplied rules."
+      }
+    },
+    "scope": {
+      "all": {
+        "title": "All Circles",
+        "desc": "Use the complete population available to this officer."
+      },
+      "selected": {
+        "title": "Selected Circles",
+        "desc": "Combine any number of Circles into one audit-selection population."
+      }
+    },
+    "actions": {
+      "selectAll": "Select all",
+      "clear": "Clear",
+      "saveDraft": "Save draft",
+      "back": "Back",
+      "continue": "Continue",
+      "confirmCandidates": "Confirm candidates"
+    },
+    "summary": {
+      "population": "Population considered",
+      "returns": "returns",
+      "eligibleAfterReadiness": "Eligible after readiness",
+      "excludedByReadiness": "Excluded by readiness",
+      "matchedCriteria": "Matched criteria",
+      "candidates": "candidates",
+      "finalCandidates": "Final candidates",
+      "allCircles": "All Circles"
+    },
+    "populationCriteria": {
+      "title": "No additional screening rule required",
+      "desc": "For a Population / Circle-based Audit, every taxpayer that survives the selected Data Quality and Coverage filters moves to Candidate Preview. This track is a product selection workflow, not a Risk Signal from the supplied framework."
+    },
+    "controlCriteria": {
+      "note": "F0–F5 are handled on the separate Control / Data Quality track and do not automatically increase substantive Risk Level."
+    },
+    "match": {
+      "any": "Match any selected signal",
+      "all": "Match all selected signals"
+    },
+    "adjustments": {
+      "title": "Candidate adjustments",
+      "desc": "Keep or exclude individual matches before confirmation. Excluding a matched taxpayer requires a reason so the original selection result is not silently rewritten.",
+      "include": "Include candidate",
+      "reason": "Exclusion reason",
+      "reasonPlaceholder": "Explain why this matched taxpayer is excluded from this selection batch."
+    },
+    "review": {
+      "scope": "Audit scope",
+      "criteria": "Selection criteria",
+      "outcome": "Selection outcome",
+      "candidateCount": "taxpayers will be added to the Audit Candidates register.",
+      "confirmTitle": "Confirmation effect",
+      "confirmDesc": "Confirming creates candidate records only. It does not automatically create Findings or final tax determinations, and newly confirmed candidates start as Selected / Not Started."
+    },
+    "validation": {
+      "completeStep": "Complete the required selections in this step before continuing."
+    },
+    "explain": "Explain {{value}}",
+    "toast": {
+      "draftSaved": "Audit selection draft saved.",
+      "candidatesConfirmed": "{{count}} audit candidates confirmed."
+    }
+  },
+  "candidates": {
+    "title": "Audit Candidates",
+    "description": "The working register of taxpayers selected for this assessment year's audit, including candidates not yet started and cases already moving through the audit workflow.",
+    "yearTitle": "Annual candidate register",
+    "yearDesc": "Selected means the taxpayer is planned for audit but an active audit case has not necessarily started. Once work begins, Audit Status follows the case workflow.",
+    "tableTitle": "This year's audit candidates",
+    "detailsTitle": "Audit candidate details",
+    "columns": {
+      "candidateId": "Candidate ID",
+      "batchId": "Selection Batch",
+      "selectionTrack": "Selection Track",
+      "selectionBasis": "Selection Basis",
+      "candidateStatus": "Candidate Status",
+      "auditStatus": "Audit Status",
+      "selectedOn": "Selected On"
+    },
+    "filters": {
+      "selectionTrack": "Selection Track"
+    }
   }
 }

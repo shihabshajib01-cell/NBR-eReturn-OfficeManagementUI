@@ -80,7 +80,9 @@
     "rulesGovernance": "Rules & Governance",
     "reconciliation": "Reconciliation",
     "auditTrail": "Audit Trail",
-    "allTaxpayers": "All Taxpayers"
+    "allTaxpayers": "All Taxpayers",
+    "initiateAudit": "Initiate Audit",
+    "auditCandidates": "Audit Candidates"
   },
   "administration": {
     "main": "Administration & Requests",

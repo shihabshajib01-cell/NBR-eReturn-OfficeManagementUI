@@ -157,5 +157,158 @@
     "whatItMeans": "এর অর্থ",
     "whatItAffects": "এটি কী প্রভাব ফেলে",
     "nextStep": "পরবর্তী ধাপ"
+  },
+  "initiate": {
+    "title": "অডিট শুরু করুন",
+    "description": "Circle scope, data readiness এবং Audit framework-এর screening rule ব্যবহার করে ধাপে ধাপে এ বছরের audit candidate population তৈরি করুন।",
+    "progressLabel": "অডিট শুরু করার অগ্রগতি",
+    "stepLabels": {
+      "setup": "অডিট সেটআপ",
+      "population": "Population",
+      "readiness": "Data readiness",
+      "criteria": "Audit criteria",
+      "preview": "Candidate preview",
+      "review": "Review ও confirm"
+    },
+    "steps": {
+      "setup": {
+        "title": "অডিট সেটআপ",
+        "desc": "Assessment Year এবং selection exercise কীভাবে তৈরি হবে তা নির্ধারণ করুন।"
+      },
+      "population": {
+        "title": "Population নির্বাচন",
+        "desc": "সব Circle অথবা যেকোনো একাধিক Circle একসাথে নির্বাচন করুন। এই officer-এর জন্য Circle access limit নয়; operational filter।"
+      },
+      "readiness": {
+        "title": "Data readiness ও coverage",
+        "desc": "Substantive audit criteria চালানোর আগে কোন Data Quality state ও Coverage Tier eligible হবে তা নির্ধারণ করুন।"
+      },
+      "criteria": {
+        "title": "Audit criteria নির্বাচন",
+        "desc": "Risk, control অথবা manual-selection logic প্রয়োগ করুন। Control Flag substantive Risk Signal থেকে আলাদা থাকবে।"
+      },
+      "preview": {
+        "title": "Candidate preview",
+        "desc": "Confirm করার আগে matched taxpayer দেখুন। Rule explanation-এর জন্য audit concept clickable থাকবে।"
+      },
+      "review": {
+        "title": "Review ও confirm",
+        "desc": "Taxpayer-দের এ বছরের Audit Candidates register-এ যোগ করার আগে সম্পূর্ণ selection basis review করুন।"
+      }
+    },
+    "fields": {
+      "assessmentYear": "Assessment Year",
+      "selectionTrack": "Selection track",
+      "circleScope": "Circle scope",
+      "selectCircles": "Circle নির্বাচন",
+      "dataQuality": "Data Quality",
+      "coverageTier": "Coverage Tier",
+      "riskLevel": "Risk Level",
+      "riskSignals": "Risk Signal",
+      "controlFlags": "Control Flag",
+      "matchLogic": "Signal match logic",
+      "manualTaxpayers": "Manualভাবে নির্বাচিত taxpayer",
+      "searchTaxpayer": "TIN, Return ID, taxpayer বা Circle খুঁজুন"
+    },
+    "tracks": {
+      "population": {
+        "title": "Population / Circle-based Audit",
+        "desc": "একটি Circle, একাধিক Circle অথবা সব Circle থেকে সম্পূর্ণ eligible population নির্বাচন করুন। এটি officer-directed selection; Risk Level নয়।"
+      },
+      "risk": {
+        "title": "Risk-based Audit",
+        "desc": "Coverage-eligible Risk Level এবং A–E screening signal ব্যবহার করে candidate নির্বাচন করুন।"
+      },
+      "control": {
+        "title": "Control / Data Quality Review",
+        "desc": "F0–F5 filing, arithmetic বা consistency control দিয়ে নির্বাচন করুন। এগুলো substantive Risk Level থেকে আলাদা।"
+      },
+      "manual": {
+        "title": "Manual Selection",
+        "desc": "Eligible population থেকে নির্দিষ্ট taxpayer নির্বাচন করুন। Supplied rule-এ final legal selection reason code নির্ধারিত নেই।"
+      }
+    },
+    "scope": {
+      "all": {
+        "title": "সব Circle",
+        "desc": "এই officer-এর available সম্পূর্ণ population ব্যবহার করুন।"
+      },
+      "selected": {
+        "title": "নির্বাচিত Circle",
+        "desc": "যেকোনো সংখ্যক Circle একত্রে একটি audit-selection population বানান।"
+      }
+    },
+    "actions": {
+      "selectAll": "সব নির্বাচন",
+      "clear": "Clear",
+      "saveDraft": "Draft save",
+      "back": "Back",
+      "continue": "Continue",
+      "confirmCandidates": "Candidate confirm"
+    },
+    "summary": {
+      "population": "Population considered",
+      "returns": "returns",
+      "eligibleAfterReadiness": "Readiness-এর পর eligible",
+      "excludedByReadiness": "Readiness-এ excluded",
+      "matchedCriteria": "Criteria matched",
+      "candidates": "candidate",
+      "finalCandidates": "Final candidate",
+      "allCircles": "সব Circle"
+    },
+    "populationCriteria": {
+      "title": "অতিরিক্ত screening rule প্রয়োজন নেই",
+      "desc": "Population / Circle-based Audit-এ নির্বাচিত Data Quality ও Coverage filter pass করা সব taxpayer Candidate Preview-এ যাবে। এটি product selection workflow; supplied framework-এর Risk Signal নয়।"
+    },
+    "controlCriteria": {
+      "note": "F0–F5 আলাদা Control / Data Quality track-এ handle হবে এবং এগুলো substantive Risk Level নিজে থেকে বাড়ায় না।"
+    },
+    "match": {
+      "any": "নির্বাচিত যেকোনো signal match",
+      "all": "নির্বাচিত সব signal match"
+    },
+    "adjustments": {
+      "title": "Candidate adjustment",
+      "desc": "Confirm করার আগে matched candidate রাখা বা বাদ দিন। কাউকে বাদ দিলে reason বাধ্যতামূলক, যাতে original selection result silently rewrite না হয়।",
+      "include": "Candidate রাখুন",
+      "reason": "Exclusion reason",
+      "reasonPlaceholder": "এই matched taxpayer-কে selection batch থেকে বাদ দেওয়ার কারণ লিখুন।"
+    },
+    "review": {
+      "scope": "Audit scope",
+      "criteria": "Selection criteria",
+      "outcome": "Selection outcome",
+      "candidateCount": "taxpayer Audit Candidates register-এ যোগ হবে।",
+      "confirmTitle": "Confirmation effect",
+      "confirmDesc": "Confirm করলে candidate record তৈরি হবে। এটি Finding বা final tax determination তৈরি করে না; নতুন candidate Selected / Not Started হিসেবে শুরু হবে।"
+    },
+    "validation": {
+      "completeStep": "পরবর্তী ধাপে যাওয়ার আগে এই ধাপের required selection সম্পন্ন করুন।"
+    },
+    "explain": "{{value}} ব্যাখ্যা",
+    "toast": {
+      "draftSaved": "Audit selection draft saved হয়েছে।",
+      "candidatesConfirmed": "{{count}} audit candidate confirm হয়েছে।"
+    }
+  },
+  "candidates": {
+    "title": "অডিট প্রার্থী",
+    "description": "এই Assessment Year-এ audit-এর জন্য নির্বাচিত taxpayer-দের working register—এখনো শুরু হয়নি এমন candidate এবং audit workflow-এ থাকা case দুটোই এখানে থাকবে।",
+    "yearTitle": "বার্ষিক candidate register",
+    "yearDesc": "Selected মানে taxpayer audit-এর জন্য planned, কিন্তু active audit case এখনো শুরু নাও হতে পারে। কাজ শুরু হলে Audit Status case workflow অনুসরণ করবে।",
+    "tableTitle": "এ বছরের audit candidate",
+    "detailsTitle": "Audit candidate details",
+    "columns": {
+      "candidateId": "Candidate ID",
+      "batchId": "Selection Batch",
+      "selectionTrack": "Selection Track",
+      "selectionBasis": "Selection Basis",
+      "candidateStatus": "Candidate Status",
+      "auditStatus": "Audit Status",
+      "selectedOn": "Selected On"
+    },
+    "filters": {
+      "selectionTrack": "Selection Track"
+    }
   }
 }

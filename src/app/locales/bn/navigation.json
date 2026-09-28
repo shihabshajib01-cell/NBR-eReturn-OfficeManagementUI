@@ -80,7 +80,9 @@
     "rulesGovernance": "রুলস ও গভর্ন্যান্স",
     "reconciliation": "রিকনসিলিয়েশন",
     "auditTrail": "অডিট ট্রেইল",
-    "allTaxpayers": "সকল করদাতা"
+    "allTaxpayers": "সকল করদাতা",
+    "initiateAudit": "অডিট শুরু করুন",
+    "auditCandidates": "অডিট প্রার্থী"
   },
   "administration": {
     "main": "প্রশাসন ও অনুরোধ",
