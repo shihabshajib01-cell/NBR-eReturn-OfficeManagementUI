@@ -18,6 +18,8 @@ interface UnifiedMobileCardProps {
   onView?: (row: TableRow, trigger: HTMLElement) => void;
   actions?: RowAction[];
   onActionClick?: (actionId: string) => void;
+  clickableKeys?: string[];
+  onCellClick?: (key: string, value: string, row: TableRow) => void;
   mobileCardMapping?: {
     primary?: string;
     identifier?: string;
@@ -47,6 +49,8 @@ export const UnifiedMobileCard = memo(function UnifiedMobileCard({
   onCardClick,
   actions,
   onActionClick,
+  clickableKeys,
+  onCellClick,
   mobileCardMapping,
 }: UnifiedMobileCardProps) {
   const { t: translateActions } = useTranslation("actions");
@@ -167,6 +171,25 @@ export const UnifiedMobileCard = memo(function UnifiedMobileCard({
       return { nameField, identifierField, metaFields, statusField, dateField, amountField };
     }, [combinedFields, mobileCardMapping, findField]);
 
+  const renderFieldValue = useCallback((field: FieldData, kind: "text" | "status" = "text") => {
+    const value = String(field.value);
+    const content = kind === "status" ? <StatusBadge value={value} /> : value;
+    if (!clickableKeys?.includes(field.key) || !onCellClick) return content;
+    return (
+      <button
+        type="button"
+        className={`mobile-table-card__field-link${kind === "status" ? " mobile-table-card__field-link--badge" : ""}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          onCellClick(field.key, value, row);
+        }}
+        aria-label={`Explain ${field.label}: ${value}`}
+      >
+        {content}
+      </button>
+    );
+  }, [clickableKeys, onCellClick, row]);
+
   const metaRows = useMemo(
     () => [identifierField, ...metaFields].filter(Boolean).slice(0, 5) as FieldData[],
     [identifierField, metaFields]
@@ -200,7 +223,7 @@ export const UnifiedMobileCard = memo(function UnifiedMobileCard({
         <div className="mobile-table-card__primary-info">
           {primaryName && (
             <p className="mobile-table-card__name">
-              {String(primaryName.value)}
+              {renderFieldValue(primaryName)}
             </p>
           )}
           {displayMeta.length > 0 && (
@@ -208,7 +231,7 @@ export const UnifiedMobileCard = memo(function UnifiedMobileCard({
               {displayMeta.map(f => (
                 <div key={f.key} className="mobile-table-card__meta-item">
                   <dt className="mobile-table-card__meta-label">{f.label}:</dt>
-                  <dd className="mobile-table-card__meta-value">{String(f.value)}</dd>
+                  <dd className="mobile-table-card__meta-value">{renderFieldValue(f)}</dd>
                 </div>
               ))}
             </dl>
@@ -221,12 +244,12 @@ export const UnifiedMobileCard = memo(function UnifiedMobileCard({
           <div className="mobile-table-card__divider" aria-hidden="true" />
           <div className="mobile-table-card__footer">
             <div className="mobile-table-card__status">
-              {statusField && <StatusBadge value={String(statusField.value)} />}
+              {statusField && renderFieldValue(statusField, "status")}
             </div>
             {footerRight && (
               <span className="mobile-table-card__date">
                 <span className="sr-only">{footerRight.label}: </span>
-                {String(footerRight.value)}
+                {renderFieldValue(footerRight)}
               </span>
             )}
           </div>

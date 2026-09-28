@@ -14,7 +14,7 @@
     },
     "riskCases": {
       "title": "Risk Cases",
-      "description": "Prioritized cases created from substantive A–E risk signals, scoped by officer jurisdiction.",
+      "description": "Prioritized cases created from substantive A–E risk signals across the officer's global Audit scope.",
       "note": "Risk Level is a review priority, not a conclusion. Findings require a verified signal linked to evidence. TIN is masked by default."
     },
     "control": {
@@ -41,6 +41,11 @@
       "title": "Audit Trail",
       "description": "Append-only event history for assessment, human decisions and sensitive-data access.",
       "note": "Nothing is overwritten or deleted. Corrections are new events. Return Version, Classification Version and Rule/Config Version travel with the assessment so the original decision can be reconstructed."
+    },
+    "allTaxpayers": {
+      "title": "All Taxpayers",
+      "description": "Global audit population across all Circles. Search any taxpayer or return, then use Circle and audit dimensions to narrow the population.",
+      "note": "This Audit workspace is configured for cross-Circle access. Circle remains an operational context and filter, not an access boundary."
     }
   },
   "overview": {
@@ -56,7 +61,11 @@
     "queueHealth": "Queue health",
     "roleScope": "Role and jurisdiction scope",
     "riskPrincipleTitle": "Core decision principle",
-    "riskPrinciple": "Screening → Verification → Audit → Final Determination are separate activities. A signal or Risk Level does not automatically become a Finding, assessment, demand or accusation."
+    "riskPrinciple": "Screening → Verification → Audit → Final Determination are separate activities. A signal or Risk Level does not automatically become a Finding, assessment, demand or accusation.",
+    "globalAccessTitle": "Global audit access",
+    "globalAccessDescription": "This officer can inspect taxpayers across all Circles. Circle is retained for filtering, grouping and operational context.",
+    "allCircles": "All Circles",
+    "globalScope": "All Circles"
   },
   "columns": {
     "caseId": "Case ID",
@@ -120,7 +129,12 @@
     "role": "Role",
     "jurisdiction": "Jurisdiction",
     "primaryAuditWork": "Primary audit work",
-    "dataAccess": "Data access"
+    "dataAccess": "Data access",
+    "taxpayer": "Taxpayer",
+    "dataQuality": "Data Quality",
+    "controlFlags": "Control Flags",
+    "auditState": "Audit State",
+    "availableData": "Available Data"
   },
   "filters": {
     "all": "All",
@@ -132,6 +146,16 @@
     "mode": "Mode",
     "viewer": "Viewer",
     "role": "Role",
-    "return": "Return"
+    "return": "Return",
+    "circle": "Circle",
+    "allCircles": "All Circles",
+    "assessmentYear": "Assessment Year",
+    "dataQuality": "Data Quality",
+    "auditState": "Audit State"
+  },
+  "explainer": {
+    "whatItMeans": "What it means",
+    "whatItAffects": "What it affects",
+    "nextStep": "Next step"
   }
 }

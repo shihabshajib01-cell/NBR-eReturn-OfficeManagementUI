@@ -1222,3 +1222,42 @@
 :root[data-font-scale="large"] .mobile-table-card__divider {
   margin: 14px 0;
 }
+
+/* Optional semantic cell actions used by modules such as Audit. */
+.card-table__cell-link,
+.mobile-table-card__field-link {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.card-table__cell-link:not(.card-table__cell-link--badge),
+.mobile-table-card__field-link:not(.mobile-table-card__field-link--badge) {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.card-table__cell-link:hover:not(.card-table__cell-link--badge),
+.mobile-table-card__field-link:hover:not(.mobile-table-card__field-link--badge) {
+  text-decoration-thickness: 2px;
+}
+
+.card-table__cell-link:focus-visible,
+.mobile-table-card__field-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.card-table__cell-link--badge,
+.mobile-table-card__field-link--badge {
+  display: inline-flex;
+}

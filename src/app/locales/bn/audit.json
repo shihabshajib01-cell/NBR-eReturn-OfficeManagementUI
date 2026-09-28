@@ -14,7 +14,7 @@
     },
     "riskCases": {
       "title": "রিস্ক কেস",
-      "description": "A–E substantive risk signal থেকে তৈরি অগ্রাধিকারভিত্তিক কেস, কর্মকর্তার এখতিয়ার অনুযায়ী সীমাবদ্ধ।",
+      "description": "Officer-এর global Audit scope জুড়ে substantive A–E risk signal থেকে তৈরি prioritized case।",
       "note": "Risk Level শুধু পর্যালোচনার অগ্রাধিকার, কোনো সিদ্ধান্ত নয়। Finding-এর জন্য যাচাইকৃত signal ও linked evidence লাগবে। TIN ডিফল্টভাবে মাস্কড থাকবে।"
     },
     "control": {
@@ -41,6 +41,11 @@
       "title": "অডিট ট্রেইল",
       "description": "Assessment, human decision ও sensitive-data access-এর append-only event history।",
       "note": "কিছু overwrite বা delete হবে না। Correction নতুন event। Return Version, Classification Version ও Rule/Config Version সঙ্গে থাকবে যাতে মূল সিদ্ধান্ত পুনর্গঠন করা যায়।"
+    },
+    "allTaxpayers": {
+      "title": "সকল করদাতা",
+      "description": "সব Circle জুড়ে global audit population। যেকোনো taxpayer বা return খুঁজে Circle ও audit dimension দিয়ে population narrow করা যাবে।",
+      "note": "এই Audit workspace cross-Circle access-এর জন্য configured। Circle access boundary নয়; operational context ও filter হিসেবে থাকবে।"
     }
   },
   "overview": {
@@ -56,7 +61,11 @@
     "queueHealth": "Queue health",
     "roleScope": "Role ও jurisdiction scope",
     "riskPrincipleTitle": "মূল সিদ্ধান্ত নীতি",
-    "riskPrinciple": "Screening → Verification → Audit → Final Determination আলাদা কার্যক্রম। কোনো signal বা Risk Level নিজে থেকে Finding, assessment, demand বা accusation হয়ে যায় না।"
+    "riskPrinciple": "Screening → Verification → Audit → Final Determination আলাদা কার্যক্রম। কোনো signal বা Risk Level নিজে থেকে Finding, assessment, demand বা accusation হয়ে যায় না।",
+    "globalAccessTitle": "Global audit access",
+    "globalAccessDescription": "এই officer সব Circle-এর taxpayer inspect করতে পারবেন। Circle filtering, grouping ও operational context হিসেবে থাকবে।",
+    "allCircles": "সব Circle",
+    "globalScope": "সব Circle"
   },
   "columns": {
     "caseId": "Case ID",
@@ -120,7 +129,12 @@
     "role": "Role",
     "jurisdiction": "Jurisdiction",
     "primaryAuditWork": "Primary audit work",
-    "dataAccess": "Data access"
+    "dataAccess": "Data access",
+    "taxpayer": "করদাতা",
+    "dataQuality": "Data Quality",
+    "controlFlags": "Control Flag",
+    "auditState": "Audit State",
+    "availableData": "Available Data"
   },
   "filters": {
     "all": "সব",
@@ -132,6 +146,16 @@
     "mode": "Mode",
     "viewer": "Viewer",
     "role": "Role",
-    "return": "Return"
+    "return": "Return",
+    "circle": "Circle",
+    "allCircles": "সব Circle",
+    "assessmentYear": "Assessment Year",
+    "dataQuality": "Data Quality",
+    "auditState": "Audit State"
+  },
+  "explainer": {
+    "whatItMeans": "এর অর্থ",
+    "whatItAffects": "এটি কী প্রভাব ফেলে",
+    "nextStep": "পরবর্তী ধাপ"
   }
 }

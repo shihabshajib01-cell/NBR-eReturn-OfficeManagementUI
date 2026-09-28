@@ -12,6 +12,8 @@ interface CardTableProps {
   onRowClick?: (row: TableRow) => void;
   onActionClick?: (actionId: string, row: TableRow) => void;
   noCard?: boolean;
+  clickableKeys?: string[];
+  onCellClick?: (key: string, value: string, row: TableRow) => void;
   "aria-label"?: string;
 }
 
@@ -40,7 +42,7 @@ function cellTextClass(col: FlatCol): string {
   return "card-table__cell-text card-table__cell-text--normal";
 }
 
-export function CardTable({ cols, rows, actions, onRowClick, onActionClick, noCard, "aria-label": ariaLabel }: CardTableProps) {
+export function CardTable({ cols, rows, actions, onRowClick, onActionClick, noCard, clickableKeys, onCellClick, "aria-label": ariaLabel }: CardTableProps) {
   const { t: translateTables } = useTranslation("tables");
   const { t: translateEmptyStates } = useTranslation("emptyStates");
   const { t: translateUser } = useTranslation("user");
@@ -161,7 +163,23 @@ export function CardTable({ cols, rows, actions, onRowClick, onActionClick, noCa
                           col.truncate === "none" ? "card-table__td--no-truncate" : "",
                         ].filter(Boolean).join(" ")}
                       >
-                        {col.badge ? (
+                        {clickableKeys?.includes(col.key) && displayVal !== "—" && onCellClick ? (
+                          <button
+                            type="button"
+                            className={`card-table__cell-link${col.badge ? " card-table__cell-link--badge" : ""}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onCellClick(col.key, displayVal, row);
+                            }}
+                            aria-label={`Explain ${col.label}: ${displayVal}`}
+                          >
+                            {col.badge ? (
+                              <StatusBadge value={displayVal} />
+                            ) : (
+                              <span className={cls} title={displayVal}>{displayVal}</span>
+                            )}
+                          </button>
+                        ) : col.badge ? (
                           <StatusBadge value={displayVal} />
                         ) : displayVal === "—" ? (
                           <span className="card-table__td--muted">—</span>

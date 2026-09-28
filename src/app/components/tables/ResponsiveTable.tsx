@@ -12,6 +12,8 @@ interface ResponsiveTableProps {
   onActionClick?: (actionId: string, row: TableRow) => void;
   noCard?: boolean;
   mobileCardMapping?: MobileCardMapping;
+  clickableKeys?: string[];
+  onCellClick?: (key: string, value: string, row: TableRow) => void;
   "aria-label"?: string;
 }
 
@@ -23,6 +25,8 @@ export const ResponsiveTable = memo(function ResponsiveTable({
   onActionClick,
   noCard,
   mobileCardMapping,
+  clickableKeys,
+  onCellClick,
   "aria-label": ariaLabel,
 }: ResponsiveTableProps) {
   const { t: translateCommon } = useTranslation("common");
@@ -54,6 +58,8 @@ export const ResponsiveTable = memo(function ResponsiveTable({
         onRowClick={onRowClick}
         onActionClick={handleActionClick}
         noCard={noCard}
+        clickableKeys={clickableKeys}
+        onCellClick={onCellClick}
         aria-label={ariaLabel}
       />
 
@@ -75,6 +81,8 @@ export const ResponsiveTable = memo(function ResponsiveTable({
               cols={cols}
               onCardClick={makeCardClick(row)}
               mobileCardMapping={mobileCardMapping}
+              clickableKeys={clickableKeys}
+              onCellClick={onCellClick}
             />
           ))
         )}
