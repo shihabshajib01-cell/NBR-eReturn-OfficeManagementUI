@@ -20,7 +20,7 @@ const WARNING_STATUSES = new Set([
   "rework requested", "partially verified", "unable to verify", "shadow", "staged",
   "dry run required", "awaiting endorsement", "awaiting approval",
 ]);
-const SECONDARY_STATUSES = new Set(["waived", "superseded", "refuted", "not verified"]);
+const SECONDARY_STATUSES = new Set(["waived", "superseded", "refuted", "not verified", "read only"]);
 
 const STATUS_KEYS: Record<string, string> = {
   "active": "active", "inactive": "inactive", "pending": "pending",
@@ -35,6 +35,7 @@ const STATUS_KEYS: Record<string, string> = {
   "selected": "selected", "adjourned": "adjourned", "under review": "underReview",
   "misfiled": "misfiled", "out of jurisdiction": "outOfJurisdiction", "waived": "waived",
   "pending review": "pendingReview",
+  "read only": "readOnly",
   "closed": "closed", "signed off": "signedOff", "assigned": "assigned",
   "verifying": "verifying", "evidence pending": "evidencePending",
   "ready for review": "readyForReview", "second review": "secondReview",

@@ -57,5 +57,6 @@
   "dryRunRequired": "ড্রাই-রান প্রয়োজন",
   "awaitingEndorsement": "এন্ডোর্সমেন্টের অপেক্ষায়",
   "awaitingApproval": "অনুমোদনের অপেক্ষায়",
-  "missingCase": "কেস অনুপস্থিত"
+  "missingCase": "কেস অনুপস্থিত",
+  "readOnly": "শুধু দেখা যাবে"
 }

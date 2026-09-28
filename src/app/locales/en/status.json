@@ -57,5 +57,6 @@
   "dryRunRequired": "Dry Run Required",
   "awaitingEndorsement": "Awaiting Endorsement",
   "awaitingApproval": "Awaiting Approval",
-  "missingCase": "Missing Case"
+  "missingCase": "Missing Case",
+  "readOnly": "Read only"
 }

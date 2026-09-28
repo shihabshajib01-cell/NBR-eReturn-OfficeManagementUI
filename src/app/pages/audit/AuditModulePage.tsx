@@ -6,6 +6,7 @@ import {
   Timer, Workflow,
 } from "lucide-react";
 import { StatCard } from "../../components/cards/StatCard";
+import { StatusBadge } from "../../components/badges/StatusBadge";
 import { DashSection } from "../../components/dashboard/DashSection";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
 import { DynamicDetailsDrawer } from "../../components/drawers/DynamicDetailsDrawer";
@@ -118,13 +119,13 @@ function AuditTablePage({ config }: { config: AuditTableConfig }) {
   };
 
   return (
-    <div className="table-page audit-page">
+    <div className="table-page">
       <div className="table-page__header">
         <div>
           <h1 className="table-page__title">{config.title}</h1>
           <p className="table-page__desc">{config.description}</p>
         </div>
-        {config.readOnly && <span className="audit-readonly-badge">{t("common.readOnly")}</span>}
+        {config.readOnly && <StatusBadge value="Read only" />}
       </div>
 
       <MobileSearchFilter
@@ -270,28 +271,20 @@ function AuditOverviewPage() {
   };
 
   return (
-    <div className="dashboard-page audit-page">
+    <div className="dashboard-page">
       <div className="dashboard-page__header">
         <h1 className="dashboard-page__title">{t("pages.overview.title")}</h1>
         <p className="dashboard-page__subtitle">{t("pages.overview.description")}</p>
       </div>
 
-      <div className="audit-global-scope-card">
-        <div>
-          <h2>{t("overview.globalAccessTitle")}</h2>
-          <p>{t("overview.globalAccessDescription")}</p>
-        </div>
-        <span>{t("overview.allCircles")}</span>
-      </div>
-
-      <div className="dashboard-kpi-grid audit-kpi-grid">
+      <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
         <StatCard icon={ShieldAlert} value="38" label={t("overview.openRiskCases")} subInfo={t("overview.globalScope")} tone="warning" />
         <StatCard icon={FileSearch} value="12" label={t("overview.evidencePending")} subInfo={t("overview.signalLinkedEvidence")} tone="primary" />
         <StatCard icon={BadgeCheck} value="7" label={t("overview.readyForSecondReview")} subInfo={t("overview.rangeOfficerQueue")} tone="primary" />
         <StatCard icon={Timer} value="3" label={t("overview.slaEscalations")} subInfo={t("overview.proposedSlaNote")} tone="warning" />
       </div>
 
-      <div className="audit-overview-grid">
+      <div className="dashboard-section-grid">
         <DashSection title={t("overview.riskDistribution")} icon={Scale}>
           <ResponsiveTable
             cols={riskCols}
@@ -312,11 +305,6 @@ function AuditOverviewPage() {
             aria-label={t("overview.queueHealth")}
           />
         </DashSection>
-      </div>
-
-      <div className="audit-context-card">
-        <h2>{t("overview.riskPrincipleTitle")}</h2>
-        <p>{t("overview.riskPrinciple")}</p>
       </div>
 
       <DashSection title={t("overview.roleScope")} icon={Workflow}>

@@ -10,7 +10,7 @@
   "pages": {
     "overview": {
       "title": "Audit Overview",
-      "description": "Aggregate risk, queue health, reconciliation and role-scoped oversight. This overview does not treat a Risk Level as a finding or final tax determination."
+      "description": "All-Circle audit oversight for risk distribution, queue health, reconciliation and review workload. Risk Level is a review priority, not a finding."
     },
     "riskCases": {
       "title": "Risk Cases",
@@ -156,7 +156,8 @@
   "explainer": {
     "whatItMeans": "What it means",
     "whatItAffects": "What it affects",
-    "nextStep": "Next step"
+    "nextStep": "Next step",
+    "important": "Important"
   },
   "initiate": {
     "title": "Initiate Audit",
@@ -291,7 +292,7 @@
   },
   "candidates": {
     "title": "Audit Candidates",
-    "description": "The working register of taxpayers selected for this assessment year's audit, including candidates not yet started and cases already moving through the audit workflow.",
+    "description": "This assessment year's audit-candidate register, including selected taxpayers not yet started and cases already moving through the audit workflow.",
     "yearTitle": "Annual candidate register",
     "yearDesc": "Selected means the taxpayer is planned for audit but an active audit case has not necessarily started. Once work begins, Audit Status follows the case workflow.",
     "tableTitle": "This year's audit candidates",

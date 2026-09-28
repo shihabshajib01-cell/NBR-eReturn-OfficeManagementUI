@@ -1,15 +1,22 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Check, ClipboardList, Info } from "lucide-react";
+import {
+  CheckCircle2, ClipboardList, Database, FileSearch, ListChecks, Users, XCircle,
+} from "lucide-react";
 import { toast } from "sonner";
-import { AppCheckbox } from "../../components/forms/AppCheckbox";
 import { AppSearchField } from "../../components/forms/AppSearchField";
 import { AppSelectField } from "../../components/forms/AppSelectField";
+import { AppTextArea } from "../../components/forms/AppTextArea";
+import { AppChoiceCard } from "../../components/forms/AppChoiceCard";
+import { AppSelectionRow } from "../../components/forms/AppSelectionRow";
+import { FormSection } from "../../components/forms/FormSection";
+import { AppStepper } from "../../components/shared/AppStepper";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { SecondaryButton } from "../../components/buttons/SecondaryButton";
 import { AppModal } from "../../components/modals/AppModal";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
-import type { ColDef, TableRow } from "../modulePageUtils";
+import { StatCard } from "../../components/cards/StatCard";
+import type { ColDef, IconComponent, TableRow } from "../modulePageUtils";
 import { fc } from "../modulePageUtils";
 import { ALL_TAXPAYER_ROWS } from "./auditData";
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
@@ -69,6 +76,7 @@ interface InitiateAuditModalProps {
 
 export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAuditModalProps) {
   const { t, i18n } = useTranslation("audit");
+
   const assessmentYears = unique("assessment_year");
   const circlesAvailable = unique("circle");
   const dataQualityAvailable = unique("data_quality");
@@ -212,396 +220,439 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     });
   };
 
-  const renderInfoButton = (field: string, value: string, row: TableRow) => (
-    <button
-      type="button"
-      className="app-icon-btn app-icon-btn--sm app-icon-btn--default"
-      aria-label={t("initiate.explain", { value })}
-      onClick={() => explain(field, value, row)}
-    >
-      <Info size={14} strokeWidth={1.8} aria-hidden="true" />
-    </button>
+  const metricRow = (items: Array<{
+    label: string;
+    value: number;
+    icon: IconComponent;
+    tone?: "primary" | "success" | "warning" | "error" | "neutral";
+  }>) => (
+    <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
+      {items.map(({ label, value, icon, tone }) => (
+        <StatCard key={label} icon={icon} value={String(value)} label={label} tone={tone} />
+      ))}
+    </div>
   );
+
+  const stepperSteps = STEPS.map((id) => ({
+    id,
+    label: t(`initiate.stepLabels.${id}`),
+  }));
 
   const renderStep = () => {
     if (step === 0) {
       return (
-        <>
-          <div className="audit-initiate__section-heading">
-            <h2>{t("initiate.steps.setup.title")}</h2>
-            <p>{t("initiate.steps.setup.desc")}</p>
-          </div>
-          <div className="audit-initiate__form-grid">
-            <AppSelectField
-              id="audit-assessment-year"
-              label={t("initiate.fields.assessmentYear")}
-              value={assessmentYear}
-              onChange={setAssessmentYear}
-              options={assessmentYears}
-              required
-            />
-          </div>
-          <fieldset className="audit-initiate__fieldset">
-            <legend>{t("initiate.fields.selectionTrack")}</legend>
-            <div className="audit-initiate__option-grid">
+        <div className="form-stack">
+          <FormSection
+            title={t("initiate.steps.setup.title")}
+            description={t("initiate.steps.setup.desc")}
+            icon={ClipboardList}
+          >
+            <div className="entry-form__grid">
+              <AppSelectField
+                id="audit-assessment-year"
+                label={t("initiate.fields.assessmentYear")}
+                value={assessmentYear}
+                onChange={setAssessmentYear}
+                options={assessmentYears}
+                required
+              />
+            </div>
+          </FormSection>
+
+          <FormSection title={t("initiate.fields.selectionTrack")} icon={FileSearch}>
+            <div className="app-choice-grid">
               {TRACKS.map((item) => (
-                <label key={item.id} className={`audit-initiate__option-card${track === item.id ? " audit-initiate__option-card--selected" : ""}`}>
-                  <input
-                    type="radio"
-                    name="audit-track"
-                    value={item.id}
-                    checked={track === item.id}
-                    onChange={() => setTrack(item.id)}
-                  />
-                  <span className="audit-initiate__option-copy">
-                    <strong>{t(item.titleKey)}</strong>
-                    <span>{t(item.descKey)}</span>
-                  </span>
-                </label>
+                <AppChoiceCard
+                  key={item.id}
+                  name="audit-track"
+                  value={item.id}
+                  title={t(item.titleKey)}
+                  description={t(item.descKey)}
+                  selected={track === item.id}
+                  onSelect={setTrack}
+                />
               ))}
             </div>
-          </fieldset>
-        </>
+          </FormSection>
+        </div>
       );
     }
 
     if (step === 1) {
       return (
-        <>
-          <div className="audit-initiate__section-heading">
-            <h2>{t("initiate.steps.population.title")}</h2>
-            <p>{t("initiate.steps.population.desc")}</p>
-          </div>
-          <fieldset className="audit-initiate__fieldset">
-            <legend>{t("initiate.fields.circleScope")}</legend>
-            <div className="audit-initiate__option-grid audit-initiate__option-grid--2">
-              {[
-                ["all", t("initiate.scope.all.title"), t("initiate.scope.all.desc")],
-                ["selected", t("initiate.scope.selected.title"), t("initiate.scope.selected.desc")],
-              ].map(([id,title,desc]) => (
-                <label key={id} className={`audit-initiate__option-card${scopeMode === id ? " audit-initiate__option-card--selected" : ""}`}>
-                  <input type="radio" name="circle-scope" checked={scopeMode === id} onChange={() => setScopeMode(id)} />
-                  <span className="audit-initiate__option-copy"><strong>{title}</strong><span>{desc}</span></span>
-                </label>
-              ))}
+        <div className="form-stack">
+          <FormSection
+            title={t("initiate.steps.population.title")}
+            description={t("initiate.steps.population.desc")}
+            icon={Users}
+          >
+            <div className="app-choice-grid">
+              <AppChoiceCard
+                name="circle-scope"
+                value="all"
+                title={t("initiate.scope.all.title")}
+                description={t("initiate.scope.all.desc")}
+                selected={scopeMode === "all"}
+                onSelect={setScopeMode}
+              />
+              <AppChoiceCard
+                name="circle-scope"
+                value="selected"
+                title={t("initiate.scope.selected.title")}
+                description={t("initiate.scope.selected.desc")}
+                selected={scopeMode === "selected"}
+                onSelect={setScopeMode}
+              />
             </div>
-          </fieldset>
+          </FormSection>
 
           {scopeMode === "selected" && (
-            <div className="audit-initiate__selection-panel">
-              <div className="audit-initiate__selection-head">
-                <h3>{t("initiate.fields.selectCircles")}</h3>
-                <div>
-                  <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>{t("initiate.actions.selectAll")}</SecondaryButton>
-                  <SecondaryButton size="sm" onClick={() => setCircles([])}>{t("initiate.actions.clear")}</SecondaryButton>
-                </div>
+            <FormSection title={t("initiate.fields.selectCircles")} icon={ListChecks}>
+              <div className="entry-form__actions">
+                <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>
+                  {t("initiate.actions.selectAll")}
+                </SecondaryButton>
+                <SecondaryButton size="sm" onClick={() => setCircles([])}>
+                  {t("initiate.actions.clear")}
+                </SecondaryButton>
               </div>
-              <div className="audit-initiate__checkbox-grid">
+              <div className="app-selection-grid app-selection-grid--3">
                 {circlesAvailable.map((circle) => (
-                  <div className="audit-initiate__check-row" key={circle}>
-                    <AppCheckbox
-                      label={circle}
-                      checked={circles.includes(circle)}
-                      onChange={() => setCircles(toggle(circles, circle))}
-                    />
-                    {renderInfoButton("circle", circle, { circle })}
-                  </div>
+                  <AppSelectionRow
+                    key={circle}
+                    title={circle}
+                    checked={circles.includes(circle)}
+                    onChange={() => setCircles(toggle(circles, circle))}
+                    onInfo={() => explain("circle", circle, { circle })}
+                    infoLabel={t("initiate.explain", { value: circle })}
+                  />
                 ))}
               </div>
-            </div>
+            </FormSection>
           )}
 
-          <div className="audit-initiate__population-summary">
-            <span>{t("initiate.summary.population")}</span>
-            <strong>{populationRows.length}</strong>
-            <span>{t("initiate.summary.returns")}</span>
-          </div>
-        </>
+          {metricRow([
+            { label:t("initiate.summary.population"), value:populationRows.length, icon:Users, tone:"primary" },
+          ])}
+        </div>
       );
     }
 
     if (step === 2) {
       return (
-        <>
-          <div className="audit-initiate__section-heading">
-            <h2>{t("initiate.steps.readiness.title")}</h2>
-            <p>{t("initiate.steps.readiness.desc")}</p>
-          </div>
-
-          <div className="audit-initiate__two-col">
-            <div className="audit-initiate__selection-panel">
-              <div className="audit-initiate__selection-head">
-                <h3>{t("initiate.fields.dataQuality")}</h3>
-              </div>
-              <div className="audit-initiate__checkbox-stack">
-                {dataQualityAvailable.map((quality) => (
-                  <div className="audit-initiate__check-row" key={quality}>
-                    <AppCheckbox
-                      label={quality}
+        <div className="form-stack">
+          <FormSection
+            title={t("initiate.steps.readiness.title")}
+            description={t("initiate.steps.readiness.desc")}
+            icon={Database}
+          >
+            <div className="form-section-grid">
+              <FormSection title={t("initiate.fields.dataQuality")}>
+                <div className="app-selection-stack">
+                  {dataQualityAvailable.map((quality) => (
+                    <AppSelectionRow
+                      key={quality}
+                      title={quality}
                       checked={dataQuality.includes(quality)}
                       onChange={() => setDataQuality(toggle(dataQuality, quality))}
+                      onInfo={() => explain("data_quality", quality, { data_quality:quality })}
+                      infoLabel={t("initiate.explain", { value: quality })}
                     />
-                    {renderInfoButton("data_quality", quality, { data_quality:quality })}
-                  </div>
-                ))}
-              </div>
-            </div>
+                  ))}
+                </div>
+              </FormSection>
 
-            <div className="audit-initiate__selection-panel">
-              <div className="audit-initiate__selection-head">
-                <h3>{t("initiate.fields.coverageTier")}</h3>
-              </div>
-              <div className="audit-initiate__checkbox-stack">
-                {coverageAvailable.map((tier) => (
-                  <div className="audit-initiate__check-row" key={tier}>
-                    <AppCheckbox
-                      label={tier}
+              <FormSection title={t("initiate.fields.coverageTier")}>
+                <div className="app-selection-stack">
+                  {coverageAvailable.map((tier) => (
+                    <AppSelectionRow
+                      key={tier}
+                      title={tier}
                       checked={coverageTiers.includes(tier)}
                       onChange={() => setCoverageTiers(toggle(coverageTiers, tier))}
+                      onInfo={() => explain("coverage_tier", tier, { coverage_tier:tier })}
+                      infoLabel={t("initiate.explain", { value: tier })}
                     />
-                    {renderInfoButton("coverage_tier", tier, { coverage_tier:tier })}
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </FormSection>
             </div>
-          </div>
+          </FormSection>
 
-          <div className="audit-initiate__metric-row">
-            <div><span>{t("initiate.summary.population")}</span><strong>{populationRows.length}</strong></div>
-            <div><span>{t("initiate.summary.eligibleAfterReadiness")}</span><strong>{readinessRows.length}</strong></div>
-            <div><span>{t("initiate.summary.excludedByReadiness")}</span><strong>{populationRows.length - readinessRows.length}</strong></div>
-          </div>
-        </>
+          {metricRow([
+            { label:t("initiate.summary.population"), value:populationRows.length, icon:Users, tone:"primary" },
+            { label:t("initiate.summary.eligibleAfterReadiness"), value:readinessRows.length, icon:CheckCircle2, tone:"success" },
+            { label:t("initiate.summary.excludedByReadiness"), value:populationRows.length-readinessRows.length, icon:XCircle, tone:"neutral" },
+          ])}
+        </div>
       );
     }
 
     if (step === 3) {
       return (
-        <>
-          <div className="audit-initiate__section-heading">
-            <h2>{t("initiate.steps.criteria.title")}</h2>
-            <p>{t("initiate.steps.criteria.desc")}</p>
-          </div>
+        <div className="form-stack">
+          <FormSection
+            title={t("initiate.steps.criteria.title")}
+            description={t("initiate.steps.criteria.desc")}
+            icon={FileSearch}
+          >
+            {track === "population" && (
+              <FormSection
+                title={t("initiate.populationCriteria.title")}
+                description={t("initiate.populationCriteria.desc")}
+              />
+            )}
 
-          {track === "population" && (
-            <div className="audit-context-card">
-              <h2>{t("initiate.populationCriteria.title")}</h2>
-              <p>{t("initiate.populationCriteria.desc")}</p>
-            </div>
-          )}
+            {track === "risk" && (
+              <div className="form-stack">
+                <FormSection title={t("initiate.fields.riskLevel")}>
+                  <div className="app-selection-grid">
+                    {RISK_LEVELS.map((level) => (
+                      <AppSelectionRow
+                        key={level}
+                        title={level}
+                        checked={riskLevels.includes(level)}
+                        onChange={() => setRiskLevels(toggle(riskLevels, level))}
+                        onInfo={() => explain("risk_level", level, { risk_level:level })}
+                        infoLabel={t("initiate.explain", { value: level })}
+                      />
+                    ))}
+                  </div>
+                </FormSection>
 
-          {track === "risk" && (
-            <div className="audit-initiate__criteria-stack">
-              <div className="audit-initiate__selection-panel">
-                <div className="audit-initiate__selection-head"><h3>{t("initiate.fields.riskLevel")}</h3></div>
-                <div className="audit-initiate__checkbox-grid">
-                  {RISK_LEVELS.map((level) => (
-                    <div className="audit-initiate__check-row" key={level}>
-                      <AppCheckbox label={level} checked={riskLevels.includes(level)} onChange={() => setRiskLevels(toggle(riskLevels, level))} />
-                      {renderInfoButton("risk_level", level, { risk_level:level })}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="audit-initiate__selection-panel">
-                <div className="audit-initiate__selection-head"><h3>{t("initiate.fields.riskSignals")}</h3></div>
-                <div className="audit-initiate__rule-list">
-                  {SIGNAL_OPTIONS.map(([id,label]) => (
-                    <div className="audit-initiate__rule-row" key={id}>
-                      <AppCheckbox
+                <FormSection title={t("initiate.fields.riskSignals")}>
+                  <div className="app-selection-grid">
+                    {SIGNAL_OPTIONS.map(([id,label]) => (
+                      <AppSelectionRow
+                        key={id}
+                        code={id}
+                        title={label}
                         checked={signals.includes(id)}
                         onChange={() => setSignals(toggle(signals, id))}
-                        ariaLabel={`${id} ${label}`}
+                        onInfo={() => explain("rule_id", id, { rule_id:id })}
+                        infoLabel={t("initiate.explain", { value: id })}
                       />
-                      <div className="audit-initiate__rule-copy">
-                        <strong>{id}</strong><span>{label}</span>
-                      </div>
-                      {renderInfoButton("rule_id", id, { rule_id:id })}
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </FormSection>
+
                 {signals.length > 1 && (
-                  <fieldset className="audit-initiate__inline-radio">
-                    <legend>{t("initiate.fields.matchLogic")}</legend>
-                    <label><input type="radio" name="match-mode" checked={matchMode === "any"} onChange={() => setMatchMode("any")} />{t("initiate.match.any")}</label>
-                    <label><input type="radio" name="match-mode" checked={matchMode === "all"} onChange={() => setMatchMode("all")} />{t("initiate.match.all")}</label>
-                  </fieldset>
+                  <FormSection title={t("initiate.fields.matchLogic")}>
+                    <div className="app-choice-grid">
+                      <AppChoiceCard
+                        name="match-mode"
+                        value="any"
+                        title={t("initiate.match.any")}
+                        selected={matchMode === "any"}
+                        onSelect={setMatchMode}
+                      />
+                      <AppChoiceCard
+                        name="match-mode"
+                        value="all"
+                        title={t("initiate.match.all")}
+                        selected={matchMode === "all"}
+                        onSelect={setMatchMode}
+                      />
+                    </div>
+                  </FormSection>
                 )}
               </div>
-            </div>
-          )}
+            )}
 
-          {track === "control" && (
-            <div className="audit-initiate__selection-panel">
-              <div className="audit-initiate__selection-head"><h3>{t("initiate.fields.controlFlags")}</h3></div>
-              <div className="audit-initiate__rule-list">
-                {FLAG_OPTIONS.map(([id,label]) => (
-                  <div className="audit-initiate__rule-row" key={id}>
-                    <AppCheckbox
+            {track === "control" && (
+              <FormSection
+                title={t("initiate.fields.controlFlags")}
+                description={t("initiate.controlCriteria.note")}
+              >
+                <div className="app-selection-grid">
+                  {FLAG_OPTIONS.map(([id,label]) => (
+                    <AppSelectionRow
+                      key={id}
+                      code={id}
+                      title={label}
                       checked={controlFlags.includes(id)}
                       onChange={() => setControlFlags(toggle(controlFlags, id))}
-                      ariaLabel={`${id} ${label}`}
+                      onInfo={() => explain("flag_id", id, { flag_id:id })}
+                      infoLabel={t("initiate.explain", { value: id })}
                     />
-                    <div className="audit-initiate__rule-copy">
-                      <strong>{id}</strong><span>{label}</span>
-                    </div>
-                    {renderInfoButton("flag_id", id, { flag_id:id })}
-                  </div>
-                ))}
-              </div>
-              <div className="audit-context-card audit-initiate__inline-note">
-                <p>{t("initiate.controlCriteria.note")}</p>
-              </div>
-            </div>
-          )}
+                  ))}
+                </div>
+              </FormSection>
+            )}
 
-          {track === "manual" && (
-            <div className="audit-initiate__selection-panel">
-              <div className="audit-initiate__selection-head"><h3>{t("initiate.fields.manualTaxpayers")}</h3></div>
-              <AppSearchField
-                value={manualSearch}
-                onChange={setManualSearch}
-                label={t("initiate.fields.searchTaxpayer")}
-                placeholder={t("initiate.fields.searchTaxpayer")}
-                size="standard"
-              />
-              <div className="audit-initiate__manual-list">
-                {manualRows.map((row) => {
-                  const returnId=String(row.return_id);
-                  return (
-                    <label className="audit-initiate__manual-row" key={returnId}>
-                      <AppCheckbox
+            {track === "manual" && (
+              <FormSection title={t("initiate.fields.manualTaxpayers")}>
+                <AppSearchField
+                  value={manualSearch}
+                  onChange={setManualSearch}
+                  label={t("initiate.fields.searchTaxpayer")}
+                  placeholder={t("initiate.fields.searchTaxpayer")}
+                  size="standard"
+                />
+                <div className="app-selection-stack">
+                  {manualRows.map((row) => {
+                    const returnId=String(row.return_id);
+                    return (
+                      <AppSelectionRow
+                        key={returnId}
+                        title={String(row.taxpayer_name)}
+                        description={`${String(row.tin)} · ${returnId} · ${String(row.circle)}`}
                         checked={manualReturnIds.includes(returnId)}
                         onChange={() => setManualReturnIds(toggle(manualReturnIds, returnId))}
-                        ariaLabel={`${row.taxpayer_name} ${returnId}`}
                       />
-                      <span><strong>{String(row.taxpayer_name)}</strong><small>{String(row.tin)} · {returnId} · {String(row.circle)}</small></span>
-                    </label>
-                  );
-                })}
-              </div>
-            </div>
-          )}
+                    );
+                  })}
+                </div>
+              </FormSection>
+            )}
+          </FormSection>
 
-          <div className="audit-initiate__population-summary">
-            <span>{t("initiate.summary.matchedCriteria")}</span>
-            <strong>{matchedRows.length}</strong>
-            <span>{t("initiate.summary.candidates")}</span>
-          </div>
-        </>
+          {metricRow([
+            { label:t("initiate.summary.matchedCriteria"), value:matchedRows.length, icon:ListChecks, tone:"primary" },
+          ])}
+        </div>
       );
     }
 
     if (step === 4) {
       return (
-        <>
-          <div className="audit-initiate__section-heading">
-            <h2>{t("initiate.steps.preview.title")}</h2>
-            <p>{t("initiate.steps.preview.desc")}</p>
-          </div>
+        <div className="form-stack">
+          <FormSection
+            title={t("initiate.steps.preview.title")}
+            description={t("initiate.steps.preview.desc")}
+            icon={ListChecks}
+          >
+            {metricRow([
+              { label:t("initiate.summary.population"), value:populationRows.length, icon:Users, tone:"primary" },
+              { label:t("initiate.summary.eligibleAfterReadiness"), value:readinessRows.length, icon:CheckCircle2, tone:"success" },
+              { label:t("initiate.summary.matchedCriteria"), value:matchedRows.length, icon:ListChecks, tone:"primary" },
+              { label:t("initiate.summary.finalCandidates"), value:finalRows.length, icon:FileSearch, tone:"warning" },
+            ])}
 
-          <div className="audit-initiate__metric-row">
-            <div><span>{t("initiate.summary.population")}</span><strong>{populationRows.length}</strong></div>
-            <div><span>{t("initiate.summary.eligibleAfterReadiness")}</span><strong>{readinessRows.length}</strong></div>
-            <div><span>{t("initiate.summary.matchedCriteria")}</span><strong>{matchedRows.length}</strong></div>
-            <div><span>{t("initiate.summary.finalCandidates")}</span><strong>{finalRows.length}</strong></div>
-          </div>
-
-          <div className="table-card audit-initiate__preview-table">
-            <ResponsiveTable
-              cols={previewCols}
-              rows={matchedRows}
-              noCard
-              clickableKeys={["circle","coverage_tier","signals","risk_level","control_flags"]}
-              onCellClick={explain}
-              mobileCardMapping={{primary:"taxpayer_name",identifier:"tin",meta:["circle","coverage_tier","risk_level"]}}
-              aria-label={t("initiate.steps.preview.title")}
-            />
-          </div>
-
-          <div className="audit-initiate__selection-panel">
-            <div className="audit-initiate__selection-head">
-              <h3>{t("initiate.adjustments.title")}</h3>
-              <p>{t("initiate.adjustments.desc")}</p>
+            <div className="table-card">
+              <ResponsiveTable
+                cols={previewCols}
+                rows={matchedRows}
+                noCard
+                clickableKeys={["circle","coverage_tier","signals","risk_level","control_flags"]}
+                onCellClick={explain}
+                mobileCardMapping={{primary:"taxpayer_name",identifier:"tin",meta:["circle","coverage_tier","risk_level"]}}
+                aria-label={t("initiate.steps.preview.title")}
+              />
             </div>
-            <div className="audit-initiate__adjustments">
+          </FormSection>
+
+          <FormSection
+            title={t("initiate.adjustments.title")}
+            description={t("initiate.adjustments.desc")}
+            icon={ListChecks}
+          >
+            <div className="app-selection-stack">
               {matchedRows.map((row) => {
                 const id=String(row.return_id);
                 const included=!(id in exclusions);
                 return (
-                  <div className="audit-initiate__adjustment-row" key={id}>
-                    <div className="audit-initiate__adjustment-main">
-                      <AppCheckbox
-                        label={t("initiate.adjustments.include")}
-                        checked={included}
-                        onChange={(checked) => setExcluded(row, checked)}
-                      />
-                      <span><strong>{String(row.taxpayer_name)}</strong><small>{id} · {String(row.circle)}</small></span>
-                    </div>
+                  <div className="form-stack" key={id}>
+                    <AppSelectionRow
+                      title={String(row.taxpayer_name)}
+                      description={`${id} · ${String(row.circle)}`}
+                      checked={included}
+                      onChange={(checked) => setExcluded(row, checked)}
+                    />
                     {!included && (
-                      <div className="audit-initiate__exclusion-reason">
-                        <label htmlFor={`exclude-${id}`}>{t("initiate.adjustments.reason")}</label>
-                        <textarea
-                          id={`exclude-${id}`}
-                          className="form-textarea"
-                          value={exclusions[id] ?? ""}
-                          onChange={(e) => setExclusions((prev) => ({...prev,[id]:e.target.value}))}
-                          placeholder={t("initiate.adjustments.reasonPlaceholder")}
-                          rows={2}
-                        />
-                      </div>
+                      <AppTextArea
+                        id={`exclude-${id}`}
+                        label={t("initiate.adjustments.reason")}
+                        value={exclusions[id] ?? ""}
+                        onChange={(value) => setExclusions((prev) => ({...prev,[id]:value}))}
+                        placeholder={t("initiate.adjustments.reasonPlaceholder")}
+                        rows={2}
+                        required
+                      />
                     )}
                   </div>
                 );
               })}
             </div>
-          </div>
-        </>
+          </FormSection>
+        </div>
       );
     }
 
     return (
-      <>
-        <div className="audit-initiate__section-heading">
-          <h2>{t("initiate.steps.review.title")}</h2>
-          <p>{t("initiate.steps.review.desc")}</p>
-        </div>
+      <div className="form-stack">
+        <FormSection
+          title={t("initiate.steps.review.title")}
+          description={t("initiate.steps.review.desc")}
+          icon={CheckCircle2}
+        >
+          <div className="form-section-grid">
+            <FormSection title={t("initiate.review.scope")}>
+              <dl className="form-summary-list">
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.fields.assessmentYear")}</dt>
+                  <dd className="form-summary-list__value">{assessmentYear}</dd>
+                </div>
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.fields.selectionTrack")}</dt>
+                  <dd className="form-summary-list__value">{t(TRACKS.find((item)=>item.id===track)?.titleKey ?? "initiate.tracks.risk.title")}</dd>
+                </div>
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.fields.circleScope")}</dt>
+                  <dd className="form-summary-list__value">{scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ")}</dd>
+                </div>
+              </dl>
+            </FormSection>
 
-        <div className="audit-initiate__review-grid">
-          <section>
-            <h3>{t("initiate.review.scope")}</h3>
-            <dl>
-              <div><dt>{t("initiate.fields.assessmentYear")}</dt><dd>{assessmentYear}</dd></div>
-              <div><dt>{t("initiate.fields.selectionTrack")}</dt><dd>{t(TRACKS.find((item)=>item.id===track)?.titleKey ?? "initiate.tracks.risk.title")}</dd></div>
-              <div><dt>{t("initiate.fields.circleScope")}</dt><dd>{scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ")}</dd></div>
-            </dl>
-          </section>
+            <FormSection title={t("initiate.review.criteria")}>
+              <dl className="form-summary-list">
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.fields.dataQuality")}</dt>
+                  <dd className="form-summary-list__value">{dataQuality.join(", ")}</dd>
+                </div>
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.fields.coverageTier")}</dt>
+                  <dd className="form-summary-list__value">{coverageTiers.join(", ")}</dd>
+                </div>
+                {track === "risk" && (
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.riskLevel")}</dt>
+                    <dd className="form-summary-list__value">{riskLevels.join(", ") || "—"}</dd>
+                  </div>
+                )}
+                {track === "risk" && (
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.riskSignals")}</dt>
+                    <dd className="form-summary-list__value">{signals.join(", ") || "—"}</dd>
+                  </div>
+                )}
+                {track === "control" && (
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.controlFlags")}</dt>
+                    <dd className="form-summary-list__value">{controlFlags.join(", ")}</dd>
+                  </div>
+                )}
+                {track === "manual" && (
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.manualTaxpayers")}</dt>
+                    <dd className="form-summary-list__value">{manualReturnIds.length}</dd>
+                  </div>
+                )}
+              </dl>
+            </FormSection>
+          </div>
+        </FormSection>
 
-          <section>
-            <h3>{t("initiate.review.criteria")}</h3>
-            <dl>
-              <div><dt>{t("initiate.fields.dataQuality")}</dt><dd>{dataQuality.join(", ")}</dd></div>
-              <div><dt>{t("initiate.fields.coverageTier")}</dt><dd>{coverageTiers.join(", ")}</dd></div>
-              {track === "risk" && <div><dt>{t("initiate.fields.riskLevel")}</dt><dd>{riskLevels.join(", ") || "—"}</dd></div>}
-              {track === "risk" && <div><dt>{t("initiate.fields.riskSignals")}</dt><dd>{signals.join(", ") || "—"}</dd></div>}
-              {track === "control" && <div><dt>{t("initiate.fields.controlFlags")}</dt><dd>{controlFlags.join(", ")}</dd></div>}
-              {track === "manual" && <div><dt>{t("initiate.fields.manualTaxpayers")}</dt><dd>{manualReturnIds.length}</dd></div>}
-            </dl>
-          </section>
+        {metricRow([
+          { label:t("initiate.summary.finalCandidates"), value:finalRows.length, icon:CheckCircle2, tone:"success" },
+        ])}
 
-          <section className="audit-initiate__review-outcome">
-            <h3>{t("initiate.review.outcome")}</h3>
-            <strong>{finalRows.length}</strong>
-            <p>{t("initiate.review.candidateCount")}</p>
-          </section>
-        </div>
-
-        <div className="audit-context-card">
-          <h2>{t("initiate.review.confirmTitle")}</h2>
-          <p>{t("initiate.review.confirmDesc")}</p>
-        </div>
-      </>
+        <FormSection
+          title={t("initiate.review.confirmTitle")}
+          description={t("initiate.review.confirmDesc")}
+          icon={CheckCircle2}
+        />
+      </div>
     );
   };
 
@@ -634,39 +685,23 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       footer={modalFooter}
       describedBy="initiate-audit-description"
     >
-      <div className="audit-initiate-modal">
-        <p id="initiate-audit-description" className="audit-initiate-modal__description">
+      <div className="form-stack">
+        <p id="initiate-audit-description" className="form-helper">
           {t("initiate.description")}
         </p>
 
-        <nav className="audit-stepper" aria-label={t("initiate.progressLabel")}>
-        <ol>
-          {STEPS.map((id,index) => (
-            <li key={id} className={[
-              index === step ? "audit-stepper__item--current" : "",
-              index < step ? "audit-stepper__item--done" : "",
-            ].filter(Boolean).join(" ")}>
-              <button
-                type="button"
-                onClick={() => index <= step && setStep(index)}
-                disabled={index > step}
-                aria-current={index === step ? "step" : undefined}
-              >
-                <span className="audit-stepper__number">{index < step ? <Check size={13} aria-hidden="true" /> : index + 1}</span>
-                <span>{t(`initiate.stepLabels.${id}`)}</span>
-              </button>
-            </li>
-          ))}
-        </ol>
-      </nav>
+        <AppStepper
+          steps={stepperSteps}
+          currentStep={step}
+          onStepChange={setStep}
+          ariaLabel={t("initiate.progressLabel")}
+        />
 
-        <div className="audit-initiate-modal__content">
-          {renderStep()}
+        {renderStep()}
 
-          {!stepValid && (
-            <p className="audit-initiate__validation" role="status">{t("initiate.validation.completeStep")}</p>
-          )}
-        </div>
+        {!stepValid && (
+          <p className="form-error" role="status">{t("initiate.validation.completeStep")}</p>
+        )}
 
         <AuditExplainerDrawer explanation={explanation} onClose={() => setExplanation(null)} />
       </div>

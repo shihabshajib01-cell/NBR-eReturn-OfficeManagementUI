@@ -10,7 +10,7 @@
   "pages": {
     "overview": {
       "title": "অডিট ওভারভিউ",
-      "description": "সমষ্টিগত ঝুঁকি, কিউ স্বাস্থ্য, রিকনসিলিয়েশন ও ভূমিকা-ভিত্তিক তদারকি। Risk Level-কে Finding বা চূড়ান্ত কর সিদ্ধান্ত হিসেবে ধরা হবে না।"
+      "description": "সব Circle-এর risk distribution, queue health, reconciliation ও review workload-এর audit oversight। Risk Level review priority; Finding নয়।"
     },
     "riskCases": {
       "title": "রিস্ক কেস",
@@ -156,7 +156,8 @@
   "explainer": {
     "whatItMeans": "এর অর্থ",
     "whatItAffects": "এটি কী প্রভাব ফেলে",
-    "nextStep": "পরবর্তী ধাপ"
+    "nextStep": "পরবর্তী ধাপ",
+    "important": "গুরুত্বপূর্ণ"
   },
   "initiate": {
     "title": "অডিট শুরু করুন",
@@ -291,7 +292,7 @@
   },
   "candidates": {
     "title": "অডিট প্রার্থী",
-    "description": "এই Assessment Year-এ audit-এর জন্য নির্বাচিত taxpayer-দের working register—এখনো শুরু হয়নি এমন candidate এবং audit workflow-এ থাকা case দুটোই এখানে থাকবে।",
+    "description": "এই Assessment Year-এর audit-candidate register—এখনো শুরু হয়নি এমন selected taxpayer এবং audit workflow-এ থাকা case দুটোই এখানে থাকবে।",
     "yearTitle": "বার্ষিক candidate register",
     "yearDesc": "Selected মানে taxpayer audit-এর জন্য planned, কিন্তু active audit case এখনো শুরু নাও হতে পারে। কাজ শুরু হলে Audit Status case workflow অনুসরণ করবে।",
     "tableTitle": "এ বছরের audit candidate",

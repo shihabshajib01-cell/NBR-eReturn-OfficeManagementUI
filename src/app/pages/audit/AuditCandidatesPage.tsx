@@ -125,7 +125,7 @@ export function AuditCandidatesPage({ initialInitiateOpen = false }: AuditCandid
   };
 
   return (
-    <div className="table-page audit-page">
+    <div className="table-page">
       <div className="table-page__header">
         <div>
           <h1 className="table-page__title">{t("candidates.title")}</h1>
@@ -141,11 +141,6 @@ export function AuditCandidatesPage({ initialInitiateOpen = false }: AuditCandid
             {t("candidates.initiateAction")}
           </button>
         </div>
-      </div>
-
-      <div className="audit-context-card">
-        <h2>{t("candidates.yearTitle")}</h2>
-        <p>{t("candidates.yearDesc")}</p>
       </div>
 
       <MobileSearchFilter
