@@ -763,40 +763,39 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                 aria-label={t("initiate.steps.preview.title")}
               />
             </div>
-          </FormSection>
-
-          <FormSection
-            title={t("initiate.adjustments.title")}
-            description={t("initiate.adjustments.desc")}
-            icon={ListChecks}
-          >
-            <div className="app-selection-stack">
-              {matchedRows.map((row) => {
-                const id=String(row.return_id);
-                const included=!(id in exclusions);
-                return (
-                  <div className="form-stack" key={id}>
-                    <AppSelectionRow
-                      title={String(row.taxpayer_name)}
-                      description={`${id} · ${String(row.circle)}`}
-                      checked={included}
-                      onChange={(checked) => setExcluded(row, checked)}
-                    />
-                    {!included && (
-                      <AppTextArea
-                        id={`exclude-${id}`}
-                        label={t("initiate.adjustments.reason")}
-                        value={exclusions[id] ?? ""}
-                        onChange={(value) => setExclusions((prev) => ({...prev,[id]:value}))}
-                        placeholder={t("initiate.adjustments.reasonPlaceholder")}
-                        rows={2}
-                        required
+            <section className="form-subsection">
+              <div className="form-subsection__heading">
+                <h4 className="form-subsection__title">{t("initiate.adjustments.title")}</h4>
+                <p className="form-subsection__description">{t("initiate.adjustments.desc")}</p>
+              </div>
+              <div className="app-selection-stack">
+                {matchedRows.map((row) => {
+                  const id=String(row.return_id);
+                  const included=!(id in exclusions);
+                  return (
+                    <div className="form-stack" key={id}>
+                      <AppSelectionRow
+                        title={String(row.taxpayer_name)}
+                        description={`${id} · ${String(row.circle)}`}
+                        checked={included}
+                        onChange={(checked) => setExcluded(row, checked)}
                       />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                      {!included && (
+                        <AppTextArea
+                          id={`exclude-${id}`}
+                          label={t("initiate.adjustments.reason")}
+                          value={exclusions[id] ?? ""}
+                          onChange={(value) => setExclusions((prev) => ({...prev,[id]:value}))}
+                          placeholder={t("initiate.adjustments.reasonPlaceholder")}
+                          rows={2}
+                          required
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
           </FormSection>
         </div>
       );
