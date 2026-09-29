@@ -913,7 +913,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       onClose={onClose}
       title={t("initiate.title")}
       icon={<ClipboardList size={17} strokeWidth={1.8} />}
-      size="xxl"
+      size="xxxl"
       footer={modalFooter}
       describedBy="initiate-audit-description"
     >

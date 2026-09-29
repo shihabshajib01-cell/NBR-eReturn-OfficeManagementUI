@@ -13,7 +13,7 @@ export interface AppModalProps {
   /** Footer slot — render your action buttons here */
   footer?: React.ReactNode;
   /** Width preset */
-  size?: "sm" | "md" | "lg" | "xl" | "xxl";
+  size?: "sm" | "md" | "lg" | "xl" | "xxl" | "xxxl";
   /** Icon shown in the header beside the title */
   icon?: React.ReactNode;
   /** ID of element that describes the dialog content (aria-describedby) */
@@ -28,6 +28,7 @@ const SIZE_CLASS: Record<string, string> = {
   lg: "app-modal--lg",
   xl: "app-modal--xl",
   xxl: "app-modal--xxl",
+  xxxl: "app-modal--xxxl",
 };
 
 export function AppModal({

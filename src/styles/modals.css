@@ -53,14 +53,16 @@
 }
 
 /* Size variants */
-.app-modal--sm  { max-width: 400px; }
-.app-modal--md  { max-width: 580px; }
-.app-modal--lg  { max-width: 800px; }
-.app-modal--xl  { max-width: 1000px; }
-.app-modal--xxl { max-width: 1240px; }
+.app-modal--sm   { max-width: 400px; }
+.app-modal--md   { max-width: 580px; }
+.app-modal--lg   { max-width: 800px; }
+.app-modal--xl   { max-width: 1000px; }
+.app-modal--xxl  { max-width: 1240px; }
+.app-modal--xxxl { max-width: 1364px; }
 
 @media (min-width: 1024px) {
-  .app-modal-backdrop:has(.app-modal--xxl) {
+  .app-modal-backdrop:has(.app-modal--xxl),
+  .app-modal-backdrop:has(.app-modal--xxxl) {
     padding-left: 12px;
     padding-right: 12px;
   }
