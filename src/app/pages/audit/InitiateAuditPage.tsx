@@ -22,10 +22,10 @@ import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge
 import { addAuditCandidates } from "./auditCandidateStore";
 
 const TRACK_STEPS = {
-  population: ["setup", "population", "readiness", "funnel", "preview", "review"],
-  risk: ["setup", "population", "readiness", "riskCriteria", "funnel", "preview", "review"],
-  control: ["setup", "population", "readiness", "controlCriteria", "funnel", "preview", "review"],
-  manual: ["setup", "population", "readiness", "manualSelection", "funnel", "preview", "review"],
+  population: ["setup", "population", "readiness", "preview", "funnel", "review"],
+  risk: ["setup", "population", "readiness", "riskCriteria", "preview", "funnel", "review"],
+  control: ["setup", "population", "readiness", "controlCriteria", "preview", "funnel", "review"],
+  manual: ["setup", "population", "readiness", "manualSelection", "preview", "funnel", "review"],
 } as const;
 
 type TrackId = keyof typeof TRACK_STEPS;
@@ -172,8 +172,21 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     return false;
   }), [readinessRows, track, riskLevels, signals, controlFlags, manualReturnIds]);
 
+  const previewRows = useMemo(
+    () => matchedRows.filter((row) => !(String(row.return_id) in exclusions)),
+    [matchedRows, exclusions],
+  );
+
+  const previewExclusionsValid = useMemo(
+    () => matchedRows.every((row) => {
+      const id=String(row.return_id);
+      return !(id in exclusions) || exclusions[id].trim().length > 0;
+    }),
+    [matchedRows, exclusions],
+  );
+
   const funnelTargetCount = useMemo(() => {
-    const available = matchedRows.length;
+    const available = previewRows.length;
     if (available === 0 || funnelMode === "all") return available;
 
     const percentage = Number(funnelPercentage);
@@ -196,17 +209,14 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     const maxValue = Number.isFinite(maximum) ? Math.max(0, Math.floor(maximum)) : available;
     const bounded = Math.min(Math.max(base, minValue), maxValue);
     return Math.min(available, Math.max(0, bounded));
-  }, [matchedRows.length, funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum]);
+  }, [previewRows.length, funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum]);
 
   const funnelRows = useMemo(
-    () => matchedRows.slice(0, funnelTargetCount),
-    [matchedRows, funnelTargetCount],
+    () => previewRows.slice(0, funnelTargetCount),
+    [previewRows, funnelTargetCount],
   );
 
-  const finalRows = useMemo(
-    () => funnelRows.filter((row) => !(String(row.return_id) in exclusions)),
-    [funnelRows, exclusions],
-  );
+  const finalRows = funnelRows;
 
   const manualRows = useMemo(() => {
     const needle = manualSearch.trim().toLowerCase();
@@ -244,7 +254,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       case "manualSelection":
         return manualReturnIds.length > 0;
       case "funnel": {
-        if (matchedRows.length === 0) return false;
+        if (previewRows.length === 0) return false;
         const percentage = Number(funnelPercentage);
         const fixedCount = Number(funnelFixedCount);
         const minimum = Number(funnelMinimum);
@@ -255,14 +265,13 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
         return percentage > 0 && percentage <= 100 && minimum >= 0 && maximum > 0 && maximum >= minimum;
       }
       case "preview":
-        return finalRows.length > 0 &&
-          Object.values(exclusions).every((reason) => reason.trim().length > 0);
+        return matchedRows.length > 0 && previewRows.length > 0 && previewExclusionsValid;
       case "review":
         return finalRows.length > 0;
       default:
         return false;
     }
-  }, [activeStepId, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, matchedRows.length, funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum, finalRows, exclusions]);
+  }, [activeStepId, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, matchedRows.length, previewRows.length, previewExclusionsValid, funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum, finalRows]);
 
 
   const explain = (key: string, value: string, row: TableRow) => {
@@ -345,8 +354,8 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     id === "riskCriteria" || id === "controlCriteria" || id === "manualSelection"
   );
   const matchedStepIndex = criteriaStepIndex >= 0 ? criteriaStepIndex : readinessStepIndex;
-  const funnelStepIndex = activeSteps.indexOf("funnel");
   const previewStepIndex = activeSteps.indexOf("preview");
+  const funnelStepIndex = activeSteps.indexOf("funnel");
 
   const impactValue = (requiredCompletedStep: number, value: number): number | string =>
     requiredCompletedStep >= 0 && maxCompletedStep >= requiredCompletedStep ? value : "—";
@@ -379,13 +388,13 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             help:t("initiate.impact.matchedHelp"),
           },
           {
-            label:t("initiate.summary.afterFunnel"),
-            value:impactValue(funnelStepIndex, funnelRows.length),
-            help:t("initiate.impact.funnelHelp"),
+            label:t("initiate.summary.afterPreview"),
+            value:impactValue(previewStepIndex, previewRows.length),
+            help:t("initiate.impact.previewHelp"),
           },
           {
             label:t("initiate.summary.finalCandidates"),
-            value:impactValue(previewStepIndex, finalRows.length),
+            value:impactValue(funnelStepIndex, finalRows.length),
             help:t("initiate.impact.finalHelp"),
           },
         ].map(({ label, value, help }) => (
@@ -885,12 +894,12 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             <section className="form-subsection">
               <dl className="form-summary-list">
                 <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.summary.matchedCriteria")}</dt>
-                  <dd className="form-summary-list__value">{matchedRows.length}</dd>
+                  <dt className="form-summary-list__label">{t("initiate.summary.afterPreview")}</dt>
+                  <dd className="form-summary-list__value">{previewRows.length}</dd>
                 </div>
                 <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.summary.afterFunnel")}</dt>
-                  <dd className="form-summary-list__value">{funnelRows.length}</dd>
+                  <dt className="form-summary-list__label">{t("initiate.summary.finalCandidates")}</dt>
+                  <dd className="form-summary-list__value">{finalRows.length}</dd>
                 </div>
               </dl>
               <p className="form-helper">{t("initiate.funnel.orderingNote")}</p>
@@ -901,50 +910,126 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     }
 
     if (activeStepId === "preview") {
+      const scopeLabel = scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ");
+      const trackLabel = t(TRACKS.find((item)=>item.id===track)?.titleKey ?? "initiate.tracks.risk.title");
+
       return (
         <div className="form-stack">
           <FormSection
             title={t("initiate.steps.preview.title")}
-            description={t("initiate.adjustments.desc")}
+            description={t("initiate.steps.preview.desc")}
             icon={ListChecks}
           >
-            <div className="app-selection-stack">
-              {funnelRows.map((row) => {
-                const id=String(row.return_id);
-                const included=!(id in exclusions);
-                const meta=[
-                  String(row.tin),
-                  String(row.circle),
-                  String(row.coverage_tier),
-                  String(row.signals),
-                  String(row.risk_level),
-                  String(row.control_flags),
-                ].filter((value) => value && value !== "—").join(" · ");
-                return (
-                  <div className="form-stack" key={id}>
-                    <AppSelectionRow
-                      title={String(row.taxpayer_name)}
-                      description={meta}
-                      checked={included}
-                      onChange={(checked) => setExcluded(row, checked)}
-                      onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
-                      infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
-                    />
-                    {!included && (
-                      <AppTextArea
-                        id={`exclude-${id}`}
-                        label={t("initiate.adjustments.reason")}
-                        value={exclusions[id] ?? ""}
-                        onChange={(value) => setExclusions((prev) => ({...prev,[id]:value}))}
-                        placeholder={t("initiate.adjustments.reasonPlaceholder")}
-                        rows={2}
-                        required
-                      />
-                    )}
+            <div className="form-section-grid">
+              <section className="form-subsection">
+                <div className="form-subsection__heading">
+                  <h4 className="form-subsection__title">{t("initiate.previewSummary.scopeTitle")}</h4>
+                </div>
+                <dl className="form-summary-list">
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.assessmentYear")}</dt>
+                    <dd className="form-summary-list__value">{assessmentYear}</dd>
                   </div>
-                );
-              })}
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.selectionTrack")}</dt>
+                    <dd className="form-summary-list__value">{trackLabel}</dd>
+                  </div>
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.circleScope")}</dt>
+                    <dd className="form-summary-list__value">{scopeLabel}</dd>
+                  </div>
+                </dl>
+              </section>
+
+              <section className="form-subsection">
+                <div className="form-subsection__heading">
+                  <h4 className="form-subsection__title">{t("initiate.previewSummary.filtersTitle")}</h4>
+                </div>
+                <dl className="form-summary-list">
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.dataQuality")}</dt>
+                    <dd className="form-summary-list__value">{dataQuality.join(", ")}</dd>
+                  </div>
+                  <div className="form-summary-list__row">
+                    <dt className="form-summary-list__label">{t("initiate.fields.coverageTier")}</dt>
+                    <dd className="form-summary-list__value">{coverageTiers.join(", ")}</dd>
+                  </div>
+                  {track === "risk" && (
+                    <>
+                      <div className="form-summary-list__row">
+                        <dt className="form-summary-list__label">{t("initiate.fields.riskLevel")}</dt>
+                        <dd className="form-summary-list__value">{riskLevels.join(", ") || "—"}</dd>
+                      </div>
+                      <div className="form-summary-list__row">
+                        <dt className="form-summary-list__label">{t("initiate.fields.riskSignals")}</dt>
+                        <dd className="form-summary-list__value">{signals.join(", ") || "—"}</dd>
+                      </div>
+                    </>
+                  )}
+                  {track === "control" && (
+                    <div className="form-summary-list__row">
+                      <dt className="form-summary-list__label">{t("initiate.fields.controlFlags")}</dt>
+                      <dd className="form-summary-list__value">{controlFlags.join(", ")}</dd>
+                    </div>
+                  )}
+                  {track === "manual" && (
+                    <div className="form-summary-list__row">
+                      <dt className="form-summary-list__label">{t("initiate.fields.manualTaxpayers")}</dt>
+                      <dd className="form-summary-list__value">{manualReturnIds.length}</dd>
+                    </div>
+                  )}
+                </dl>
+              </section>
             </div>
+
+            <section className="form-subsection">
+              <div className="form-subsection__heading">
+                <h4 className="form-subsection__title">
+                  {t("initiate.previewSummary.initialList", { count:matchedRows.length })}
+                </h4>
+                <p className="form-subsection__description">{t("initiate.adjustments.desc")}</p>
+              </div>
+              <div className="app-selection-stack">
+                {matchedRows.map((row) => {
+                  const id=String(row.return_id);
+                  const included=!(id in exclusions);
+                  const meta=[
+                    String(row.tin),
+                    String(row.circle),
+                    String(row.coverage_tier),
+                    String(row.signals),
+                    String(row.risk_level),
+                    String(row.control_flags),
+                  ].filter((value) => value && value !== "—").join(" · ");
+                  return (
+                    <div className="form-stack" key={id}>
+                      <AppSelectionRow
+                        title={String(row.taxpayer_name)}
+                        description={meta}
+                        checked={included}
+                        onChange={(checked) => setExcluded(row, checked)}
+                        onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
+                        infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
+                      />
+                      {!included && (
+                        <AppTextArea
+                          id={`exclude-${id}`}
+                          label={t("initiate.adjustments.reason")}
+                          value={exclusions[id] ?? ""}
+                          onChange={(value) => setExclusions((prev) => ({...prev,[id]:value}))}
+                          placeholder={t("initiate.adjustments.reasonPlaceholder")}
+                          rows={2}
+                          required
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              <p className="form-helper">
+                {t("initiate.previewSummary.keptCount", { count:previewRows.length })}
+              </p>
+            </section>
           </FormSection>
         </div>
       );
@@ -992,43 +1077,66 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   <dd className="form-summary-list__value">{coverageTiers.join(", ")}</dd>
                 </div>
                 {track === "risk" && (
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.riskLevel")}</dt>
-                    <dd className="form-summary-list__value">{riskLevels.join(", ") || "—"}</dd>
-                  </div>
+                  <>
+                    <div className="form-summary-list__row">
+                      <dt className="form-summary-list__label">{t("initiate.fields.riskLevel")}</dt>
+                      <dd className="form-summary-list__value">{riskLevels.join(", ") || "—"}</dd>
+                    </div>
+                    <div className="form-summary-list__row">
+                      <dt className="form-summary-list__label">{t("initiate.fields.riskSignals")}</dt>
+                      <dd className="form-summary-list__value">{signals.join(", ") || "—"}</dd>
+                    </div>
+                  </>
                 )}
-                {track === "risk" && (
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.riskSignals")}</dt>
-                    <dd className="form-summary-list__value">{signals.join(", ") || "—"}</dd>
-                  </div>
-                )}
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.review.funnelRule")}</dt>
-                  <dd className="form-summary-list__value">{funnelBasis}</dd>
-                </div>
                 {track === "control" && (
                   <div className="form-summary-list__row">
                     <dt className="form-summary-list__label">{t("initiate.fields.controlFlags")}</dt>
                     <dd className="form-summary-list__value">{controlFlags.join(", ")}</dd>
                   </div>
                 )}
-                {track === "manual" && (
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.manualTaxpayers")}</dt>
-                    <dd className="form-summary-list__value">{manualReturnIds.length}</dd>
-                  </div>
-                )}
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.review.funnelRule")}</dt>
+                  <dd className="form-summary-list__value">{funnelBasis}</dd>
+                </div>
               </dl>
             </section>
           </div>
-        </FormSection>
 
-        <FormSection
-          title={t("initiate.review.confirmTitle")}
-          description={t("initiate.review.confirmDesc")}
-          icon={CheckCircle2}
-        />
+          <section className="form-subsection">
+            <div className="form-subsection__heading">
+              <h4 className="form-subsection__title">
+                {t("initiate.review.finalList", { count:finalRows.length })}
+              </h4>
+              <p className="form-subsection__description">{t("initiate.review.finalListHelp")}</p>
+            </div>
+            <div className="app-selection-stack">
+              {finalRows.map((row) => {
+                const id=String(row.return_id);
+                const meta=[
+                  String(row.tin),
+                  String(row.circle),
+                  String(row.coverage_tier),
+                  String(row.signals),
+                  String(row.risk_level),
+                  String(row.control_flags),
+                ].filter((value) => value && value !== "—").join(" · ");
+                return (
+                  <AppSelectionRow
+                    key={id}
+                    title={String(row.taxpayer_name)}
+                    description={meta}
+                    checked
+                    disabled
+                    onChange={() => {}}
+                    onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
+                    infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
+                  />
+                );
+              })}
+            </div>
+            <p className="form-helper">{t("initiate.review.confirmDesc")}</p>
+          </section>
+        </FormSection>
       </div>
     );
   };

@@ -216,7 +216,7 @@
       "readiness": "Data readiness",
       "criteria": "Audit criteria",
       "preview": "Candidate preview",
-      "review": "Review & confirm",
+      "review": "Final list & confirm",
       "riskCriteria": "Risk criteria",
       "controlCriteria": "Control criteria",
       "manualSelection": "Select taxpayers",
@@ -241,11 +241,11 @@
       },
       "preview": {
         "title": "Candidate preview",
-        "desc": "Inspect the matched taxpayers before confirmation. Audit concepts remain clickable for rule explanations."
+        "desc": "Review the initial matched list produced by all setup, population, readiness and audit-criteria choices. Keep or exclude individual matches before funneling."
       },
       "review": {
-        "title": "Review & confirm",
-        "desc": "Review the complete selection basis before adding taxpayers to this year's Audit Candidates register."
+        "title": "Final list & confirm",
+        "desc": "Review the final candidate list after the funnel, then confirm the batch for the Audit Candidates register."
       },
       "riskCriteria": {
         "title": "Risk criteria",
@@ -261,7 +261,7 @@
       },
       "funnel": {
         "title": "Funnel matched candidates",
-        "desc": "Reduce the matched population to a manageable audit batch before the final candidate preview."
+        "desc": "Apply a transparent batch-size rule to the reviewed candidate list before producing the final list."
       }
     },
     "fields": {
@@ -326,7 +326,8 @@
       "candidates": "candidates",
       "finalCandidates": "Final candidates",
       "allCircles": "All Circles",
-      "afterFunnel": "After funnel"
+      "afterFunnel": "After funnel",
+      "afterPreview": "After preview"
     },
     "populationCriteria": {
       "title": "No additional screening rule required",
@@ -356,7 +357,9 @@
       "candidateCount": "taxpayers will be added to the Audit Candidates register.",
       "confirmTitle": "Confirmation effect",
       "confirmDesc": "Confirming creates candidate records only. It does not automatically create Findings or final tax determinations, and newly confirmed candidates start as Selected / Not Started.",
-      "funnelRule": "Funnel rule"
+      "funnelRule": "Funnel rule",
+      "finalList": "Final candidate list ({{count}})",
+      "finalListHelp": "This is the post-funnel list that will be added when you confirm."
     },
     "validation": {
       "completeStep": "Complete the required selections in this step before continuing.",
@@ -378,8 +381,9 @@
       "eligibleHelp": "Returns still included after Data Quality and Coverage filters.",
       "excludedHelp": "Returns removed by the current readiness selections.",
       "matchedHelp": "Eligible returns that match the current track criteria.",
-      "finalHelp": "Candidates remaining after the funnel and any individual preview exclusions.",
-      "funnelHelp": "Candidates retained by the selected funnel rule before individual preview adjustments."
+      "finalHelp": "Candidates retained after the funnel and shown in the final list.",
+      "funnelHelp": "Candidates retained by the selected funnel rule before individual preview adjustments.",
+      "previewHelp": "Matched candidates kept after the Candidate Preview adjustments."
     },
     "riskSignals": {
       "help": "Select the screening signals a return should match. Search by signal code or description.",
@@ -392,19 +396,19 @@
       "modes": {
         "all": {
           "title": "Keep all matched candidates",
-          "desc": "Move the full matched population to Candidate Preview."
+          "desc": "Move the full reviewed candidate list to the final list."
         },
         "percentage": {
           "title": "Percentage",
-          "desc": "Keep a percentage of the matched population."
+          "desc": "Keep a percentage of the reviewed candidate list."
         },
         "fixed": {
           "title": "Fixed number",
-          "desc": "Keep up to a specified number of matched candidates."
+          "desc": "Keep up to a specified number from the reviewed candidate list."
         },
         "limited": {
           "title": "Percentage with limits",
-          "desc": "Apply a percentage, then enforce a minimum and maximum batch size."
+          "desc": "Apply a percentage to the reviewed list, then enforce a minimum and maximum batch size."
         }
       },
       "fields": {
@@ -421,9 +425,15 @@
         "fixed": "Fixed {{count}} candidates",
         "limited": "{{percentage}}% · Min {{minimum}} · Max {{maximum}}"
       },
-      "orderingNote": "The funnel preserves the current matched-list order. It does not create a hidden risk score or ranking."
+      "orderingNote": "The funnel preserves the reviewed-list order. It does not create a hidden risk score or ranking."
     },
-    "previewInfo": "View {{value}} details and explanations"
+    "previewInfo": "View {{value}} details and explanations",
+    "previewSummary": {
+      "scopeTitle": "Applied scope",
+      "filtersTitle": "Applied readiness & criteria",
+      "initialList": "Initial matched list ({{count}})",
+      "keptCount": "{{count}} candidate will move to the Funnel step."
+    }
   },
   "candidates": {
     "title": "Audit Candidates",
