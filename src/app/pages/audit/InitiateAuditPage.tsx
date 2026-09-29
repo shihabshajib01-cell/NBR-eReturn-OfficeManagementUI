@@ -92,6 +92,8 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [scopeMode, setScopeMode] = useState("all");
   const [circles, setCircles] = useState<string[]>([]);
   const [circleSearch, setCircleSearch] = useState("");
+  const [dataQualitySearch, setDataQualitySearch] = useState("");
+  const [coverageSearch, setCoverageSearch] = useState("");
   const [dataQuality, setDataQuality] = useState<string[]>(dataQualityAvailable);
   const [coverageTiers, setCoverageTiers] = useState<string[]>(coverageAvailable);
   const [riskLevels, setRiskLevels] = useState<string[]>([]);
@@ -122,6 +124,18 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     if (!needle) return circlesAvailable;
     return circlesAvailable.filter((circle) => circle.toLowerCase().includes(needle));
   }, [circleSearch, circlesAvailable]);
+
+  const filteredDataQuality = useMemo(() => {
+    const needle = dataQualitySearch.trim().toLowerCase();
+    if (!needle) return dataQualityAvailable;
+    return dataQualityAvailable.filter((quality) => quality.toLowerCase().includes(needle));
+  }, [dataQualitySearch, dataQualityAvailable]);
+
+  const filteredCoverageTiers = useMemo(() => {
+    const needle = coverageSearch.trim().toLowerCase();
+    if (!needle) return coverageAvailable;
+    return coverageAvailable.filter((tier) => tier.toLowerCase().includes(needle));
+  }, [coverageSearch, coverageAvailable]);
 
   const readinessRows = useMemo(() => populationRows.filter((row) =>
     dataQuality.includes(String(row.data_quality)) &&
@@ -443,8 +457,29 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   <h4 className="form-subsection__title">{t("initiate.fields.dataQuality")}</h4>
                   <p className="form-subsection__description">{t("initiate.readiness.dataQualityHelp")}</p>
                 </div>
+                <div className="form-section__toolbar">
+                  <div className="form-section__toolbar-search">
+                    <AppSearchField
+                      value={dataQualitySearch}
+                      onChange={setDataQualitySearch}
+                      label={t("initiate.fields.searchDataQuality")}
+                      placeholder={t("initiate.fields.searchDataQuality")}
+                      size="compact"
+                    />
+                  </div>
+                  <div className="form-section__toolbar-actions">
+                    <SecondaryButton size="sm" onClick={() => setDataQuality(dataQualityAvailable)}>
+                      {t("initiate.actions.selectAll")}
+                    </SecondaryButton>
+                    {dataQuality.length > 0 && (
+                      <SecondaryButton size="sm" onClick={() => setDataQuality([])}>
+                        {t("initiate.actions.clear")}
+                      </SecondaryButton>
+                    )}
+                  </div>
+                </div>
                 <div className="app-selection-stack">
-                  {dataQualityAvailable.map((quality) => (
+                  {filteredDataQuality.map((quality) => (
                     <AppSelectionRow
                       key={quality}
                       title={quality}
@@ -462,8 +497,29 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   <h4 className="form-subsection__title">{t("initiate.fields.coverageTier")}</h4>
                   <p className="form-subsection__description">{t("initiate.readiness.coverageHelp")}</p>
                 </div>
+                <div className="form-section__toolbar">
+                  <div className="form-section__toolbar-search">
+                    <AppSearchField
+                      value={coverageSearch}
+                      onChange={setCoverageSearch}
+                      label={t("initiate.fields.searchCoverageTier")}
+                      placeholder={t("initiate.fields.searchCoverageTier")}
+                      size="compact"
+                    />
+                  </div>
+                  <div className="form-section__toolbar-actions">
+                    <SecondaryButton size="sm" onClick={() => setCoverageTiers(coverageAvailable)}>
+                      {t("initiate.actions.selectAll")}
+                    </SecondaryButton>
+                    {coverageTiers.length > 0 && (
+                      <SecondaryButton size="sm" onClick={() => setCoverageTiers([])}>
+                        {t("initiate.actions.clear")}
+                      </SecondaryButton>
+                    )}
+                  </div>
+                </div>
                 <div className="app-selection-stack">
-                  {coverageAvailable.map((tier) => (
+                  {filteredCoverageTiers.map((tier) => (
                     <AppSelectionRow
                       key={tier}
                       title={tier}

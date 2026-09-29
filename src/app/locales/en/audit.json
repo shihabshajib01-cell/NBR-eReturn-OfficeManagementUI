@@ -272,7 +272,9 @@
       "matchLogic": "Signal match logic",
       "manualTaxpayers": "Taxpayers selected manually",
       "searchTaxpayer": "Search TIN, Return ID, taxpayer or Circle",
-      "searchCircles": "Search Circles"
+      "searchCircles": "Search Circles",
+      "searchDataQuality": "Search Data Quality",
+      "searchCoverageTier": "Search Coverage Tier"
     },
     "tracks": {
       "population": {

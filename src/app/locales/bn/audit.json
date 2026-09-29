@@ -272,7 +272,9 @@
       "matchLogic": "Signal match logic",
       "manualTaxpayers": "Manualভাবে নির্বাচিত taxpayer",
       "searchTaxpayer": "TIN, Return ID, taxpayer বা Circle খুঁজুন",
-      "searchCircles": "Circle খুঁজুন"
+      "searchCircles": "Circle খুঁজুন",
+      "searchDataQuality": "Data Quality খুঁজুন",
+      "searchCoverageTier": "Coverage Tier খুঁজুন"
     },
     "tracks": {
       "population": {
