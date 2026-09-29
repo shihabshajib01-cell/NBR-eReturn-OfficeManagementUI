@@ -46,6 +46,10 @@
 }
 
 @media (max-width: 1023px) {
+  .audit-manual-desktop-only {
+    display: none !important;
+  }
+
   .audit-manual-section-stack {
     padding: 10px;
     gap: 8px;
