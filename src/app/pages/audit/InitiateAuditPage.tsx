@@ -23,9 +23,14 @@ import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
 import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge";
 import { addAuditCandidates } from "./auditCandidateStore";
 
-const STEPS = [
-  "setup", "population", "readiness", "criteria", "preview", "review",
-] as const;
+const TRACK_STEPS = {
+  population: ["setup", "population", "readiness", "preview", "review"],
+  risk: ["setup", "population", "readiness", "riskCriteria", "preview", "review"],
+  control: ["setup", "population", "readiness", "controlCriteria", "preview", "review"],
+  manual: ["setup", "population", "readiness", "manualSelection", "preview", "review"],
+} as const;
+
+type TrackId = keyof typeof TRACK_STEPS;
 
 const TRACKS = [
   { id:"population", titleKey:"initiate.tracks.population.title", descKey:"initiate.tracks.population.desc" },
@@ -84,7 +89,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
 
   const [step, setStep] = useState(0);
   const [assessmentYear, setAssessmentYear] = useState(assessmentYears[0] ?? "2025-26");
-  const [track, setTrack] = useState("risk");
+  const [track, setTrack] = useState<TrackId>("risk");
   const [scopeMode, setScopeMode] = useState("all");
   const [circles, setCircles] = useState<string[]>([]);
   const [dataQuality, setDataQuality] = useState<string[]>(dataQualityAvailable);
@@ -97,6 +102,9 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [manualSearch, setManualSearch] = useState("");
   const [exclusions, setExclusions] = useState<Record<string,string>>({});
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
+
+  const activeSteps = TRACK_STEPS[track];
+  const activeStepId = activeSteps[step] ?? activeSteps[activeSteps.length - 1];
 
   const baseYearRows = useMemo(
     () => ALL_TAXPAYER_ROWS.filter((row) => String(row.assessment_year) === assessmentYear),
@@ -152,22 +160,28 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   }, [readinessRows, manualSearch]);
 
   const stepValid = useMemo(() => {
-    switch (step) {
-      case 0: return !!assessmentYear && !!track;
-      case 1: return scopeMode === "all" || circles.length > 0;
-      case 2: return dataQuality.length > 0 && coverageTiers.length > 0;
-      case 3:
-        if (track === "population") return true;
-        if (track === "risk") return riskLevels.length > 0 || signals.length > 0;
-        if (track === "control") return controlFlags.length > 0;
-        if (track === "manual") return manualReturnIds.length > 0;
-        return false;
-      case 4:
+    switch (activeStepId) {
+      case "setup":
+        return !!assessmentYear && !!track;
+      case "population":
+        return scopeMode === "all" || circles.length > 0;
+      case "readiness":
+        return dataQuality.length > 0 && coverageTiers.length > 0;
+      case "riskCriteria":
+        return riskLevels.length > 0 || signals.length > 0;
+      case "controlCriteria":
+        return controlFlags.length > 0;
+      case "manualSelection":
+        return manualReturnIds.length > 0;
+      case "preview":
         return finalRows.length > 0 &&
           Object.values(exclusions).every((reason) => reason.trim().length > 0);
-      default: return finalRows.length > 0;
+      case "review":
+        return finalRows.length > 0;
+      default:
+        return false;
     }
-  }, [step, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, finalRows, exclusions]);
+  }, [activeStepId, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, finalRows, exclusions]);
 
   const previewCols: ColDef[] = [
     fc("taxpayer_name", t("columns.taxpayer")),
@@ -182,6 +196,20 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const explain = (key: string, value: string, row: TableRow) => {
     const resolved = resolveAuditExplanation(key, value, row, i18n.resolvedLanguage);
     if (resolved) setExplanation(resolved);
+  };
+
+  const handleTrackSelect = (value: string) => {
+    const nextTrack = value as TrackId;
+    if (nextTrack === track) return;
+
+    setTrack(nextTrack);
+    setRiskLevels([]);
+    setSignals([]);
+    setControlFlags([]);
+    setManualReturnIds([]);
+    setManualSearch("");
+    setMatchMode("any");
+    setExclusions({});
   };
 
   const selectionBasis = useMemo(() => {
@@ -233,13 +261,13 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     </div>
   );
 
-  const stepperSteps = STEPS.map((id) => ({
+  const stepperSteps = activeSteps.map((id) => ({
     id,
     label: t(`initiate.stepLabels.${id}`),
   }));
 
   const renderStep = () => {
-    if (step === 0) {
+    if (activeStepId === "setup") {
       return (
         <div className="form-stack">
           <FormSection
@@ -269,7 +297,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   title={t(item.titleKey)}
                   description={t(item.descKey)}
                   selected={track === item.id}
-                  onSelect={setTrack}
+                  onSelect={handleTrackSelect}
                 />
               ))}
             </div>
@@ -278,7 +306,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       );
     }
 
-    if (step === 1) {
+    if (activeStepId === "population") {
       return (
         <div className="form-stack">
           <FormSection
@@ -338,7 +366,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       );
     }
 
-    if (step === 2) {
+    if (activeStepId === "readiness") {
       return (
         <div className="form-stack">
           <FormSection
@@ -388,123 +416,67 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       );
     }
 
-    if (step === 3) {
+    if (activeStepId === "riskCriteria") {
       return (
         <div className="form-stack">
           <FormSection
-            title={t("initiate.steps.criteria.title")}
-            description={t("initiate.steps.criteria.desc")}
+            title={t("initiate.steps.riskCriteria.title")}
+            description={t("initiate.steps.riskCriteria.desc")}
             icon={FileSearch}
           >
-            {track === "population" && (
-              <FormSection
-                title={t("initiate.populationCriteria.title")}
-                description={t("initiate.populationCriteria.desc")}
-              />
-            )}
-
-            {track === "risk" && (
-              <div className="form-stack">
-                <FormSection title={t("initiate.fields.riskLevel")}>
-                  <div className="app-selection-grid">
-                    {RISK_LEVELS.map((level) => (
-                      <AppSelectionRow
-                        key={level}
-                        title={level}
-                        checked={riskLevels.includes(level)}
-                        onChange={() => setRiskLevels(toggle(riskLevels, level))}
-                        onInfo={() => explain("risk_level", level, { risk_level:level })}
-                        infoLabel={t("initiate.explain", { value: level })}
-                      />
-                    ))}
-                  </div>
-                </FormSection>
-
-                <FormSection title={t("initiate.fields.riskSignals")}>
-                  <div className="app-selection-grid">
-                    {SIGNAL_OPTIONS.map(([id,label]) => (
-                      <AppSelectionRow
-                        key={id}
-                        code={id}
-                        title={label}
-                        checked={signals.includes(id)}
-                        onChange={() => setSignals(toggle(signals, id))}
-                        onInfo={() => explain("rule_id", id, { rule_id:id })}
-                        infoLabel={t("initiate.explain", { value: id })}
-                      />
-                    ))}
-                  </div>
-                </FormSection>
-
-                {signals.length > 1 && (
-                  <FormSection title={t("initiate.fields.matchLogic")}>
-                    <div className="app-choice-grid">
-                      <AppChoiceCard
-                        name="match-mode"
-                        value="any"
-                        title={t("initiate.match.any")}
-                        selected={matchMode === "any"}
-                        onSelect={setMatchMode}
-                      />
-                      <AppChoiceCard
-                        name="match-mode"
-                        value="all"
-                        title={t("initiate.match.all")}
-                        selected={matchMode === "all"}
-                        onSelect={setMatchMode}
-                      />
-                    </div>
-                  </FormSection>
-                )}
-              </div>
-            )}
-
-            {track === "control" && (
-              <FormSection
-                title={t("initiate.fields.controlFlags")}
-                description={t("initiate.controlCriteria.note")}
-              >
+            <div className="form-stack">
+              <FormSection title={t("initiate.fields.riskLevel")}>
                 <div className="app-selection-grid">
-                  {FLAG_OPTIONS.map(([id,label]) => (
+                  {RISK_LEVELS.map((level) => (
+                    <AppSelectionRow
+                      key={level}
+                      title={level}
+                      checked={riskLevels.includes(level)}
+                      onChange={() => setRiskLevels(toggle(riskLevels, level))}
+                      onInfo={() => explain("risk_level", level, { risk_level:level })}
+                      infoLabel={t("initiate.explain", { value: level })}
+                    />
+                  ))}
+                </div>
+              </FormSection>
+
+              <FormSection title={t("initiate.fields.riskSignals")}>
+                <div className="app-selection-grid">
+                  {SIGNAL_OPTIONS.map(([id,label]) => (
                     <AppSelectionRow
                       key={id}
                       code={id}
                       title={label}
-                      checked={controlFlags.includes(id)}
-                      onChange={() => setControlFlags(toggle(controlFlags, id))}
-                      onInfo={() => explain("flag_id", id, { flag_id:id })}
+                      checked={signals.includes(id)}
+                      onChange={() => setSignals(toggle(signals, id))}
+                      onInfo={() => explain("rule_id", id, { rule_id:id })}
                       infoLabel={t("initiate.explain", { value: id })}
                     />
                   ))}
                 </div>
               </FormSection>
-            )}
 
-            {track === "manual" && (
-              <FormSection title={t("initiate.fields.manualTaxpayers")}>
-                <AppSearchField
-                  value={manualSearch}
-                  onChange={setManualSearch}
-                  label={t("initiate.fields.searchTaxpayer")}
-                  placeholder={t("initiate.fields.searchTaxpayer")}
-                  size="standard"
-                />
-                <div className="app-selection-stack">
-                  {manualRows.map((row) => {
-                    const returnId=String(row.return_id);
-                    return (
-                      <AppSelectionRow
-                        key={returnId}
-                        title={String(row.taxpayer_name)}
-                        description={`${String(row.tin)} · ${returnId} · ${String(row.circle)}`}
-                        checked={manualReturnIds.includes(returnId)}
-                        onChange={() => setManualReturnIds(toggle(manualReturnIds, returnId))}
-                      />
-                    );
-                  })}
-                </div>
-              </FormSection>
-            )}
+              {signals.length > 1 && (
+                <FormSection title={t("initiate.fields.matchLogic")}>
+                  <div className="app-choice-grid">
+                    <AppChoiceCard
+                      name="match-mode"
+                      value="any"
+                      title={t("initiate.match.any")}
+                      selected={matchMode === "any"}
+                      onSelect={setMatchMode}
+                    />
+                    <AppChoiceCard
+                      name="match-mode"
+                      value="all"
+                      title={t("initiate.match.all")}
+                      selected={matchMode === "all"}
+                      onSelect={setMatchMode}
+                    />
+                  </div>
+                </FormSection>
+              )}
+            </div>
           </FormSection>
 
           {metricRow([
@@ -514,7 +486,82 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       );
     }
 
-    if (step === 4) {
+    if (activeStepId === "controlCriteria") {
+      return (
+        <div className="form-stack">
+          <FormSection
+            title={t("initiate.steps.controlCriteria.title")}
+            description={t("initiate.steps.controlCriteria.desc")}
+            icon={FileSearch}
+          >
+            <FormSection
+              title={t("initiate.fields.controlFlags")}
+              description={t("initiate.controlCriteria.note")}
+            >
+              <div className="app-selection-grid">
+                {FLAG_OPTIONS.map(([id,label]) => (
+                  <AppSelectionRow
+                    key={id}
+                    code={id}
+                    title={label}
+                    checked={controlFlags.includes(id)}
+                    onChange={() => setControlFlags(toggle(controlFlags, id))}
+                    onInfo={() => explain("flag_id", id, { flag_id:id })}
+                    infoLabel={t("initiate.explain", { value: id })}
+                  />
+                ))}
+              </div>
+            </FormSection>
+          </FormSection>
+
+          {metricRow([
+            { label:t("initiate.summary.matchedCriteria"), value:matchedRows.length, icon:ListChecks, tone:"primary" },
+          ])}
+        </div>
+      );
+    }
+
+    if (activeStepId === "manualSelection") {
+      return (
+        <div className="form-stack">
+          <FormSection
+            title={t("initiate.steps.manualSelection.title")}
+            description={t("initiate.steps.manualSelection.desc")}
+            icon={FileSearch}
+          >
+            <FormSection title={t("initiate.fields.manualTaxpayers")}>
+              <AppSearchField
+                value={manualSearch}
+                onChange={setManualSearch}
+                label={t("initiate.fields.searchTaxpayer")}
+                placeholder={t("initiate.fields.searchTaxpayer")}
+                size="standard"
+              />
+              <div className="app-selection-stack">
+                {manualRows.map((row) => {
+                  const returnId=String(row.return_id);
+                  return (
+                    <AppSelectionRow
+                      key={returnId}
+                      title={String(row.taxpayer_name)}
+                      description={`${String(row.tin)} · ${returnId} · ${String(row.circle)}`}
+                      checked={manualReturnIds.includes(returnId)}
+                      onChange={() => setManualReturnIds(toggle(manualReturnIds, returnId))}
+                    />
+                  );
+                })}
+              </div>
+            </FormSection>
+          </FormSection>
+
+          {metricRow([
+            { label:t("initiate.summary.matchedCriteria"), value:matchedRows.length, icon:ListChecks, tone:"primary" },
+          ])}
+        </div>
+      );
+    }
+
+    if (activeStepId === "preview") {
       return (
         <div className="form-stack">
           <FormSection
@@ -663,8 +710,8 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
           {t("initiate.actions.back")}
         </SecondaryButton>
       )}
-      {step < STEPS.length - 1 ? (
-        <PrimaryButton size="sm" disabled={!stepValid} onClick={() => setStep((value) => Math.min(STEPS.length-1,value+1))}>
+      {step < activeSteps.length - 1 ? (
+        <PrimaryButton size="sm" disabled={!stepValid} onClick={() => setStep((value) => Math.min(activeSteps.length-1,value+1))}>
           {t("initiate.actions.continue")}
         </PrimaryButton>
       ) : (
@@ -681,7 +728,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       onClose={onClose}
       title={t("initiate.title")}
       icon={<ClipboardList size={17} strokeWidth={1.8} />}
-      size="xl"
+      size="xxl"
       footer={modalFooter}
       describedBy="initiate-audit-description"
     >

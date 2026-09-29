@@ -410,6 +410,11 @@
   grid-column: 1 / -1;
 }
 
+/* A single field in a two-column entry grid must use the full available width. */
+.entry-form__grid > :only-child {
+  grid-column: 1 / -1;
+}
+
 .entry-form__textarea {
   resize: vertical;
   height: auto;

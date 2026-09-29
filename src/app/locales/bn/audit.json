@@ -169,7 +169,10 @@
       "readiness": "Data readiness",
       "criteria": "Audit criteria",
       "preview": "Candidate preview",
-      "review": "Review ও confirm"
+      "review": "Review ও confirm",
+      "riskCriteria": "Risk criteria",
+      "controlCriteria": "Control criteria",
+      "manualSelection": "Taxpayer নির্বাচন"
     },
     "steps": {
       "setup": {
@@ -195,6 +198,18 @@
       "review": {
         "title": "Review ও confirm",
         "desc": "Taxpayer-দের এ বছরের Audit Candidates register-এ যোগ করার আগে সম্পূর্ণ selection basis review করুন।"
+      },
+      "riskCriteria": {
+        "title": "Risk criteria",
+        "desc": "এক বা একাধিক Risk Level এবং/অথবা A–E screening signal নির্বাচন করুন। একাধিক signal থাকলে যেকোনো একটি নাকি সবগুলো match করতে হবে তা নির্ধারণ করুন।"
+      },
+      "controlCriteria": {
+        "title": "Control criteria",
+        "desc": "এক বা একাধিক F0–F5 filing, arithmetic বা consistency control নির্বাচন করুন। এগুলো substantive Risk Level থেকে আলাদা থাকবে।"
+      },
+      "manualSelection": {
+        "title": "Taxpayer নির্বাচন",
+        "desc": "Readiness-eligible population থেকে search করে নির্দিষ্ট return নির্বাচন করুন। Approved source-এ সংজ্ঞায়িত না থাকলে কোনো legal selection reason code যোগ করা হবে না।"
       }
     },
     "fields": {
@@ -214,19 +229,19 @@
     "tracks": {
       "population": {
         "title": "Population / Circle-based Audit",
-        "desc": "একটি Circle, একাধিক Circle অথবা সব Circle থেকে সম্পূর্ণ eligible population নির্বাচন করুন। এটি officer-directed selection; Risk Level নয়।"
+        "desc": "শুধু Circle scope ও data readiness ব্যবহার হবে। Risk Level, signal বা control criterion যোগ হবে না।"
       },
       "risk": {
         "title": "Risk-based Audit",
-        "desc": "Coverage-eligible Risk Level এবং A–E screening signal ব্যবহার করে candidate নির্বাচন করুন।"
+        "desc": "Risk Level এবং/অথবা A–E signal ব্যবহার করুন; একাধিক signal হলে Any/All matching নির্ধারণ করুন।"
       },
       "control": {
         "title": "Control / Data Quality Review",
-        "desc": "F0–F5 filing, arithmetic বা consistency control দিয়ে নির্বাচন করুন। এগুলো substantive Risk Level থেকে আলাদা।"
+        "desc": "শুধু F0–F5 control flag ব্যবহার হবে। Control selection substantive Risk Level থেকে আলাদা থাকবে।"
       },
       "manual": {
         "title": "Manual Selection",
-        "desc": "Eligible population থেকে নির্দিষ্ট taxpayer নির্বাচন করুন। Supplied rule-এ final legal selection reason code নির্ধারিত নেই।"
+        "desc": "Eligible population থেকে search করে নির্দিষ্ট return নির্বাচন করুন। সংজ্ঞায়িত নয় এমন legal reason code তৈরি করা হবে না।"
       }
     },
     "scope": {
