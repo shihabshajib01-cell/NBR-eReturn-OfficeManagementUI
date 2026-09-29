@@ -190,6 +190,7 @@ export const NAVIGATION: MainNavDef[] = [
       { id: "rules-governance", label: "Rules & Governance", labelKey: "navigation.audit.rulesGovernance", icon: Settings2 },
       { id: "reconciliation", label: "Reconciliation", labelKey: "navigation.audit.reconciliation", icon: ArrowLeftRight },
       { id: "audit-trail", label: "Audit Trail", labelKey: "navigation.audit.auditTrail", icon: History },
+      { id: "audit-manual", label: "Audit Manual", labelKey: "navigation.audit.auditManual", icon: BookOpen },
     ],
   },
   {
