@@ -1,4 +1,4 @@
-import { mt, type ManualSection } from "./auditManualTypes";
+import { mt, type ManualBlock, type ManualSection } from "./auditManualTypes";
 
 const same = (v: string) => mt(v, v);
 
@@ -69,7 +69,7 @@ export const AUDIT_MANUAL_TEST_SECTIONS: ManualSection[] = [
 ];
 
 
-export const AUDIT_MANUAL_TEST_SUPPLEMENT_BLOCKS = {
+export const AUDIT_MANUAL_TEST_SUPPLEMENT_BLOCKS: Record<string, ManualBlock[]> = {
   s12: [
     {
       kind: "table" as const,
@@ -146,4 +146,4 @@ export const AUDIT_MANUAL_TEST_SUPPLEMENT_BLOCKS = {
       note: mt("Some assertions execute once per applicable test case, so the runtime count can exceed this unique assertion catalogue.","কিছু assertion applicable test case প্রতি একবার চলে; তাই runtime check count এই unique assertion catalogue-এর চেয়ে বেশি হতে পারে।"),
     },
   ],
-} as const;
+};
