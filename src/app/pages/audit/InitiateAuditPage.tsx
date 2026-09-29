@@ -394,7 +394,9 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
           },
           {
             label:t("initiate.summary.finalCandidates"),
-            value:impactValue(funnelStepIndex, finalRows.length),
+            value:activeStepId === "funnel"
+              ? finalRows.length
+              : impactValue(funnelStepIndex, finalRows.length),
             help:t("initiate.impact.finalHelp"),
           },
         ].map(({ label, value, help }) => (
@@ -407,6 +409,9 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
           </div>
         ))}
       </dl>
+      {activeStepId === "funnel" && (
+        <p className="form-helper">{t("initiate.funnel.orderingNote")}</p>
+      )}
     </FormSection>
   );
 
@@ -891,19 +896,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
               </section>
             )}
 
-            <section className="form-subsection">
-              <dl className="form-summary-list">
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.summary.afterPreview")}</dt>
-                  <dd className="form-summary-list__value">{previewRows.length}</dd>
-                </div>
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.summary.finalCandidates")}</dt>
-                  <dd className="form-summary-list__value">{finalRows.length}</dd>
-                </div>
-              </dl>
-              <p className="form-helper">{t("initiate.funnel.orderingNote")}</p>
-            </section>
           </FormSection>
         </div>
       );
