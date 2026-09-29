@@ -13,7 +13,7 @@ import type { ColDef, FilterDef, TableRow } from "../modulePageUtils";
 import { fc } from "../modulePageUtils";
 import { AUDIT_MANUAL_CORE_SECTIONS } from "./auditManualCoreData";
 import { AUDIT_MANUAL_RULE_SECTIONS, AUDIT_MANUAL_SUPPLEMENT_BLOCKS } from "./auditManualRulesData";
-import { AUDIT_MANUAL_TEST_SECTIONS } from "./auditManualTestData";
+import { AUDIT_MANUAL_TEST_SECTIONS, AUDIT_MANUAL_TEST_SUPPLEMENT_BLOCKS } from "./auditManualTestData";
 import { AUDIT_MANUAL_DEMO_SECTIONS, AUDIT_MANUAL_DEMO_SUPPLEMENTS } from "./auditManualDemoData";
 import {
   manualText,
@@ -91,7 +91,7 @@ function buildSections(): ManualSection[] {
     byId.set(section.id, { ...section, blocks: [...section.blocks] });
   });
 
-  const supplements = { ...AUDIT_MANUAL_SUPPLEMENT_BLOCKS, ...AUDIT_MANUAL_DEMO_SUPPLEMENTS };
+  const supplements = { ...AUDIT_MANUAL_SUPPLEMENT_BLOCKS, ...AUDIT_MANUAL_TEST_SUPPLEMENT_BLOCKS, ...AUDIT_MANUAL_DEMO_SUPPLEMENTS };
   Object.entries(supplements).forEach(([id, blocks]) => {
     const section = byId.get(id);
     if (section) section.blocks.push(...blocks);
