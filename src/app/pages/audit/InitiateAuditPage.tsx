@@ -356,7 +356,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
 
           {scopeMode === "selected" && (
             <FormSection title={t("initiate.fields.selectCircles")} icon={ListChecks}>
-              <div className="filter-actions">
+              <div className="form-section__actions">
                 <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>
                   {t("initiate.actions.selectAll")}
                 </SecondaryButton>
