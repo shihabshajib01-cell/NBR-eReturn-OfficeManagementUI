@@ -241,7 +241,7 @@
       },
       "preview": {
         "title": "Candidate preview",
-        "desc": "Review the initial matched list produced by all setup, population, readiness and audit-criteria choices. Keep or exclude individual matches before funneling."
+        "desc": "Review the initial matched candidate list before funneling. The list already reflects the selections and filters completed in the earlier steps."
       },
       "review": {
         "title": "Final list & confirm",
@@ -429,8 +429,6 @@
     },
     "previewInfo": "View {{value}} details and explanations",
     "previewSummary": {
-      "scopeTitle": "Applied scope",
-      "filtersTitle": "Applied readiness & criteria",
       "initialList": "Initial matched list ({{count}})",
       "keptCount": "{{count}} candidate will move to the Funnel step."
     }

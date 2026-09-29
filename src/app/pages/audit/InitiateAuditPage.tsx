@@ -910,9 +910,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     }
 
     if (activeStepId === "preview") {
-      const scopeLabel = scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ");
-      const trackLabel = t(TRACKS.find((item)=>item.id===track)?.titleKey ?? "initiate.tracks.risk.title");
-
       return (
         <div className="form-stack">
           <FormSection
@@ -920,68 +917,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             description={t("initiate.steps.preview.desc")}
             icon={ListChecks}
           >
-            <div className="form-section-grid">
-              <section className="form-subsection">
-                <div className="form-subsection__heading">
-                  <h4 className="form-subsection__title">{t("initiate.previewSummary.scopeTitle")}</h4>
-                </div>
-                <dl className="form-summary-list">
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.assessmentYear")}</dt>
-                    <dd className="form-summary-list__value">{assessmentYear}</dd>
-                  </div>
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.selectionTrack")}</dt>
-                    <dd className="form-summary-list__value">{trackLabel}</dd>
-                  </div>
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.circleScope")}</dt>
-                    <dd className="form-summary-list__value">{scopeLabel}</dd>
-                  </div>
-                </dl>
-              </section>
-
-              <section className="form-subsection">
-                <div className="form-subsection__heading">
-                  <h4 className="form-subsection__title">{t("initiate.previewSummary.filtersTitle")}</h4>
-                </div>
-                <dl className="form-summary-list">
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.dataQuality")}</dt>
-                    <dd className="form-summary-list__value">{dataQuality.join(", ")}</dd>
-                  </div>
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.coverageTier")}</dt>
-                    <dd className="form-summary-list__value">{coverageTiers.join(", ")}</dd>
-                  </div>
-                  {track === "risk" && (
-                    <>
-                      <div className="form-summary-list__row">
-                        <dt className="form-summary-list__label">{t("initiate.fields.riskLevel")}</dt>
-                        <dd className="form-summary-list__value">{riskLevels.join(", ") || "—"}</dd>
-                      </div>
-                      <div className="form-summary-list__row">
-                        <dt className="form-summary-list__label">{t("initiate.fields.riskSignals")}</dt>
-                        <dd className="form-summary-list__value">{signals.join(", ") || "—"}</dd>
-                      </div>
-                    </>
-                  )}
-                  {track === "control" && (
-                    <div className="form-summary-list__row">
-                      <dt className="form-summary-list__label">{t("initiate.fields.controlFlags")}</dt>
-                      <dd className="form-summary-list__value">{controlFlags.join(", ")}</dd>
-                    </div>
-                  )}
-                  {track === "manual" && (
-                    <div className="form-summary-list__row">
-                      <dt className="form-summary-list__label">{t("initiate.fields.manualTaxpayers")}</dt>
-                      <dd className="form-summary-list__value">{manualReturnIds.length}</dd>
-                    </div>
-                  )}
-                </dl>
-              </section>
-            </div>
-
             <section className="form-subsection">
               <div className="form-subsection__heading">
                 <h4 className="form-subsection__title">

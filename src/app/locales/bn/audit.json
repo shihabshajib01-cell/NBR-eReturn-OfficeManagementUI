@@ -241,7 +241,7 @@
       },
       "preview": {
         "title": "Candidate preview",
-        "desc": "Setup, population, readiness ও audit criteria-এর সব choice থেকে তৈরি initial matched list review করুন। Funnel-এর আগে individual match রাখুন বা বাদ দিন।"
+        "desc": "Funnel-এর আগে initial matched candidate list review করুন। এই list আগের step-এর selection ও filter অনুযায়ী তৈরি হয়েছে।"
       },
       "review": {
         "title": "Final list ও confirm",
@@ -429,8 +429,6 @@
     },
     "previewInfo": "{{value}}-এর details ও explanation দেখুন",
     "previewSummary": {
-      "scopeTitle": "Applied scope",
-      "filtersTitle": "Applied readiness ও criteria",
       "initialList": "Initial matched list ({{count}})",
       "keptCount": "{{count}} candidate Funnel step-এ যাবে।"
     }
