@@ -241,7 +241,7 @@
       },
       "preview": {
         "title": "Candidate preview",
-        "desc": "Review the initial matched candidate list before funneling. The list already reflects the selections and filters completed in the earlier steps."
+        "desc": "Review the initial matched candidate list before funneling. This is a read-only preview of the selections and filters completed in the earlier steps."
       },
       "review": {
         "title": "Final list & confirm",
@@ -327,7 +327,7 @@
       "finalCandidates": "Final candidates",
       "allCircles": "All Circles",
       "afterFunnel": "After funnel",
-      "afterPreview": "After preview"
+      "afterPreview": "Ready for funnel"
     },
     "populationCriteria": {
       "title": "No additional screening rule required",
@@ -383,7 +383,7 @@
       "matchedHelp": "Eligible returns that match the current track criteria.",
       "finalHelp": "Candidates retained after the funnel and shown in the final list.",
       "funnelHelp": "Candidates retained by the selected funnel rule before individual preview adjustments.",
-      "previewHelp": "Matched candidates kept after the Candidate Preview adjustments."
+      "previewHelp": "Matched candidates reviewed in Candidate Preview. Preview does not remove candidates; the Funnel controls the reduction."
     },
     "riskSignals": {
       "help": "Select the screening signals a return should match. Search by signal code or description.",
@@ -430,7 +430,8 @@
     "previewInfo": "View {{value}} details and explanations",
     "previewSummary": {
       "initialList": "Initial matched list ({{count}})",
-      "keptCount": "{{count}} candidate will move to the Funnel step."
+      "keptCount": "All {{count}} matched candidates will move to the Funnel step.",
+      "rowsPerPage": "Rows per page"
     }
   },
   "candidates": {
