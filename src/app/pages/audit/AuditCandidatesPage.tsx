@@ -50,13 +50,13 @@ export function AuditCandidatesPage({ initialInitiateOpen = false }: AuditCandid
   const [initiateOpen, setInitiateOpen] = useState(initialInitiateOpen);
 
   const cols: ColDef[] = [
-    fc("candidate_id", t("candidates.columns.candidateId"), { mono:true }),
+    fc("batch_id", t("candidates.columns.batchId"), { mono:true }),
     fc("taxpayer_name", t("columns.taxpayer")),
     fc("tin", t("columns.tin"), { mono:true }),
     fc("circle", t("columns.circle")),
     fc("selection_track", t("candidates.columns.selectionTrack")),
-    fc("coverage_tier", t("columns.coverageTier")),
     fc("risk_level", t("columns.riskLevel")),
+    fc("funnel_rule", t("candidates.columns.funnelRule")),
     { type:"col", col:{ key:"candidate_status", label:t("candidates.columns.candidateStatus"), badge:true } },
     { type:"col", col:{ key:"audit_status", label:t("candidates.columns.auditStatus"), badge:true } },
     fc("selected_on", t("candidates.columns.selectedOn")),
@@ -72,10 +72,17 @@ export function AuditCandidatesPage({ initialInitiateOpen = false }: AuditCandid
     fc("circle", t("columns.circle")),
     fc("selection_track", t("candidates.columns.selectionTrack")),
     fc("selection_basis", t("candidates.columns.selectionBasis")),
+    fc("funnel_rule", t("candidates.columns.funnelRule")),
+    fc("data_quality", t("columns.dataQuality")),
     fc("coverage_tier", t("columns.coverageTier")),
     fc("signals", t("columns.signals")),
     fc("risk_level", t("columns.riskLevel")),
     fc("control_flags", t("columns.controlFlags")),
+    fc("population_considered", t("candidates.columns.populationConsidered")),
+    fc("eligible_after_readiness", t("candidates.columns.eligibleAfterReadiness")),
+    fc("matched_criteria", t("candidates.columns.matchedCriteria")),
+    fc("after_preview", t("candidates.columns.afterPreview")),
+    fc("final_candidates", t("candidates.columns.finalCandidates")),
     { type:"col", col:{ key:"candidate_status", label:t("candidates.columns.candidateStatus"), badge:true } },
     { type:"col", col:{ key:"audit_status", label:t("candidates.columns.auditStatus"), badge:true } },
     fc("selected_on", t("candidates.columns.selectedOn")),
@@ -84,6 +91,7 @@ export function AuditCandidatesPage({ initialInitiateOpen = false }: AuditCandid
   const filters: FilterDef[] = [
     { key:"assessment_year", label:t("columns.assessmentYear"), type:"select", options:["",...unique(rows,"assessment_year")] },
     { key:"circle", label:t("filters.circle"), type:"select", options:["",...unique(rows,"circle")] },
+    { key:"batch_id", label:t("candidates.columns.batchId"), type:"select", options:["",...unique(rows,"batch_id")] },
     { key:"selection_track", label:t("candidates.filters.selectionTrack"), type:"select", options:["",...unique(rows,"selection_track")] },
     { key:"coverage_tier", label:t("filters.coverageTier"), type:"select", options:["",...unique(rows,"coverage_tier")] },
     { key:"risk_level", label:t("filters.riskLevel"), type:"select", options:["",...unique(rows,"risk_level")] },
@@ -200,7 +208,7 @@ export function AuditCandidatesPage({ initialInitiateOpen = false }: AuditCandid
           noCard
           clickableKeys={["circle","coverage_tier","risk_level","audit_status"]}
           onCellClick={explain}
-          mobileCardMapping={{primary:"taxpayer_name",identifier:"tin",meta:["circle","selection_track","risk_level"],status:"audit_status",date:"selected_on"}}
+          mobileCardMapping={{primary:"taxpayer_name",identifier:"batch_id",meta:["tin","circle","selection_track","risk_level"],status:"audit_status",date:"selected_on"}}
           aria-label={t("candidates.tableTitle")}
         />
 

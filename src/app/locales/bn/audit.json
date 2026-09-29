@@ -435,7 +435,7 @@
   },
   "candidates": {
     "title": "অডিট প্রার্থী",
-    "description": "এই Assessment Year-এর audit-candidate register—এখনো শুরু হয়নি এমন selected taxpayer এবং audit workflow-এ থাকা case দুটোই এখানে থাকবে।",
+    "description": "Confirmed Initiate Audit selection থেকে তৈরি audit candidate register। প্রতিটি নতুন confirmed audit একটি নতুন selection batch তৈরি করে এবং তার final candidate এখানে দেখা যায়।",
     "yearTitle": "বার্ষিক candidate register",
     "yearDesc": "Selected মানে taxpayer audit-এর জন্য planned, কিন্তু active audit case এখনো শুরু নাও হতে পারে। কাজ শুরু হলে Audit Status case workflow অনুসরণ করবে।",
     "tableTitle": "এ বছরের audit candidate",
@@ -447,7 +447,13 @@
       "selectionBasis": "Selection Basis",
       "candidateStatus": "Candidate Status",
       "auditStatus": "Audit Status",
-      "selectedOn": "Selected On"
+      "selectedOn": "Selected On",
+      "funnelRule": "Funnel Rule",
+      "populationConsidered": "Population Considered",
+      "eligibleAfterReadiness": "Eligible After Readiness",
+      "matchedCriteria": "Matched Criteria",
+      "afterPreview": "After Preview",
+      "finalCandidates": "Final Candidates"
     },
     "filters": {
       "selectionTrack": "Selection Track"

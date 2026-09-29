@@ -435,7 +435,7 @@
   },
   "candidates": {
     "title": "Audit Candidates",
-    "description": "This assessment year's audit-candidate register, including selected taxpayers not yet started and cases already moving through the audit workflow.",
+    "description": "Audit candidate register generated from confirmed Initiate Audit selections. Each new confirmed audit creates a new selection batch and its final candidates appear here.",
     "yearTitle": "Annual candidate register",
     "yearDesc": "Selected means the taxpayer is planned for audit but an active audit case has not necessarily started. Once work begins, Audit Status follows the case workflow.",
     "tableTitle": "This year's audit candidates",
@@ -447,7 +447,13 @@
       "selectionBasis": "Selection Basis",
       "candidateStatus": "Candidate Status",
       "auditStatus": "Audit Status",
-      "selectedOn": "Selected On"
+      "selectedOn": "Selected On",
+      "funnelRule": "Funnel Rule",
+      "populationConsidered": "Population Considered",
+      "eligibleAfterReadiness": "Eligible After Readiness",
+      "matchedCriteria": "Matched Criteria",
+      "afterPreview": "After Preview",
+      "finalCandidates": "Final Candidates"
     },
     "filters": {
       "selectionTrack": "Selection Track"

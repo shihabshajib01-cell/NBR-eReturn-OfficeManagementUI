@@ -330,8 +330,14 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     if (!finalRows.length) return;
     addAuditCandidates(finalRows, {
       assessmentYear,
-      track: TRACKS.find((item) => item.id === track)?.id ?? track,
+      track: t(TRACKS.find((item) => item.id === track)?.titleKey ?? "initiate.tracks.risk.title"),
       selectionBasis,
+      funnelRule: funnelBasis,
+      populationConsidered: populationRows.length,
+      eligibleAfterReadiness: readinessRows.length,
+      matchedCriteria: matchedRows.length,
+      afterPreview: previewRows.length,
+      finalCandidates: finalRows.length,
     });
     toast.success(t("initiate.toast.candidatesConfirmed", { count: finalRows.length }));
     onConfirmed();
