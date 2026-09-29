@@ -422,7 +422,8 @@
         "limited": "{{percentage}}% · Min {{minimum}} · Max {{maximum}}"
       },
       "orderingNote": "Funnel বর্তমান matched-list order বজায় রাখে। কোনো hidden risk score বা ranking তৈরি করা হয় না।"
-    }
+    },
+    "previewInfo": "{{value}}-এর details ও explanation দেখুন"
   },
   "candidates": {
     "title": "অডিট প্রার্থী",

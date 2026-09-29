@@ -158,6 +158,108 @@ export function resolveAuditExplanation(
   const lang: Lang = language?.toLowerCase().startsWith("bn") ? "bn" : "en";
   const value = text(rawValue);
 
+  if (field === "candidate_record") {
+    const taxpayerName = text(row.taxpayer_name);
+    const riskLevel = text(row.risk_level);
+    const coverageTier = text(row.coverage_tier);
+    const dataQuality = text(row.data_quality);
+    const signalIds = signalsFrom(text(row.signals));
+    const flagIds = flagsFrom(text(row.control_flags));
+    const risk = RISK[riskLevel];
+    const coverage = COVERAGE[coverageTier];
+
+    const dataQualityExplanation = dataQuality.toLowerCase().includes("invalid")
+      ? pick(l("One or more values are unusable for affected checks. Invalid values must not be silently converted to zero.", "এক বা একাধিক value affected check-এর জন্য unusable। Invalid value নীরবে zero করা যাবে না।"), lang)
+      : dataQuality.toLowerCase().includes("incomplete")
+        ? pick(l("One or more required values are missing. Missing values remain missing rather than being treated as zero.", "এক বা একাধিক required value missing। Missing value-কে zero ধরা হবে না।"), lang)
+        : pick(l("The available values passed the current data-quality gate for the checks shown.", "Available value current data-quality gate pass করেছে।"), lang);
+
+    const explanationSections: AuditExplanationSection[] = [
+      {
+        title: pick(l("Candidate information", "Candidate information"), lang),
+        items: [
+          ["Taxpayer", taxpayerName],
+          ["TIN", text(row.tin)],
+          ["Return ID", text(row.return_id)],
+          ["Assessment Year", text(row.assessment_year)],
+          ["Return Version", text(row.return_version)],
+          ["Circle", text(row.circle)],
+        ].filter(([, itemValue]) => itemValue !== "—").map(([label, itemValue]) => ({ label, value:itemValue })),
+      },
+      {
+        title: pick(l("Screening context", "Screening context"), lang),
+        items: [
+          ["Data Quality", dataQuality],
+          ["Coverage Tier", coverageTier],
+          ["Available data", text(row.available_data)],
+          ["Risk Level", riskLevel],
+          ["Signals", text(row.signals)],
+          ["Control Flags", text(row.control_flags)],
+          ["Audit state", text(row.audit_state)],
+          ["Reason / basis", text(row.reason_code)],
+        ].filter(([, itemValue]) => itemValue !== "—").map(([label, itemValue]) => ({ label, value:itemValue })),
+      },
+      {
+        title: pick(l("Data readiness explanation", "Data readiness explanation"), lang),
+        items: [
+          { label: pick(l("Data Quality", "Data Quality"), lang), value:dataQualityExplanation },
+          ...(coverage ? [{
+            label: coverageTier,
+            value: `${pick(coverage.definition, lang)} ${pick(l("Available:", "Available:"), lang)} ${pick(coverage.available, lang)}.`,
+          }] : []),
+        ],
+      },
+      ...(risk ? [{
+        title: pick(l("Risk Level explanation", "Risk Level explanation"), lang),
+        items: [
+          { label:riskLevel, value:`${pick(risk.definition, lang)} ${pick(risk.basis, lang)} ${pick(l("Handling:", "Handling:"), lang)} ${pick(risk.handling, lang)}` },
+        ],
+      }] : []),
+      ...(signalIds.length ? [{
+        title: pick(l("Risk signal explanations", "Risk signal explanations"), lang),
+        items: signalIds.map((id) => {
+          const signal = SIGNALS[id];
+          return {
+            label:`${id} · ${pick(signal.name, lang)}`,
+            value:`${pick(signal.condition, lang)} ${pick(l("Strength:", "Strength:"), lang)} ${signal.strength}. ${pick(l("Requires:", "Requires:"), lang)} ${signal.requires}. ${pick(l("Evidence:", "Evidence:"), lang)} ${pick(signal.evidence, lang)}`,
+          };
+        }),
+      }] : []),
+      ...(flagIds.length ? [{
+        title: pick(l("Control flag explanations", "Control flag explanations"), lang),
+        items: flagIds.map((id) => {
+          const flag = FLAGS[id];
+          return {
+            label:`${id} · ${pick(flag.name, lang)}`,
+            value:`${pick(flag.check, lang)} ${pick(l("Source:", "Source:"), lang)} ${flag.source}. ${pick(flag.dependency, lang)}`,
+          };
+        }),
+      }] : []),
+    ].filter((section) => section.items.length > 0);
+
+    return {
+      title: taxpayerName,
+      category: pick(l("Audit candidate preview", "Audit candidate preview"), lang),
+      definition: pick(
+        l("This is the taxpayer's current screening context at Candidate Preview. It combines the record details with explanations of the risk, coverage and control concepts shown.", "এটি Candidate Preview-এ taxpayer-এর current screening context। এখানে record detail-এর সাথে দেখানো risk, coverage ও control concept-এর explanation একসাথে আছে।"),
+        lang,
+      ),
+      effect: pick(
+        l("The record has reached Candidate Preview after the selected population, readiness, criteria and funnel steps. This does not create a Finding, accusation or tax determination.", "Selected population, readiness, criteria ও funnel step-এর পর record Candidate Preview-এ এসেছে। এটি Finding, accusation বা tax determination তৈরি করে না।"),
+        lang,
+      ),
+      nextStep: pick(
+        l("Keep the candidate or exclude it with a recorded reason, then continue to final review.", "Candidate রাখুন অথবা recorded reason দিয়ে exclude করুন, তারপর final review-এ যান।"),
+        lang,
+      ),
+      important: pick(
+        l("TIN remains masked in this preview. Risk Level is a review priority, and Control Flags remain separate from substantive Risk Signals.", "এই preview-এ TIN masked থাকে। Risk Level review priority, এবং Control Flag substantive Risk Signal থেকে আলাদা থাকে।"),
+        lang,
+      ),
+      sections: explanationSections,
+    };
+  }
+
   if (field === "coverage_tier" && COVERAGE[value]) {
     const c = COVERAGE[value];
     return {

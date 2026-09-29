@@ -422,7 +422,8 @@
         "limited": "{{percentage}}% · Min {{minimum}} · Max {{maximum}}"
       },
       "orderingNote": "The funnel preserves the current matched-list order. It does not create a hidden risk score or ranking."
-    }
+    },
+    "previewInfo": "View {{value}} details and explanations"
   },
   "candidates": {
     "title": "Audit Candidates",

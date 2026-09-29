@@ -927,8 +927,8 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                       description={meta}
                       checked={included}
                       onChange={(checked) => setExcluded(row, checked)}
-                      onInfo={() => explain("risk_level", String(row.risk_level), row)}
-                      infoLabel={t("initiate.explain", { value: String(row.risk_level) })}
+                      onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
+                      infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
                     />
                     {!included && (
                       <AppTextArea
