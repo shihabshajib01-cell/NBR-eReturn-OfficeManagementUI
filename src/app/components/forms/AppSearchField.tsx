@@ -59,6 +59,7 @@ export function AppSearchField({
           opacity: 0.65,
           pointerEvents: "none",
           flexShrink: 0,
+          zIndex: 1,
         }}
       />
 
