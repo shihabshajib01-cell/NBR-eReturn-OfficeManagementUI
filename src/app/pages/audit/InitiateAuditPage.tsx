@@ -10,6 +10,7 @@ import { AppNumberField } from "../../components/forms/AppNumberField";
 import { AppChoiceCard } from "../../components/forms/AppChoiceCard";
 import { AppSelectionRow } from "../../components/forms/AppSelectionRow";
 import { FormSection } from "../../components/forms/FormSection";
+import { CollapsibleFormSection } from "../../components/forms/CollapsibleFormSection";
 import { AppStepper } from "../../components/shared/AppStepper";
 import { Pagination } from "../../components/shared/Pagination";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
@@ -110,6 +111,8 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [funnelMaximum, setFunnelMaximum] = useState("2000");
   const [previewPage, setPreviewPage] = useState(1);
   const [previewPerPage, setPreviewPerPage] = useState(10);
+  const [reviewPage, setReviewPage] = useState(1);
+  const [reviewPerPage, setReviewPerPage] = useState(10);
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
 
   const activeSteps = TRACK_STEPS[track];
@@ -215,6 +218,14 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   );
 
   const finalRows = funnelRows;
+  const safeReviewPage = Math.min(
+    reviewPage,
+    Math.max(1, Math.ceil(finalRows.length / reviewPerPage)),
+  );
+  const reviewPageRows = finalRows.slice(
+    (safeReviewPage - 1) * reviewPerPage,
+    safeReviewPage * reviewPerPage,
+  );
 
   const manualRows = useMemo(() => {
     const needle = manualSearch.trim().toLowerCase();
@@ -297,6 +308,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     setFunnelMinimum("200");
     setFunnelMaximum("2000");
     setPreviewPage(1);
+    setReviewPage(1);
   };
 
   const funnelBasis = useMemo(() => {
@@ -956,104 +968,106 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
 
     return (
       <div className="form-stack">
-        <FormSection
-          title={t("initiate.steps.review.title")}
-          description={t("initiate.steps.review.desc")}
+        <CollapsibleFormSection
+          title={t("initiate.review.scope")}
+          icon={ClipboardList}
+        >
+          <dl className="form-summary-list">
+            <div className="form-summary-list__row">
+              <dt className="form-summary-list__label">{t("initiate.fields.assessmentYear")}</dt>
+              <dd className="form-summary-list__value">{assessmentYear}</dd>
+            </div>
+            <div className="form-summary-list__row">
+              <dt className="form-summary-list__label">{t("initiate.fields.selectionTrack")}</dt>
+              <dd className="form-summary-list__value">{t(TRACKS.find((item)=>item.id===track)?.titleKey ?? "initiate.tracks.risk.title")}</dd>
+            </div>
+            <div className="form-summary-list__row">
+              <dt className="form-summary-list__label">{t("initiate.fields.circleScope")}</dt>
+              <dd className="form-summary-list__value">{scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ")}</dd>
+            </div>
+          </dl>
+        </CollapsibleFormSection>
+
+        <CollapsibleFormSection
+          title={t("initiate.review.criteria")}
+          icon={FileSearch}
+        >
+          <dl className="form-summary-list">
+            <div className="form-summary-list__row">
+              <dt className="form-summary-list__label">{t("initiate.fields.dataQuality")}</dt>
+              <dd className="form-summary-list__value">{dataQuality.join(", ")}</dd>
+            </div>
+            <div className="form-summary-list__row">
+              <dt className="form-summary-list__label">{t("initiate.fields.coverageTier")}</dt>
+              <dd className="form-summary-list__value">{coverageTiers.join(", ")}</dd>
+            </div>
+            {track === "risk" && (
+              <>
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.fields.riskLevel")}</dt>
+                  <dd className="form-summary-list__value">{riskLevels.join(", ") || "—"}</dd>
+                </div>
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.fields.riskSignals")}</dt>
+                  <dd className="form-summary-list__value">{signals.join(", ") || "—"}</dd>
+                </div>
+              </>
+            )}
+            {track === "control" && (
+              <div className="form-summary-list__row">
+                <dt className="form-summary-list__label">{t("initiate.fields.controlFlags")}</dt>
+                <dd className="form-summary-list__value">{controlFlags.join(", ")}</dd>
+              </div>
+            )}
+            <div className="form-summary-list__row">
+              <dt className="form-summary-list__label">{t("initiate.review.funnelRule")}</dt>
+              <dd className="form-summary-list__value">{funnelBasis}</dd>
+            </div>
+          </dl>
+        </CollapsibleFormSection>
+
+        <CollapsibleFormSection
+          title={t("initiate.review.finalList", { count:finalRows.length })}
+          description={t("initiate.review.finalListHelp")}
           icon={CheckCircle2}
         >
-          <div className="form-section-grid">
-            <section className="form-subsection">
-              <div className="form-subsection__heading">
-                <h4 className="form-subsection__title">{t("initiate.review.scope")}</h4>
-              </div>
-              <dl className="form-summary-list">
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.fields.assessmentYear")}</dt>
-                  <dd className="form-summary-list__value">{assessmentYear}</dd>
-                </div>
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.fields.selectionTrack")}</dt>
-                  <dd className="form-summary-list__value">{t(TRACKS.find((item)=>item.id===track)?.titleKey ?? "initiate.tracks.risk.title")}</dd>
-                </div>
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.fields.circleScope")}</dt>
-                  <dd className="form-summary-list__value">{scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ")}</dd>
-                </div>
-              </dl>
-            </section>
-
-            <section className="form-subsection">
-              <div className="form-subsection__heading">
-                <h4 className="form-subsection__title">{t("initiate.review.criteria")}</h4>
-              </div>
-              <dl className="form-summary-list">
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.fields.dataQuality")}</dt>
-                  <dd className="form-summary-list__value">{dataQuality.join(", ")}</dd>
-                </div>
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.fields.coverageTier")}</dt>
-                  <dd className="form-summary-list__value">{coverageTiers.join(", ")}</dd>
-                </div>
-                {track === "risk" && (
-                  <>
-                    <div className="form-summary-list__row">
-                      <dt className="form-summary-list__label">{t("initiate.fields.riskLevel")}</dt>
-                      <dd className="form-summary-list__value">{riskLevels.join(", ") || "—"}</dd>
-                    </div>
-                    <div className="form-summary-list__row">
-                      <dt className="form-summary-list__label">{t("initiate.fields.riskSignals")}</dt>
-                      <dd className="form-summary-list__value">{signals.join(", ") || "—"}</dd>
-                    </div>
-                  </>
-                )}
-                {track === "control" && (
-                  <div className="form-summary-list__row">
-                    <dt className="form-summary-list__label">{t("initiate.fields.controlFlags")}</dt>
-                    <dd className="form-summary-list__value">{controlFlags.join(", ")}</dd>
-                  </div>
-                )}
-                <div className="form-summary-list__row">
-                  <dt className="form-summary-list__label">{t("initiate.review.funnelRule")}</dt>
-                  <dd className="form-summary-list__value">{funnelBasis}</dd>
-                </div>
-              </dl>
-            </section>
+          <div className="app-selection-stack">
+            {reviewPageRows.map((row) => {
+              const id=String(row.return_id);
+              const meta=[
+                String(row.tin),
+                String(row.circle),
+                String(row.coverage_tier),
+                String(row.signals),
+                String(row.risk_level),
+                String(row.control_flags),
+              ].filter((value) => value && value !== "—").join(" · ");
+              return (
+                <AppSelectionRow
+                  key={id}
+                  title={String(row.taxpayer_name)}
+                  description={meta}
+                  selectionControl={false}
+                  onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
+                  infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
+                />
+              );
+            })}
           </div>
-
-          <section className="form-subsection">
-            <div className="form-subsection__heading">
-              <h4 className="form-subsection__title">
-                {t("initiate.review.finalList", { count:finalRows.length })}
-              </h4>
-              <p className="form-subsection__description">{t("initiate.review.finalListHelp")}</p>
-            </div>
-            <div className="app-selection-stack">
-              {finalRows.map((row) => {
-                const id=String(row.return_id);
-                const meta=[
-                  String(row.tin),
-                  String(row.circle),
-                  String(row.coverage_tier),
-                  String(row.signals),
-                  String(row.risk_level),
-                  String(row.control_flags),
-                ].filter((value) => value && value !== "—").join(" · ");
-                return (
-                  <AppSelectionRow
-                    key={id}
-                    title={String(row.taxpayer_name)}
-                    description={meta}
-                    selectionControl={false}
-                    onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
-                    infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
-                  />
-                );
-              })}
-            </div>
-            <p className="form-helper">{t("initiate.review.confirmDesc")}</p>
-          </section>
-        </FormSection>
+          <Pagination
+            total={finalRows.length}
+            page={safeReviewPage}
+            perPage={reviewPerPage}
+            onPage={setReviewPage}
+            perPageOptions={[10, 25, 50]}
+            onPerPageChange={(value) => {
+              setReviewPerPage(value);
+              setReviewPage(1);
+            }}
+            perPageLabel={t("initiate.previewSummary.rowsPerPage")}
+          />
+          <p className="form-helper">{t("initiate.review.confirmDesc")}</p>
+        </CollapsibleFormSection>
       </div>
     );
   };
