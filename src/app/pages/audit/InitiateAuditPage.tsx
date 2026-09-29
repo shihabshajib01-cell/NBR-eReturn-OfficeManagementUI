@@ -438,10 +438,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             icon={Database}
           >
             <div className="form-section-grid">
-              <FormSection
-                title={t("initiate.fields.dataQuality")}
-                description={t("initiate.readiness.dataQualityHelp")}
-              >
+              <section className="form-subsection">
+                <div className="form-subsection__heading">
+                  <h4 className="form-subsection__title">{t("initiate.fields.dataQuality")}</h4>
+                  <p className="form-subsection__description">{t("initiate.readiness.dataQualityHelp")}</p>
+                </div>
                 <div className="app-selection-stack">
                   {dataQualityAvailable.map((quality) => (
                     <AppSelectionRow
@@ -454,12 +455,13 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     />
                   ))}
                 </div>
-              </FormSection>
+              </section>
 
-              <FormSection
-                title={t("initiate.fields.coverageTier")}
-                description={t("initiate.readiness.coverageHelp")}
-              >
+              <section className="form-subsection">
+                <div className="form-subsection__heading">
+                  <h4 className="form-subsection__title">{t("initiate.fields.coverageTier")}</h4>
+                  <p className="form-subsection__description">{t("initiate.readiness.coverageHelp")}</p>
+                </div>
                 <div className="app-selection-stack">
                   {coverageAvailable.map((tier) => (
                     <AppSelectionRow
@@ -472,7 +474,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     />
                   ))}
                 </div>
-              </FormSection>
+              </section>
             </div>
           </FormSection>
         </div>
@@ -488,7 +490,10 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             icon={FileSearch}
           >
             <div className="form-stack">
-              <FormSection title={t("initiate.fields.riskLevel")}>
+              <section className="form-subsection">
+                <div className="form-subsection__heading">
+                  <h4 className="form-subsection__title">{t("initiate.fields.riskLevel")}</h4>
+                </div>
                 <div className="app-selection-grid">
                   {RISK_LEVELS.map((level) => (
                     <AppSelectionRow
@@ -501,12 +506,13 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     />
                   ))}
                 </div>
-              </FormSection>
+              </section>
 
-              <FormSection
-                title={t("initiate.fields.riskSignals")}
-                description={t("initiate.riskSignals.help")}
-              >
+              <section className="form-subsection">
+                <div className="form-subsection__heading">
+                  <h4 className="form-subsection__title">{t("initiate.fields.riskSignals")}</h4>
+                  <p className="form-subsection__description">{t("initiate.riskSignals.help")}</p>
+                </div>
                 <AppSearchField
                   value={riskSignalSearch}
                   onChange={setRiskSignalSearch}
@@ -534,13 +540,14 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                 ) : (
                   <p className="form-helper">{t("initiate.riskSignals.noResults")}</p>
                 )}
-              </FormSection>
+              </section>
 
               {signals.length > 1 && (
-                <FormSection
-                  title={t("initiate.fields.matchLogic")}
-                  description={t("initiate.match.help")}
-                >
+                <section className="form-subsection">
+                  <div className="form-subsection__heading">
+                    <h4 className="form-subsection__title">{t("initiate.fields.matchLogic")}</h4>
+                    <p className="form-subsection__description">{t("initiate.match.help")}</p>
+                  </div>
                   <div className="app-choice-grid">
                     <AppChoiceCard
                       name="match-mode"
@@ -559,7 +566,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                       onSelect={setMatchMode}
                     />
                   </div>
-                </FormSection>
+                </section>
               )}
             </div>
           </FormSection>
@@ -575,10 +582,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             description={t("initiate.steps.controlCriteria.desc")}
             icon={FileSearch}
           >
-            <FormSection
-              title={t("initiate.fields.controlFlags")}
-              description={t("initiate.controlCriteria.note")}
-            >
+            <section className="form-subsection">
+              <div className="form-subsection__heading">
+                <h4 className="form-subsection__title">{t("initiate.fields.controlFlags")}</h4>
+                <p className="form-subsection__description">{t("initiate.controlCriteria.note")}</p>
+              </div>
               <div className="app-selection-grid">
                 {FLAG_OPTIONS.map(([id,label]) => (
                   <AppSelectionRow
@@ -592,7 +600,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   />
                 ))}
               </div>
-            </FormSection>
+            </section>
           </FormSection>
         </div>
       );
@@ -606,7 +614,10 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             description={t("initiate.steps.manualSelection.desc")}
             icon={FileSearch}
           >
-            <FormSection title={t("initiate.fields.manualTaxpayers")}>
+            <section className="form-subsection">
+              <div className="form-subsection__heading">
+                <h4 className="form-subsection__title">{t("initiate.fields.manualTaxpayers")}</h4>
+              </div>
               <AppSearchField
                 value={manualSearch}
                 onChange={setManualSearch}
@@ -701,7 +712,10 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
           icon={CheckCircle2}
         >
           <div className="form-section-grid">
-            <FormSection title={t("initiate.review.scope")}>
+            <section className="form-subsection">
+              <div className="form-subsection__heading">
+                <h4 className="form-subsection__title">{t("initiate.review.scope")}</h4>
+              </div>
               <dl className="form-summary-list">
                 <div className="form-summary-list__row">
                   <dt className="form-summary-list__label">{t("initiate.fields.assessmentYear")}</dt>
@@ -716,9 +730,12 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   <dd className="form-summary-list__value">{scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ")}</dd>
                 </div>
               </dl>
-            </FormSection>
+            </section>
 
-            <FormSection title={t("initiate.review.criteria")}>
+            <section className="form-subsection">
+              <div className="form-subsection__heading">
+                <h4 className="form-subsection__title">{t("initiate.review.criteria")}</h4>
+              </div>
               <dl className="form-summary-list">
                 <div className="form-summary-list__row">
                   <dt className="form-summary-list__label">{t("initiate.fields.dataQuality")}</dt>
@@ -753,7 +770,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   </div>
                 )}
               </dl>
-            </FormSection>
+            </section>
           </div>
         </FormSection>
 

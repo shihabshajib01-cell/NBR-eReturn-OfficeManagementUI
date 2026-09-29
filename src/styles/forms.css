@@ -398,6 +398,47 @@
   gap: 1rem;
 }
 
+/* Lightweight subsection for grouping related controls inside a FormSection
+   without creating another card/border/background layer. */
+.form-subsection {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.form-subsection + .form-subsection {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.form-section-grid > .form-subsection + .form-subsection {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.form-subsection__heading {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-subsection__title {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: var(--fs-label-md);
+  line-height: var(--lh-body-sm);
+  font-weight: 600;
+}
+
+.form-subsection__description {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+}
+
 /* Compact action row inside form sections.
    Unlike filter-actions, this has no external top margin because the
    FormSection body already provides its own padding and vertical gap. */
