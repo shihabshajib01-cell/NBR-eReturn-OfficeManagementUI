@@ -169,7 +169,10 @@
       "readiness": "Data readiness",
       "criteria": "Audit criteria",
       "preview": "Candidate preview",
-      "review": "Review & confirm"
+      "review": "Review & confirm",
+      "riskCriteria": "Risk criteria",
+      "controlCriteria": "Control criteria",
+      "manualSelection": "Select taxpayers"
     },
     "steps": {
       "setup": {
@@ -195,6 +198,18 @@
       "review": {
         "title": "Review & confirm",
         "desc": "Review the complete selection basis before adding taxpayers to this year's Audit Candidates register."
+      },
+      "riskCriteria": {
+        "title": "Risk criteria",
+        "desc": "Select one or more Risk Levels and/or A–E screening signals. When multiple signals are selected, choose whether any or all must match."
+      },
+      "controlCriteria": {
+        "title": "Control criteria",
+        "desc": "Select one or more F0–F5 filing, arithmetic or consistency controls. These controls remain separate from substantive Risk Level."
+      },
+      "manualSelection": {
+        "title": "Select taxpayers",
+        "desc": "Search the readiness-eligible population and select individual returns directly. No legal selection reason code is added unless it is defined by an approved source."
       }
     },
     "fields": {
@@ -214,19 +229,19 @@
     "tracks": {
       "population": {
         "title": "Population / Circle-based Audit",
-        "desc": "Select the full eligible population from one Circle, multiple Circles or all Circles. This is an officer-directed selection, not a Risk Level."
+        "desc": "Circle scope + data readiness only. No Risk Level, signal or control criterion is added."
       },
       "risk": {
         "title": "Risk-based Audit",
-        "desc": "Select candidates using Coverage-eligible Risk Levels and A–E screening signals after the framework's separation and deduplication principles."
+        "desc": "Use Risk Level and/or A–E signals, with Any/All matching when multiple signals are selected."
       },
       "control": {
         "title": "Control / Data Quality Review",
-        "desc": "Select by F0–F5 filing, arithmetic or consistency controls. These controls remain separate from substantive Risk Level."
+        "desc": "Use F0–F5 control flags only. Control selection remains separate from substantive Risk Level."
       },
       "manual": {
         "title": "Manual Selection",
-        "desc": "Choose individual taxpayers directly from the eligible population. Final legal selection reason codes are not defined in the supplied rules."
+        "desc": "Search the eligible population and select individual returns directly. Undefined legal reason codes are not invented."
       }
     },
     "scope": {
