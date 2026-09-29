@@ -1058,6 +1058,14 @@
   opacity: 0.5;
 }
 
+.app-selection-row--static {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.app-selection-row--static .app-selection-row__content {
+  cursor: default;
+}
+
 .app-selection-row__content {
   min-width: 0;
   display: flex;
