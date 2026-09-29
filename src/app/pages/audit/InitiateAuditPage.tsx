@@ -14,9 +14,7 @@ import { AppStepper } from "../../components/shared/AppStepper";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { SecondaryButton } from "../../components/buttons/SecondaryButton";
 import { AppModal } from "../../components/modals/AppModal";
-import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
-import type { ColDef, TableRow } from "../modulePageUtils";
-import { fc } from "../modulePageUtils";
+import type { TableRow } from "../modulePageUtils";
 import { ALL_TAXPAYER_ROWS } from "./auditData";
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
 import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge";
@@ -218,15 +216,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     }
   }, [activeStepId, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, finalRows, exclusions]);
 
-  const previewCols: ColDef[] = [
-    fc("taxpayer_name", t("columns.taxpayer")),
-    fc("tin", t("columns.tin"), { mono:true }),
-    fc("circle", t("columns.circle")),
-    fc("coverage_tier", t("columns.coverageTier")),
-    fc("signals", t("columns.signals"), { truncate:"normal" }),
-    fc("risk_level", t("columns.riskLevel")),
-    fc("control_flags", t("columns.controlFlags")),
-  ];
 
   const explain = (key: string, value: string, row: TableRow) => {
     const resolved = resolveAuditExplanation(key, value, row, i18n.resolvedLanguage);
@@ -748,54 +737,46 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
         <div className="form-stack">
           <FormSection
             title={t("initiate.steps.preview.title")}
-            description={t("initiate.steps.preview.desc")}
+            description={t("initiate.adjustments.desc")}
             icon={ListChecks}
           >
-
-            <div className="table-card">
-              <ResponsiveTable
-                cols={previewCols}
-                rows={matchedRows}
-                noCard
-                clickableKeys={["circle","coverage_tier","signals","risk_level","control_flags"]}
-                onCellClick={explain}
-                mobileCardMapping={{primary:"taxpayer_name",identifier:"tin",meta:["circle","coverage_tier","risk_level"]}}
-                aria-label={t("initiate.steps.preview.title")}
-              />
-            </div>
-            <section className="form-subsection">
-              <div className="form-subsection__heading">
-                <h4 className="form-subsection__title">{t("initiate.adjustments.title")}</h4>
-                <p className="form-subsection__description">{t("initiate.adjustments.desc")}</p>
-              </div>
-              <div className="app-selection-stack">
-                {matchedRows.map((row) => {
-                  const id=String(row.return_id);
-                  const included=!(id in exclusions);
-                  return (
-                    <div className="form-stack" key={id}>
-                      <AppSelectionRow
-                        title={String(row.taxpayer_name)}
-                        description={`${id} · ${String(row.circle)}`}
-                        checked={included}
-                        onChange={(checked) => setExcluded(row, checked)}
+            <div className="app-selection-stack">
+              {matchedRows.map((row) => {
+                const id=String(row.return_id);
+                const included=!(id in exclusions);
+                const meta=[
+                  String(row.tin),
+                  String(row.circle),
+                  String(row.coverage_tier),
+                  String(row.signals),
+                  String(row.risk_level),
+                  String(row.control_flags),
+                ].filter((value) => value && value !== "—").join(" · ");
+                return (
+                  <div className="form-stack" key={id}>
+                    <AppSelectionRow
+                      title={String(row.taxpayer_name)}
+                      description={meta}
+                      checked={included}
+                      onChange={(checked) => setExcluded(row, checked)}
+                      onInfo={() => explain("risk_level", String(row.risk_level), row)}
+                      infoLabel={t("initiate.explain", { value: String(row.risk_level) })}
+                    />
+                    {!included && (
+                      <AppTextArea
+                        id={`exclude-${id}`}
+                        label={t("initiate.adjustments.reason")}
+                        value={exclusions[id] ?? ""}
+                        onChange={(value) => setExclusions((prev) => ({...prev,[id]:value}))}
+                        placeholder={t("initiate.adjustments.reasonPlaceholder")}
+                        rows={2}
+                        required
                       />
-                      {!included && (
-                        <AppTextArea
-                          id={`exclude-${id}`}
-                          label={t("initiate.adjustments.reason")}
-                          value={exclusions[id] ?? ""}
-                          onChange={(value) => setExclusions((prev) => ({...prev,[id]:value}))}
-                          placeholder={t("initiate.adjustments.reasonPlaceholder")}
-                          rows={2}
-                          required
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </FormSection>
         </div>
       );
