@@ -57,6 +57,14 @@
 .app-modal--md  { max-width: 580px; }
 .app-modal--lg  { max-width: 800px; }
 .app-modal--xl  { max-width: 1000px; }
+.app-modal--xxl { max-width: 1240px; }
+
+@media (min-width: 1024px) {
+  .app-modal-backdrop:has(.app-modal--xxl) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
 
 /* ── Header ────────────────────────────────────────────────────────────── */
 .app-modal-header {
