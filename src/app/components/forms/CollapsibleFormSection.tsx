@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
 import type { IconComponent } from "../../pages/modulePageUtils";
 
@@ -17,8 +17,14 @@ export function CollapsibleFormSection({
   children,
   defaultOpen = true,
 }: CollapsibleFormSectionProps) {
+  const [open, setOpen] = useState(defaultOpen);
+
   return (
-    <details className="form-section form-section--collapsible" open={defaultOpen}>
+    <details
+      className="form-section form-section--collapsible"
+      open={open}
+      onToggle={(event) => setOpen(event.currentTarget.open)}
+    >
       <summary className="form-section__header form-section__header--collapsible">
         {Icon && (
           <span className="form-section__icon" aria-hidden="true">
