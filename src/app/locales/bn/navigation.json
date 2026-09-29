@@ -81,7 +81,8 @@
     "reconciliation": "রিকনসিলিয়েশন",
     "auditTrail": "অডিট ট্রেইল",
     "allTaxpayers": "সকল করদাতা",
-    "auditCandidates": "অডিট প্রার্থী"
+    "auditCandidates": "অডিট প্রার্থী",
+    "auditManual": "অডিট ম্যানুয়াল"
   },
   "administration": {
     "main": "প্রশাসন ও অনুরোধ",
