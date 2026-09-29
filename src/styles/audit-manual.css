@@ -1,545 +1,63 @@
-/* Audit Manual — isolated library styles. Reuses the existing NBR tokens and controls. */
+/* Audit Manual — layout-only extensions.
+   Visual treatment comes from the existing table, form-section, drawer,
+   filter, button and typography systems. */
 
-.audit-manual-page {
-  padding: var(--space-6, 24px);
+.audit-manual-section-stack {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  min-width: 0;
-}
-
-.audit-manual-page__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.audit-manual-page__title {
-  margin: 0 0 6px;
-  color: var(--color-text-primary);
-  font-size: var(--fs-h1);
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.audit-manual-page__description {
-  margin: 0;
-  max-width: 900px;
-  color: var(--color-text-secondary);
-  font-size: var(--fs-body-md);
-  line-height: 1.55;
-}
-
-.audit-manual-page__source {
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 36px;
-  padding: 8px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-text-secondary);
-}
-
-.audit-manual-page__source p {
-  margin: 0;
-  font-size: var(--fs-caption);
-  font-weight: 600;
-}
-
-.audit-manual-flow,
-.audit-manual-library {
-  border: 1px solid var(--color-border);
-  border-radius: 14px;
-  background: var(--color-surface);
-  min-width: 0;
-  overflow: hidden;
-}
-
-.audit-manual-flow {
+  gap: 12px;
   padding: 16px;
-}
-
-.audit-manual-flow__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-
-.audit-manual-flow__head h2,
-.audit-manual-library__title h2 {
-  margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--fs-h3);
-  font-weight: 600;
-}
-
-.audit-manual-flow__head p {
-  margin: 4px 0 0;
-  color: var(--color-text-secondary);
-  font-size: var(--fs-body-sm);
-  line-height: 1.5;
-  max-width: 860px;
-}
-
-.audit-manual-flow__head > svg {
-  color: var(--color-primary);
-  flex: 0 0 auto;
-}
-
-.audit-manual-flow__grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.audit-manual-flow__step {
-  width: 100%;
-  min-width: 0;
-  padding: 12px;
-  text-align: left;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  background: var(--color-background);
-  color: var(--color-text-primary);
-  cursor: pointer;
-  transition: border-color var(--motion-fast) var(--ease-standard), background-color var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard);
-}
-
-.audit-manual-flow__step:hover {
-  border-color: var(--color-primary);
-  background: var(--color-primary-alpha-4);
-}
-
-.audit-manual-flow__step:focus-visible,
-.audit-manual-card:focus-visible,
-.audit-manual-library__clear:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-.audit-manual-flow__step--active {
-  border-color: var(--color-primary);
-  background: var(--color-primary-alpha-6);
-  box-shadow: inset 0 0 0 1px var(--color-primary-alpha-10);
-}
-
-.audit-manual-flow__step h3 {
-  margin: 0 0 6px;
-  font-size: var(--fs-body-sm);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  line-height: 1.35;
-}
-
-.audit-manual-flow__step p {
-  margin: 0;
-  font-size: var(--fs-caption);
-  line-height: 1.45;
-  color: var(--color-text-secondary);
-}
-
-.audit-manual-library__toolbar {
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.audit-manual-library__title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-right: auto;
   min-width: 0;
 }
 
-.audit-manual-library__title > svg {
-  color: var(--color-primary);
-  flex: 0 0 auto;
-}
-
-.audit-manual-library__title p {
-  margin: 0;
-  padding: 2px 8px;
-  border-radius: 9999px;
-  background: var(--color-text-secondary-alpha-4);
-  color: var(--color-text-secondary);
-  font-size: 11px;
-  white-space: nowrap;
-}
-
-.audit-manual-library__controls {
-  display: grid;
-  grid-template-columns: minmax(240px, 1.6fr) minmax(180px, 1fr) minmax(170px, 1fr) auto;
-  gap: 8px;
-  align-items: center;
-  min-width: min(760px, 100%);
-}
-
-.audit-manual-library__search,
-.audit-manual-library__filter {
+.audit-manual-section-stack .form-section {
   min-width: 0;
 }
 
-.audit-manual-library__filter {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.audit-manual-library__filter > svg {
-  display: none;
-}
-
-.audit-manual-library__clear {
-  min-height: 36px;
-  padding: 0 12px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: transparent;
-  color: var(--color-text-secondary);
-  cursor: pointer;
-}
-
-.audit-manual-library__clear:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  background: var(--color-primary-alpha-4);
-}
-
-.audit-manual-library__clear p {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.audit-manual-grid {
-  padding: 14px 16px 16px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.audit-manual-card {
-  width: 100%;
-  min-width: 0;
-  padding: 14px 15px;
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  background: var(--color-surface);
-  text-align: left;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: border-color var(--motion-fast) var(--ease-standard), background-color var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard);
-}
-
-.audit-manual-card:hover {
-  border-color: var(--color-primary);
-  background: var(--color-primary-alpha-3);
-  box-shadow: 0 2px 8px var(--color-text-primary-alpha-3);
-}
-
-.audit-manual-card__meta,
-.audit-manual-topic__meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.audit-manual-card__meta p,
-.audit-manual-topic__meta p {
-  margin: 0;
-  font-size: 11px;
-  line-height: 1.35;
-}
-
-.audit-manual-card__category {
-  padding: 2px 8px;
-  border-radius: 9999px;
-  background: var(--color-primary-alpha-8);
-  color: var(--color-primary);
-  font-weight: 600;
-}
-
-.audit-manual-card__type {
-  padding: 2px 8px;
-  border-radius: 9999px;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-secondary);
-  font-weight: 600;
-}
-
-.audit-manual-card h3 {
-  margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--fs-body-md);
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.audit-manual-card__summary {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--fs-body-sm);
-  line-height: 1.55;
-  flex: 1;
-}
-
-.audit-manual-card__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding-top: 4px;
-}
-
-.audit-manual-card__footer > p {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: 11px;
+.audit-manual-section-stack .form-subsection {
   min-width: 0;
 }
 
-.audit-manual-card__open {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  flex: 0 0 auto;
-  color: var(--color-primary);
+.audit-manual-section-stack .card-table {
+  min-width: 0;
 }
 
-.audit-manual-card__open p {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 600;
+.audit-manual-section-stack .form-summary-list__value {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
-.audit-manual-empty {
-  min-height: 260px;
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.audit-manual-empty-state {
+  padding: 48px 20px;
   text-align: center;
-  color: var(--color-text-secondary);
 }
 
-.audit-manual-empty > svg {
-  color: var(--color-primary);
-  margin-bottom: 10px;
-}
-
-.audit-manual-empty h3 {
+.audit-manual-empty-state h3 {
   margin: 0 0 6px;
   color: var(--color-text-primary);
   font-size: var(--fs-h3);
   font-weight: 600;
 }
 
-.audit-manual-empty > p {
-  margin: 0 0 14px;
-  font-size: var(--fs-body-sm);
-}
-
-.audit-manual-topic {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.audit-manual-topic__meta > p:not(.audit-manual-card__category):not(.audit-manual-card__type) {
-  color: var(--color-text-secondary);
-}
-
-.audit-manual-topic__summary {
-  margin: 0;
-  color: var(--color-text-primary);
-  font-size: var(--fs-body-md);
-  line-height: 1.65;
-}
-
-.audit-manual-topic__guardrail {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 12px 14px;
-  border-left: 3px solid var(--color-primary);
-  border-radius: 0 10px 10px 0;
-  background: var(--color-primary-alpha-6);
-}
-
-.audit-manual-topic__guardrail > svg {
-  color: var(--color-primary);
-  flex: 0 0 auto;
-  margin-top: 1px;
-}
-
-.audit-manual-topic__guardrail h3,
-.audit-manual-topic__section h3,
-.audit-manual-topic__related h3 {
-  margin: 0 0 5px;
-  color: var(--color-text-primary);
-  font-size: var(--fs-body-sm);
-  font-weight: 600;
-}
-
-.audit-manual-topic__guardrail p,
-.audit-manual-topic__related p {
+.audit-manual-empty-state p {
   margin: 0;
   color: var(--color-text-secondary);
   font-size: var(--fs-body-sm);
-  line-height: 1.55;
 }
 
-.audit-manual-topic__section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.audit-manual-topic__points {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.audit-manual-topic__point {
-  display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
-  gap: 10px;
-  align-items: start;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.audit-manual-topic__point:last-child {
-  border-bottom: 0;
-}
-
-.audit-manual-topic__point p {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--fs-body-sm);
-  line-height: 1.6;
-}
-
-.audit-manual-topic__point-number {
-  color: var(--color-primary) !important;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-.audit-manual-topic__codes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.audit-manual-topic__codes p {
-  margin: 0;
-  padding: 4px 8px;
-  border-radius: 7px;
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.audit-manual-topic__related {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--color-border);
-}
-
-.audit-manual-topic__related .action-btn {
-  flex: 0 0 auto;
-}
-
-.audit-manual-topic__related .action-btn p {
-  margin: 0;
-}
-
-@media (max-width: 1279px) {
-  .audit-manual-flow__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .audit-manual-library__controls {
-    width: 100%;
-    min-width: 0;
-    grid-template-columns: minmax(220px, 1.5fr) minmax(170px, 1fr) minmax(160px, 1fr) auto;
-  }
-}
-
-@media (max-width: 767px) {
-  .audit-manual-page {
-    padding: 12px;
-    gap: 12px;
-  }
-
-  .audit-manual-page__header {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .audit-manual-page__source {
-    width: 100%;
-  }
-
-  .audit-manual-flow {
-    padding: 14px;
-  }
-
-  .audit-manual-flow__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .audit-manual-library__toolbar {
-    align-items: stretch;
-  }
-
-  .audit-manual-library__title {
-    width: 100%;
-  }
-
-  .audit-manual-library__controls {
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
-
-  .audit-manual-library__clear {
-    width: 100%;
-  }
-
-  .audit-manual-grid {
-    grid-template-columns: 1fr;
+@media (max-width: 1023px) {
+  .audit-manual-section-stack {
     padding: 10px;
+    gap: 8px;
+  }
+}
+
+@media print {
+  .audit-manual-section-stack details.form-section {
+    display: block;
   }
 
-  .audit-manual-card__footer,
-  .audit-manual-topic__related {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .audit-manual-topic__related .action-btn {
-    width: 100%;
-    justify-content: center;
+  .audit-manual-section-stack details.form-section > .form-section__body--stack {
+    display: flex;
   }
 }
