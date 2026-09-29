@@ -407,6 +407,13 @@
   gap: 0.75rem;
 }
 
+.form-subsection--boxed {
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
 .form-subsection + .form-subsection {
   padding-top: 1rem;
   border-top: 1px solid var(--color-border);

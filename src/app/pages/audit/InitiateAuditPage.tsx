@@ -474,7 +474,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             icon={Database}
           >
             <div className="form-section-grid">
-              <section className="form-subsection">
+              <section className="form-subsection form-subsection--boxed">
                 <div className="form-subsection__heading">
                   <h4 className="form-subsection__title">{t("initiate.fields.dataQuality")}</h4>
                   <p className="form-subsection__description">{t("initiate.readiness.dataQualityHelp")}</p>
@@ -514,7 +514,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                 </div>
               </section>
 
-              <section className="form-subsection">
+              <section className="form-subsection form-subsection--boxed">
                 <div className="form-subsection__heading">
                   <h4 className="form-subsection__title">{t("initiate.fields.coverageTier")}</h4>
                   <p className="form-subsection__description">{t("initiate.readiness.coverageHelp")}</p>
