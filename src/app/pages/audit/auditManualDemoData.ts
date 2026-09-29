@@ -92,6 +92,7 @@ export const AUDIT_MANUAL_DEMO_SECTIONS: ManualSection[] = [
           [mt("Previous expenditure components","Previous expenditure component"),mt("Housing 1.1 · vehicle 0.2 · education 0.6 · food/clothing 0.9 · utility 0.32 · festival 0.2 · travel 0.45 · Sl.8 TDS/prior tax 0.43","Housing 1.1 · vehicle 0.2 · education 0.6 · food/clothing 0.9 · utility 0.32 · festival 0.2 · travel 0.45 · Sl.8 TDS/prior tax 0.43")],
           [same("Seed signals"),same("R-B1 meaningful · fact asset-growth · family internal-change")],
           [same("Control flags"),same("F1")],
+          [same("Engine outcome"),mt("Reconciliation: Sources 8, Uses 4.5, Net/Gross Wealth 34.5, Assets 82, Gap +47.5, materiality 2 → auto R-C1 strong; B1 becomes context; Risk Level High.","Reconciliation: Sources 8, Uses 4.5, Net/Gross Wealth 34.5, Assets 82, Gap +47.5, materiality 2 → auto R-C1 strong; B1 context; Risk Level High।")],
           [mt("Source correction note","Source correction note"),mt("The source comments that R-A1 must not fire because income is 8L, not zero; only B1 is seeded before reconciliation.","Source comment: income 8L হওয়ায় R-A1 fire নয়; reconciliation-এর আগে শুধু B1 seed।")],
         ],
       },
@@ -110,6 +111,7 @@ export const AUDIT_MANUAL_DEMO_SECTIONS: ManualSection[] = [
           [same("Component data"),mt("Asset components: unavailable · expenditure components: unavailable","Asset component: unavailable · expenditure component: unavailable")],
           [same("Seed signals"),same("none")],
           [same("Control flags"),same("none")],
+          [same("Engine outcome"),mt("Reconciliation gap 0; no substantive signal retained; Risk Level Low.","Reconciliation gap 0; retained substantive signal নেই; Risk Level Low।")],
         ],
       },
       {
@@ -122,6 +124,7 @@ export const AUDIT_MANUAL_DEMO_SECTIONS: ManualSection[] = [
           [same("IT-10B / history / components"),mt("Unavailable","Unavailable")],
           [same("Seed signals"),same("R-A2 weak · fact tax-zero · family internal-tax")],
           [same("Control flags"),same("F5")],
+          [same("Engine outcome"),mt("No reconciliation because IT-10B is unavailable; R-A2 weak remains eligible from return data; Risk Level Low, with F5 on the separate control path.","IT-10B unavailable বলে reconciliation নেই; return data থেকে R-A2 weak eligible; Risk Level Low, F5 আলাদা control path-এ।")],
         ],
       },
     ],
@@ -184,6 +187,17 @@ export const AUDIT_MANUAL_DEMO_SUPPLEMENTS: Record<string, ManualBlock[]> = {
         mt("If E0 → PC (Coverage/Data Quality), not a risk priority.","E0 → PC (Coverage/Data Quality), risk priority নয়।"),
         mt("If Net Wealth rises/flat: I0 → P3 when expenditure midpoint ≥9 else P2; otherwise expenditure ≥2× income → P3; > income → P2; ≥60% income → P1; E1 with I3+ → P1; else P0.","Net Wealth ↑/flat: I0 হলে exp midpoint ≥9 → P3, নইলে P2; অন্যথায় exp ≥2×income → P3; >income → P2; ≥60% → P1; E1 ও I3+ → P1; else P0।"),
         mt("If Net Wealth falls: I0 → P2 when expenditure midpoint ≥21 else P1; otherwise expenditure ≥3× income → P2; > income → P1; E1 with I3+ → P1; else P0.","Net Wealth ↓: I0 হলে exp midpoint ≥21 → P2, নইলে P1; অন্যথায় exp ≥3×income → P2; >income → P1; E1 ও I3+ → P1; else P0।"),
+      ],
+    },
+  ],
+  s13: [
+    {
+      kind: "table",
+      title: mt("Source verification-strip demo", "Source verification-strip demo"),
+      columns: [mt("State","State"), mt("Risk / signals","Risk / signals"), mt("Verification","Verification"), mt("Evidence refs","Evidence ref"), mt("Meaning","Meaning")],
+      rows: [
+        [mt("Before verification","Verification-এর আগে"),same("Risk High · R-C1 strong · R-E2 meaningful · R-D3 weak"),same("C1 Pending · E2 Pending · D3 Pending"),same("none"),mt("Three signals are open; Risk Level already comes from the screening engine.","তিন signal open; Risk Level screening engine থেকেই এসেছে।")],
+        [mt("After partial verification","আংশিক verification-এর পরে"),same("Risk remains High"),same("C1 Verified · E2 Refuted · D3 Pending"),same("C1: D-1 Bank statement · E2: D-2 Registry extract"),mt("One signal's outcome does not alter another signal, and verification does not change Risk Level.","এক signal-এর outcome অন্য signal-কে স্পর্শ করে না; verification Risk Level বদলায় না।")],
       ],
     },
   ],
