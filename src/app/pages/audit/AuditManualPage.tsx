@@ -456,6 +456,12 @@ export function AuditManualPage() {
     setShowFilter(false);
   };
 
+  useEffect(() => {
+    setFilterValues({});
+    setAppliedFilters({});
+    setShowFilter(false);
+  }, [language]);
+
   const expandAll = () => setOpenSections(new Set(filteredSections.map((section) => section.id)));
   const collapseAll = () => setOpenSections(new Set());
 
@@ -503,10 +509,10 @@ export function AuditManualPage() {
             <Filter size={13} aria-hidden="true" /> {tc("actions.filter")}
           </button>
 
-          <button type="button" className="table-card__toolbar-btn" onClick={expandAll}>
+          <button type="button" className="table-card__toolbar-btn audit-manual-desktop-only" onClick={expandAll}>
             {txt(COPY.expandAll)}
           </button>
-          <button type="button" className="table-card__toolbar-btn" onClick={collapseAll}>
+          <button type="button" className="table-card__toolbar-btn audit-manual-desktop-only" onClick={collapseAll}>
             {txt(COPY.collapseAll)}
           </button>
           <button
