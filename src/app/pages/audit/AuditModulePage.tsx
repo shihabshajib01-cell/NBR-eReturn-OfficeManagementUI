@@ -392,8 +392,9 @@ function AuditOverviewPage() {
         </div>
       </div>
 
-      <div className="dashboard-section-grid">
-        <DashSection title={t("overview.auditPipeline")} icon={Workflow}>
+      <div className="dashboard-content-stack">
+        <div className="dashboard-section-grid">
+          <DashSection title={t("overview.auditPipeline")} icon={Workflow}>
           <ResponsiveTable
             cols={pipelineCols}
             rows={pipelineRows}
@@ -403,19 +404,19 @@ function AuditOverviewPage() {
             aria-label={t("overview.auditPipeline")}
           />
         </DashSection>
-        <DashSection title={t("overview.riskDistribution")} icon={Scale}>
-          <ResponsiveTable
-            cols={riskCols}
-            rows={riskRows}
-            noCard
-            clickableKeys={["risk_level"]}
-            onCellClick={explain}
-            aria-label={t("overview.riskDistribution")}
-          />
-        </DashSection>
-      </div>
+          <DashSection title={t("overview.riskDistribution")} icon={Scale}>
+            <ResponsiveTable
+              cols={riskCols}
+              rows={riskRows}
+              noCard
+              clickableKeys={["risk_level"]}
+              onCellClick={explain}
+              aria-label={t("overview.riskDistribution")}
+            />
+          </DashSection>
+        </div>
 
-      <DashSection title={t("overview.circleWorkload")} icon={Activity}>
+        <DashSection title={t("overview.circleWorkload")} icon={Activity}>
         <ResponsiveTable
           cols={circleCols}
           rows={circleRows}
@@ -426,8 +427,8 @@ function AuditOverviewPage() {
         />
       </DashSection>
 
-      <div className="dashboard-section-grid">
-        <DashSection title={t("overview.queueHealth")} icon={Activity}>
+        <div className="dashboard-section-grid">
+          <DashSection title={t("overview.queueHealth")} icon={Activity}>
           <ResponsiveTable
             cols={queueCols}
             rows={queueRows}
@@ -437,7 +438,7 @@ function AuditOverviewPage() {
             aria-label={t("overview.queueHealth")}
           />
         </DashSection>
-        <DashSection title={t("overview.selectionBreakdown")} icon={FileSearch}>
+          <DashSection title={t("overview.selectionBreakdown")} icon={FileSearch}>
           <ResponsiveTable
             cols={selectionCols}
             rows={selectionRows}
@@ -445,16 +446,17 @@ function AuditOverviewPage() {
             aria-label={t("overview.selectionBreakdown")}
           />
         </DashSection>
-      </div>
+        </div>
 
-      <DashSection title={t("overview.recentActivity")} icon={BadgeCheck}>
-        <ResponsiveTable
-          cols={activityCols}
-          rows={recentRows}
-          noCard
-          aria-label={t("overview.recentActivity")}
-        />
-      </DashSection>
+          <DashSection title={t("overview.recentActivity")} icon={BadgeCheck}>
+          <ResponsiveTable
+            cols={activityCols}
+            rows={recentRows}
+            noCard
+            aria-label={t("overview.recentActivity")}
+          />
+        </DashSection>
+      </div>
 
       <AuditExplainerDrawer explanation={explanation} onClose={() => setExplanation(null)} />
     </div>

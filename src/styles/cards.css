@@ -315,6 +315,13 @@
   }
 }
 
+/* Dashboard Section Stack */
+.dashboard-content-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 /* Dashboard Section Grid */
 .dashboard-section-grid {
   display: grid;
