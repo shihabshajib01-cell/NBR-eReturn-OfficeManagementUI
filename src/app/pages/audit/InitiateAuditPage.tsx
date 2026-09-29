@@ -6,6 +6,7 @@ import {
 import { toast } from "sonner";
 import { AppSearchField } from "../../components/forms/AppSearchField";
 import { AppSelectField } from "../../components/forms/AppSelectField";
+import { AppNumberField } from "../../components/forms/AppNumberField";
 import { AppTextArea } from "../../components/forms/AppTextArea";
 import { AppChoiceCard } from "../../components/forms/AppChoiceCard";
 import { AppSelectionRow } from "../../components/forms/AppSelectionRow";
@@ -21,10 +22,10 @@ import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge
 import { addAuditCandidates } from "./auditCandidateStore";
 
 const TRACK_STEPS = {
-  population: ["setup", "population", "readiness", "preview", "review"],
-  risk: ["setup", "population", "readiness", "riskCriteria", "preview", "review"],
-  control: ["setup", "population", "readiness", "controlCriteria", "preview", "review"],
-  manual: ["setup", "population", "readiness", "manualSelection", "preview", "review"],
+  population: ["setup", "population", "readiness", "funnel", "preview", "review"],
+  risk: ["setup", "population", "readiness", "riskCriteria", "funnel", "preview", "review"],
+  control: ["setup", "population", "readiness", "controlCriteria", "funnel", "preview", "review"],
+  manual: ["setup", "population", "readiness", "manualSelection", "funnel", "preview", "review"],
 } as const;
 
 type TrackId = keyof typeof TRACK_STEPS;
@@ -102,6 +103,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [manualSearch, setManualSearch] = useState("");
   const [riskLevelSearch, setRiskLevelSearch] = useState("");
   const [riskSignalSearch, setRiskSignalSearch] = useState("");
+  const [funnelMode, setFunnelMode] = useState("all");
+  const [funnelPercentage, setFunnelPercentage] = useState("10");
+  const [funnelFixedCount, setFunnelFixedCount] = useState("200");
+  const [funnelMinimum, setFunnelMinimum] = useState("200");
+  const [funnelMaximum, setFunnelMaximum] = useState("2000");
   const [exclusions, setExclusions] = useState<Record<string,string>>({});
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
 
@@ -166,9 +172,40 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     return false;
   }), [readinessRows, track, riskLevels, signals, controlFlags, manualReturnIds]);
 
+  const funnelTargetCount = useMemo(() => {
+    const available = matchedRows.length;
+    if (available === 0 || funnelMode === "all") return available;
+
+    const percentage = Number(funnelPercentage);
+    const fixedCount = Number(funnelFixedCount);
+    const minimum = Number(funnelMinimum);
+    const maximum = Number(funnelMaximum);
+
+    if (funnelMode === "percentage") {
+      const target = Number.isFinite(percentage) ? Math.ceil(available * percentage / 100) : 0;
+      return Math.min(available, Math.max(0, target));
+    }
+
+    if (funnelMode === "fixed") {
+      const target = Number.isFinite(fixedCount) ? Math.floor(fixedCount) : 0;
+      return Math.min(available, Math.max(0, target));
+    }
+
+    const base = Number.isFinite(percentage) ? Math.ceil(available * percentage / 100) : 0;
+    const minValue = Number.isFinite(minimum) ? Math.max(0, Math.floor(minimum)) : 0;
+    const maxValue = Number.isFinite(maximum) ? Math.max(0, Math.floor(maximum)) : available;
+    const bounded = Math.min(Math.max(base, minValue), maxValue);
+    return Math.min(available, Math.max(0, bounded));
+  }, [matchedRows.length, funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum]);
+
+  const funnelRows = useMemo(
+    () => matchedRows.slice(0, funnelTargetCount),
+    [matchedRows, funnelTargetCount],
+  );
+
   const finalRows = useMemo(
-    () => matchedRows.filter((row) => !(String(row.return_id) in exclusions)),
-    [matchedRows, exclusions],
+    () => funnelRows.filter((row) => !(String(row.return_id) in exclusions)),
+    [funnelRows, exclusions],
   );
 
   const manualRows = useMemo(() => {
@@ -206,6 +243,17 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
         return controlFlags.length > 0;
       case "manualSelection":
         return manualReturnIds.length > 0;
+      case "funnel": {
+        if (matchedRows.length === 0) return false;
+        const percentage = Number(funnelPercentage);
+        const fixedCount = Number(funnelFixedCount);
+        const minimum = Number(funnelMinimum);
+        const maximum = Number(funnelMaximum);
+        if (funnelMode === "all") return true;
+        if (funnelMode === "percentage") return percentage > 0 && percentage <= 100;
+        if (funnelMode === "fixed") return fixedCount > 0;
+        return percentage > 0 && percentage <= 100 && minimum >= 0 && maximum > 0 && maximum >= minimum;
+      }
       case "preview":
         return finalRows.length > 0 &&
           Object.values(exclusions).every((reason) => reason.trim().length > 0);
@@ -214,7 +262,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       default:
         return false;
     }
-  }, [activeStepId, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, finalRows, exclusions]);
+  }, [activeStepId, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, matchedRows.length, funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum, finalRows, exclusions]);
 
 
   const explain = (key: string, value: string, row: TableRow) => {
@@ -236,22 +284,38 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     setManualSearch("");
     setRiskLevelSearch("");
     setRiskSignalSearch("");
+    setFunnelMode("all");
+    setFunnelPercentage("10");
+    setFunnelFixedCount("200");
+    setFunnelMinimum("200");
+    setFunnelMaximum("2000");
     setExclusions({});
   };
 
+  const funnelBasis = useMemo(() => {
+    if (funnelMode === "all") return t("initiate.funnel.modes.all.title");
+    if (funnelMode === "percentage") return t("initiate.funnel.basis.percentage", { percentage:funnelPercentage });
+    if (funnelMode === "fixed") return t("initiate.funnel.basis.fixed", { count:funnelFixedCount });
+    return t("initiate.funnel.basis.limited", {
+      percentage:funnelPercentage,
+      minimum:funnelMinimum,
+      maximum:funnelMaximum,
+    });
+  }, [funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum, t]);
+
   const selectionBasis = useMemo(() => {
     const scope = scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ");
-    if (track === "population") return `Population selection · ${scope}`;
+    if (track === "population") return `Population selection · ${scope} · ${funnelBasis}`;
     if (track === "risk") {
       const parts = [
         riskLevels.length ? `Risk: ${riskLevels.join(", ")}` : "",
         signals.length ? `Signals: ${signals.join(", ")}` : "",
       ].filter(Boolean).join(" · ");
-      return `Risk-based · ${scope} · ${parts}`;
+      return `Risk-based · ${scope} · ${parts} · ${funnelBasis}`;
     }
-    if (track === "control") return `Control / Data Quality · ${scope} · ${controlFlags.join(", ")}`;
-    return `Manual selection · ${scope}`;
-  }, [scopeMode, circles, track, riskLevels, signals, controlFlags, t]);
+    if (track === "control") return `Control / Data Quality · ${scope} · ${controlFlags.join(", ")} · ${funnelBasis}`;
+    return `Manual selection · ${scope} · ${funnelBasis}`;
+  }, [scopeMode, circles, track, riskLevels, signals, controlFlags, funnelBasis, t]);
 
   const confirmCandidates = () => {
     if (!finalRows.length) return;
@@ -281,6 +345,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     id === "riskCriteria" || id === "controlCriteria" || id === "manualSelection"
   );
   const matchedStepIndex = criteriaStepIndex >= 0 ? criteriaStepIndex : readinessStepIndex;
+  const funnelStepIndex = activeSteps.indexOf("funnel");
   const previewStepIndex = activeSteps.indexOf("preview");
 
   const impactValue = (requiredCompletedStep: number, value: number): number | string =>
@@ -312,6 +377,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             label:t("initiate.summary.matchedCriteria"),
             value:impactValue(matchedStepIndex, matchedRows.length),
             help:t("initiate.impact.matchedHelp"),
+          },
+          {
+            label:t("initiate.summary.afterFunnel"),
+            value:impactValue(funnelStepIndex, funnelRows.length),
+            help:t("initiate.impact.funnelHelp"),
           },
           {
             label:t("initiate.summary.finalCandidates"),
@@ -732,6 +802,104 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       );
     }
 
+    if (activeStepId === "funnel") {
+      return (
+        <div className="form-stack">
+          <FormSection
+            title={t("initiate.steps.funnel.title")}
+            description={t("initiate.steps.funnel.desc")}
+            icon={Users}
+          >
+            <div className="app-choice-grid">
+              {[
+                ["all", "initiate.funnel.modes.all.title", "initiate.funnel.modes.all.desc"],
+                ["percentage", "initiate.funnel.modes.percentage.title", "initiate.funnel.modes.percentage.desc"],
+                ["fixed", "initiate.funnel.modes.fixed.title", "initiate.funnel.modes.fixed.desc"],
+                ["limited", "initiate.funnel.modes.limited.title", "initiate.funnel.modes.limited.desc"],
+              ].map(([value,titleKey,descKey]) => (
+                <AppChoiceCard
+                  key={value}
+                  name="funnel-mode"
+                  value={value}
+                  title={t(titleKey)}
+                  description={t(descKey)}
+                  selected={funnelMode === value}
+                  onSelect={setFunnelMode}
+                />
+              ))}
+            </div>
+
+            {funnelMode !== "all" && (
+              <section className="form-subsection">
+                <div className="entry-form__grid">
+                  {(funnelMode === "percentage" || funnelMode === "limited") && (
+                    <AppNumberField
+                      id="audit-funnel-percentage"
+                      label={t("initiate.funnel.fields.percentage")}
+                      value={funnelPercentage}
+                      onChange={setFunnelPercentage}
+                      min={1}
+                      max={100}
+                      step={1}
+                      required
+                      helper={t("initiate.funnel.helpers.percentage")}
+                    />
+                  )}
+                  {funnelMode === "fixed" && (
+                    <AppNumberField
+                      id="audit-funnel-fixed"
+                      label={t("initiate.funnel.fields.fixedCount")}
+                      value={funnelFixedCount}
+                      onChange={setFunnelFixedCount}
+                      min={1}
+                      step={1}
+                      required
+                    />
+                  )}
+                  {funnelMode === "limited" && (
+                    <>
+                      <AppNumberField
+                        id="audit-funnel-minimum"
+                        label={t("initiate.funnel.fields.minimum")}
+                        value={funnelMinimum}
+                        onChange={setFunnelMinimum}
+                        min={0}
+                        step={1}
+                        required
+                      />
+                      <AppNumberField
+                        id="audit-funnel-maximum"
+                        label={t("initiate.funnel.fields.maximum")}
+                        value={funnelMaximum}
+                        onChange={setFunnelMaximum}
+                        min={1}
+                        step={1}
+                        required
+                      />
+                    </>
+                  )}
+                </div>
+              </section>
+            )}
+
+            <section className="form-subsection">
+              <dl className="form-summary-list">
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.summary.matchedCriteria")}</dt>
+                  <dd className="form-summary-list__value">{matchedRows.length}</dd>
+                </div>
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.summary.afterFunnel")}</dt>
+                  <dd className="form-summary-list__value">{funnelRows.length}</dd>
+                </div>
+              </dl>
+              <p className="form-helper">{t("initiate.funnel.orderingNote")}</p>
+            </section>
+          </FormSection>
+        </div>
+      );
+    }
+
     if (activeStepId === "preview") {
       return (
         <div className="form-stack">
@@ -741,7 +909,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             icon={ListChecks}
           >
             <div className="app-selection-stack">
-              {matchedRows.map((row) => {
+              {funnelRows.map((row) => {
                 const id=String(row.return_id);
                 const included=!(id in exclusions);
                 const meta=[
@@ -835,6 +1003,10 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     <dd className="form-summary-list__value">{signals.join(", ") || "—"}</dd>
                   </div>
                 )}
+                <div className="form-summary-list__row">
+                  <dt className="form-summary-list__label">{t("initiate.review.funnelRule")}</dt>
+                  <dd className="form-summary-list__value">{funnelBasis}</dd>
+                </div>
                 {track === "control" && (
                   <div className="form-summary-list__row">
                     <dt className="form-summary-list__label">{t("initiate.fields.controlFlags")}</dt>

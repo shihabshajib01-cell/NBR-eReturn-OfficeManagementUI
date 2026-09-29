@@ -219,7 +219,8 @@
       "review": "Review & confirm",
       "riskCriteria": "Risk criteria",
       "controlCriteria": "Control criteria",
-      "manualSelection": "Select taxpayers"
+      "manualSelection": "Select taxpayers",
+      "funnel": "Funnel"
     },
     "steps": {
       "setup": {
@@ -257,6 +258,10 @@
       "manualSelection": {
         "title": "Select taxpayers",
         "desc": "Search the readiness-eligible population and select individual returns directly. No legal selection reason code is added unless it is defined by an approved source."
+      },
+      "funnel": {
+        "title": "Funnel matched candidates",
+        "desc": "Reduce the matched population to a manageable audit batch before the final candidate preview."
       }
     },
     "fields": {
@@ -284,7 +289,7 @@
       },
       "risk": {
         "title": "Risk-based Audit",
-        "desc": "Use Risk Level and/or A–E signals, with Any/All matching when multiple signals are selected."
+        "desc": "Use Risk Level and/or A–E screening signals. Multiple selected signals use the existing any-match behavior."
       },
       "control": {
         "title": "Control / Data Quality Review",
@@ -320,7 +325,8 @@
       "matchedCriteria": "Matched criteria",
       "candidates": "candidates",
       "finalCandidates": "Final candidates",
-      "allCircles": "All Circles"
+      "allCircles": "All Circles",
+      "afterFunnel": "After funnel"
     },
     "populationCriteria": {
       "title": "No additional screening rule required",
@@ -349,7 +355,8 @@
       "outcome": "Selection outcome",
       "candidateCount": "taxpayers will be added to the Audit Candidates register.",
       "confirmTitle": "Confirmation effect",
-      "confirmDesc": "Confirming creates candidate records only. It does not automatically create Findings or final tax determinations, and newly confirmed candidates start as Selected / Not Started."
+      "confirmDesc": "Confirming creates candidate records only. It does not automatically create Findings or final tax determinations, and newly confirmed candidates start as Selected / Not Started.",
+      "funnelRule": "Funnel rule"
     },
     "validation": {
       "completeStep": "Complete the required selections in this step before continuing.",
@@ -371,7 +378,8 @@
       "eligibleHelp": "Returns still included after Data Quality and Coverage filters.",
       "excludedHelp": "Returns removed by the current readiness selections.",
       "matchedHelp": "Eligible returns that match the current track criteria.",
-      "finalHelp": "Candidates that will move forward after your preview adjustments."
+      "finalHelp": "Candidates remaining after the funnel and any individual preview exclusions.",
+      "funnelHelp": "Candidates retained by the selected funnel rule before individual preview adjustments."
     },
     "riskSignals": {
       "help": "Select the screening signals a return should match. Search by signal code or description.",
@@ -379,6 +387,41 @@
       "searchPlaceholder": "Search R-A1, asset growth, reconciliation…",
       "selectedCount": "{{count}} signal selected",
       "noResults": "No Risk Signals match this search."
+    },
+    "funnel": {
+      "modes": {
+        "all": {
+          "title": "Keep all matched candidates",
+          "desc": "Move the full matched population to Candidate Preview."
+        },
+        "percentage": {
+          "title": "Percentage",
+          "desc": "Keep a percentage of the matched population."
+        },
+        "fixed": {
+          "title": "Fixed number",
+          "desc": "Keep up to a specified number of matched candidates."
+        },
+        "limited": {
+          "title": "Percentage with limits",
+          "desc": "Apply a percentage, then enforce a minimum and maximum batch size."
+        }
+      },
+      "fields": {
+        "percentage": "Percentage",
+        "fixedCount": "Number of candidates",
+        "minimum": "Minimum candidates",
+        "maximum": "Maximum candidates"
+      },
+      "helpers": {
+        "percentage": "Enter a value from 1 to 100."
+      },
+      "basis": {
+        "percentage": "{{percentage}}% of matched candidates",
+        "fixed": "Fixed {{count}} candidates",
+        "limited": "{{percentage}}% · Min {{minimum}} · Max {{maximum}}"
+      },
+      "orderingNote": "The funnel preserves the current matched-list order. It does not create a hidden risk score or ranking."
     }
   },
   "candidates": {

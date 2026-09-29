@@ -219,7 +219,8 @@
       "review": "Review ও confirm",
       "riskCriteria": "Risk criteria",
       "controlCriteria": "Control criteria",
-      "manualSelection": "Taxpayer নির্বাচন"
+      "manualSelection": "Taxpayer নির্বাচন",
+      "funnel": "Funnel"
     },
     "steps": {
       "setup": {
@@ -257,6 +258,10 @@
       "manualSelection": {
         "title": "Taxpayer নির্বাচন",
         "desc": "Readiness-eligible population থেকে search করে নির্দিষ্ট return নির্বাচন করুন। Approved source-এ সংজ্ঞায়িত না থাকলে কোনো legal selection reason code যোগ করা হবে না।"
+      },
+      "funnel": {
+        "title": "Matched candidate funnel করুন",
+        "desc": "Final candidate preview-এর আগে matched population থেকে manageable audit batch নির্ধারণ করুন।"
       }
     },
     "fields": {
@@ -284,7 +289,7 @@
       },
       "risk": {
         "title": "Risk-based Audit",
-        "desc": "Risk Level এবং/অথবা A–E signal ব্যবহার করুন; একাধিক signal হলে Any/All matching নির্ধারণ করুন।"
+        "desc": "Risk Level এবং/অথবা A–E screening signal ব্যবহার করুন। একাধিক signal selected হলে existing any-match behavior ব্যবহার হবে।"
       },
       "control": {
         "title": "Control / Data Quality Review",
@@ -320,7 +325,8 @@
       "matchedCriteria": "Criteria matched",
       "candidates": "candidate",
       "finalCandidates": "Final candidate",
-      "allCircles": "সব Circle"
+      "allCircles": "সব Circle",
+      "afterFunnel": "Funnel-এর পর"
     },
     "populationCriteria": {
       "title": "অতিরিক্ত screening rule প্রয়োজন নেই",
@@ -349,7 +355,8 @@
       "outcome": "Selection outcome",
       "candidateCount": "taxpayer Audit Candidates register-এ যোগ হবে।",
       "confirmTitle": "Confirmation effect",
-      "confirmDesc": "Confirm করলে candidate record তৈরি হবে। এটি Finding বা final tax determination তৈরি করে না; নতুন candidate Selected / Not Started হিসেবে শুরু হবে।"
+      "confirmDesc": "Confirm করলে candidate record তৈরি হবে। এটি Finding বা final tax determination তৈরি করে না; নতুন candidate Selected / Not Started হিসেবে শুরু হবে।",
+      "funnelRule": "Funnel rule"
     },
     "validation": {
       "completeStep": "পরবর্তী ধাপে যাওয়ার আগে এই ধাপের required selection সম্পন্ন করুন।",
@@ -371,7 +378,8 @@
       "eligibleHelp": "Data Quality ও Coverage filter-এর পরও অন্তর্ভুক্ত থাকা return।",
       "excludedHelp": "বর্তমান readiness selection-এর কারণে বাদ যাওয়া return।",
       "matchedHelp": "বর্তমান track criteria match করা eligible return।",
-      "finalHelp": "Preview adjustment-এর পর সামনে এগোবে এমন candidate।"
+      "finalHelp": "Funnel ও individual preview exclusion-এর পর remaining candidate।",
+      "funnelHelp": "Individual preview adjustment-এর আগে funnel rule অনুযায়ী রাখা candidate।"
     },
     "riskSignals": {
       "help": "Return কোন screening signal match করবে তা নির্বাচন করুন। Signal code বা description দিয়ে search করুন।",
@@ -379,6 +387,41 @@
       "searchPlaceholder": "R-A1, asset growth, reconciliation…",
       "selectedCount": "{{count}}টি signal নির্বাচিত",
       "noResults": "এই search-এর সাথে কোনো Risk Signal মেলেনি।"
+    },
+    "funnel": {
+      "modes": {
+        "all": {
+          "title": "সব matched candidate রাখুন",
+          "desc": "সম্পূর্ণ matched population Candidate Preview-এ পাঠান।"
+        },
+        "percentage": {
+          "title": "Percentage",
+          "desc": "Matched population-এর একটি percentage রাখুন।"
+        },
+        "fixed": {
+          "title": "Fixed number",
+          "desc": "নির্দিষ্ট সংখ্যক matched candidate পর্যন্ত রাখুন।"
+        },
+        "limited": {
+          "title": "Percentage with limits",
+          "desc": "Percentage প্রয়োগ করে minimum ও maximum batch size enforce করুন।"
+        }
+      },
+      "fields": {
+        "percentage": "Percentage",
+        "fixedCount": "Candidate সংখ্যা",
+        "minimum": "Minimum candidate",
+        "maximum": "Maximum candidate"
+      },
+      "helpers": {
+        "percentage": "1 থেকে 100-এর মধ্যে value দিন।"
+      },
+      "basis": {
+        "percentage": "Matched candidate-এর {{percentage}}%",
+        "fixed": "Fixed {{count}} candidate",
+        "limited": "{{percentage}}% · Min {{minimum}} · Max {{maximum}}"
+      },
+      "orderingNote": "Funnel বর্তমান matched-list order বজায় রাখে। কোনো hidden risk score বা ranking তৈরি করা হয় না।"
     }
   },
   "candidates": {
