@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import {
   Activity, BadgeCheck, Download, FileSearch, Filter, Printer, Scale, ShieldAlert,
@@ -28,6 +28,7 @@ import {
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
 import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge";
 import { AuditCandidatesPage } from "./AuditCandidatesPage";
+import { getAuditCandidates } from "./auditCandidateStore";
 
 const PER_PAGE = 10;
 
@@ -245,12 +246,102 @@ function AuditTablePage({ config }: { config: AuditTableConfig }) {
 
 function AuditOverviewPage() {
   const { t, i18n } = useTranslation("audit");
+  const navigate = useNavigate();
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
+
+  const candidates = getAuditCandidates();
+  const activeCases = RISK_CASE_ROWS.filter((row) => String(row.case_status ?? "") !== "Closed");
+  const closedCases = RISK_CASE_ROWS.filter((row) => String(row.case_status ?? "") === "Closed");
+  const pendingEvidence = RISK_CASE_ROWS.filter((row) =>
+    ["Pending", "Partial", "Not requested"].includes(String(row.evidence_status ?? ""))
+  );
+  const openControls = CONTROL_ROWS.filter((row) => String(row.control_status ?? "") !== "Resolved");
+  const reconciliationIssues = RECONCILIATION_ROWS.filter((row) => Number(row.missing_case_count ?? 0) > 0);
+
+  const pipelineStages = [
+    ["Assigned", "assigned"],
+    ["Verifying", "verifying"],
+    ["Evidence Pending", "evidencePending"],
+    ["Ready for Review", "readyForReview"],
+    ["Second Review", "secondReview"],
+    ["Rework Requested", "rework"],
+    ["Closed", "closed"],
+  ] as const;
+
+  const pipelineRows: TableRow[] = pipelineStages.map(([status, focusKey], index) => ({
+    id: String(index + 1),
+    case_status: status,
+    case_count: String(RISK_CASE_ROWS.filter((row) => String(row.case_status ?? "") === status).length),
+    focus: t(`overview.pipelineFocus.${focusKey}`),
+  }));
+
+  const handlingByRisk = Object.fromEntries(
+    RISK_DISTRIBUTION_ROWS.map((row) => [String(row.risk_level), String(row.handling ?? "")])
+  );
+  const riskRows: TableRow[] = ["Low", "Medium", "High", "Very High"].map((level, index) => ({
+    id: String(index + 1),
+    risk_level: level,
+    case_count: String(RISK_CASE_ROWS.filter((row) => String(row.risk_level ?? "") === level).length),
+    handling: handlingByRisk[level] ?? "—",
+  }));
+
+  const queueRows: TableRow[] = [
+    { id:"1", queue:t("overview.queues.risk"), open_items:String(activeCases.length), waiting_on:t("overview.queueWaiting.risk"), queue_status:"In Progress" },
+    { id:"2", queue:t("overview.queues.control"), open_items:String(openControls.length), waiting_on:t("overview.queueWaiting.control"), queue_status:"In Progress" },
+    { id:"3", queue:t("overview.queues.secondReview"), open_items:String(SECOND_REVIEW_ROWS.length), waiting_on:t("overview.queueWaiting.secondReview"), queue_status:"Pending Review" },
+    { id:"4", queue:t("overview.queues.reconciliation"), open_items:String(reconciliationIssues.length), waiting_on:t("overview.queueWaiting.reconciliation"), queue_status:reconciliationIssues.length ? "Under Review" : "Resolved" },
+  ];
+
+  const knownTracks = [
+    { id:"population", label:t("initiate.tracks.population.title") },
+    { id:"risk", label:t("initiate.tracks.risk.title") },
+    { id:"control", label:t("initiate.tracks.control.title") },
+    { id:"manual", label:t("initiate.tracks.manual.title") },
+  ];
+  const knownTrackIds = new Set(knownTracks.map((item) => item.id));
+  const selectionRows: TableRow[] = knownTracks.map((item, index) => {
+    const rows = candidates.filter((candidate) => candidate.selection_track === item.id);
+    const latest = rows.map((candidate) => candidate.selected_on).filter(Boolean).sort().reverse()[0] ?? "—";
+    return { id:String(index + 1), selection_track:item.label, candidate_count:String(rows.length), latest_selection:latest };
+  });
+  const existingPlanRows = candidates.filter((candidate) => !knownTrackIds.has(candidate.selection_track));
+  if (existingPlanRows.length) {
+    selectionRows.push({
+      id:String(selectionRows.length + 1),
+      selection_track:t("overview.existingPlan"),
+      candidate_count:String(existingPlanRows.length),
+      latest_selection:existingPlanRows.map((candidate) => candidate.selected_on).filter(Boolean).sort().reverse()[0] ?? "—",
+    });
+  }
+
+  const circles = Array.from(new Set([
+    ...candidates.map((row) => String(row.circle ?? "")),
+    ...RISK_CASE_ROWS.map((row) => String(row.circle ?? "")),
+    ...CONTROL_ROWS.map((row) => String(row.circle ?? "")),
+    ...SECOND_REVIEW_ROWS.map((row) => String(row.circle ?? "")),
+  ].filter(Boolean))).sort((a, b) => a.localeCompare(b));
+
+  const circleRows: TableRow[] = circles.map((circle, index) => ({
+    id:String(index + 1),
+    circle,
+    candidate_count:String(candidates.filter((row) => String(row.circle ?? "") === circle).length),
+    active_cases:String(activeCases.filter((row) => String(row.circle ?? "") === circle).length),
+    control_open:String(openControls.filter((row) => String(row.circle ?? "") === circle).length),
+    second_review:String(SECOND_REVIEW_ROWS.filter((row) => String(row.circle ?? "") === circle).length),
+    closed_cases:String(closedCases.filter((row) => String(row.circle ?? "") === circle).length),
+  }));
+
+  const recentRows = [...AUDIT_TRAIL_ROWS].reverse().slice(0, 5);
 
   const riskCols: ColDef[] = [
     fc("risk_level", t("columns.riskLevel")),
     fc("case_count", t("columns.caseCount"), { mono: true }),
     fc("handling", t("columns.reviewHandling")),
+  ];
+  const pipelineCols: ColDef[] = [
+    { type:"col", col:{ key:"case_status", label:t("columns.stage"), badge:true } },
+    fc("case_count", t("columns.caseCount"), { mono:true }),
+    fc("focus", t("columns.focus")),
   ];
   const queueCols: ColDef[] = [
     fc("queue", t("columns.queue")),
@@ -258,11 +349,24 @@ function AuditOverviewPage() {
     fc("waiting_on", t("columns.waitingOn")),
     { type:"col", col:{ key:"queue_status", label:t("columns.status"), badge:true } },
   ];
-  const roleCols: ColDef[] = [
-    fc("role", t("columns.role")),
-    fc("jurisdiction", t("columns.jurisdiction")),
-    fc("primary_audit_work", t("columns.primaryAuditWork"), { truncate:"long" }),
-    fc("data_access", t("columns.dataAccess"), { truncate:"long" }),
+  const selectionCols: ColDef[] = [
+    fc("selection_track", t("columns.selectionTrack")),
+    fc("candidate_count", t("columns.candidateCount"), { mono:true }),
+    fc("latest_selection", t("columns.latestSelection")),
+  ];
+  const circleCols: ColDef[] = [
+    fc("circle", t("columns.circle")),
+    fc("candidate_count", t("columns.candidateCount"), { mono:true }),
+    fc("active_cases", t("columns.activeCases"), { mono:true }),
+    fc("control_open", t("columns.controlOpen"), { mono:true }),
+    fc("second_review", t("columns.secondReview"), { mono:true }),
+    fc("closed_cases", t("columns.closedCases"), { mono:true }),
+  ];
+  const activityCols: ColDef[] = [
+    fc("timestamp_utc", t("columns.timestampUtc")),
+    fc("action", t("columns.action"), { truncate:"long" }),
+    fc("actor_role", t("columns.actorRole")),
+    fc("return_id", t("columns.returnId"), { mono:true }),
   ];
 
   const explain = (key: string, value: string, row: TableRow) => {
@@ -277,38 +381,79 @@ function AuditOverviewPage() {
         <p className="dashboard-page__subtitle">{t("pages.overview.description")}</p>
       </div>
 
-      <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
-        <StatCard icon={ShieldAlert} value="38" label={t("overview.openRiskCases")} subInfo={t("overview.globalScope")} tone="warning" />
-        <StatCard icon={FileSearch} value="12" label={t("overview.evidencePending")} subInfo={t("overview.signalLinkedEvidence")} tone="primary" />
-        <StatCard icon={BadgeCheck} value="7" label={t("overview.readyForSecondReview")} subInfo={t("overview.rangeOfficerQueue")} tone="primary" />
-        <StatCard icon={Timer} value="3" label={t("overview.slaEscalations")} subInfo={t("overview.proposedSlaNote")} tone="warning" />
+      <div className="dashboard-kpi-section">
+        <div className="dashboard-kpi-grid">
+          <StatCard icon={Workflow} value={String(candidates.length)} label={t("overview.auditCandidates")} subInfo={t("overview.auditCandidatesSub")} tone="primary" onClick={() => navigate("/audit/audit-candidates")} />
+          <StatCard icon={ShieldAlert} value={String(activeCases.length)} label={t("overview.activeAuditCases")} subInfo={t("overview.activeAuditCasesSub")} tone="warning" onClick={() => navigate("/audit/risk-cases")} />
+          <StatCard icon={FileSearch} value={String(pendingEvidence.length)} label={t("overview.evidenceToResolve")} subInfo={t("overview.evidenceToResolveSub")} tone="warning" onClick={() => navigate("/audit/risk-cases")} />
+          <StatCard icon={Activity} value={String(openControls.length)} label={t("overview.openControlItems")} subInfo={t("overview.openControlItemsSub")} tone="primary" onClick={() => navigate("/audit/control-data-quality")} />
+          <StatCard icon={Timer} value={String(SECOND_REVIEW_ROWS.length)} label={t("overview.secondReviewWorkload")} subInfo={t("overview.secondReviewWorkloadSub")} tone="primary" onClick={() => navigate("/audit/second-review")} />
+          <StatCard icon={BadgeCheck} value={String(closedCases.length)} label={t("overview.closedAudits")} subInfo={t("overview.closedAuditsSub")} tone="success" onClick={() => navigate("/audit/risk-cases")} />
+        </div>
       </div>
 
       <div className="dashboard-section-grid">
+        <DashSection title={t("overview.auditPipeline")} icon={Workflow}>
+          <ResponsiveTable
+            cols={pipelineCols}
+            rows={pipelineRows}
+            noCard
+            clickableKeys={["case_status"]}
+            onCellClick={explain}
+            aria-label={t("overview.auditPipeline")}
+          />
+        </DashSection>
         <DashSection title={t("overview.riskDistribution")} icon={Scale}>
           <ResponsiveTable
             cols={riskCols}
-            rows={RISK_DISTRIBUTION_ROWS}
+            rows={riskRows}
             noCard
             clickableKeys={["risk_level"]}
             onCellClick={explain}
             aria-label={t("overview.riskDistribution")}
           />
         </DashSection>
+      </div>
+
+      <DashSection title={t("overview.circleWorkload")} icon={Activity}>
+        <ResponsiveTable
+          cols={circleCols}
+          rows={circleRows}
+          noCard
+          clickableKeys={["circle"]}
+          onCellClick={explain}
+          aria-label={t("overview.circleWorkload")}
+        />
+      </DashSection>
+
+      <div className="dashboard-section-grid">
         <DashSection title={t("overview.queueHealth")} icon={Activity}>
           <ResponsiveTable
             cols={queueCols}
-            rows={QUEUE_HEALTH_ROWS}
+            rows={queueRows}
             noCard
             clickableKeys={["queue_status"]}
             onCellClick={explain}
             aria-label={t("overview.queueHealth")}
           />
         </DashSection>
+        <DashSection title={t("overview.selectionBreakdown")} icon={FileSearch}>
+          <ResponsiveTable
+            cols={selectionCols}
+            rows={selectionRows}
+            noCard
+            aria-label={t("overview.selectionBreakdown")}
+          />
+        </DashSection>
       </div>
 
-      <DashSection title={t("overview.roleScope")} icon={Workflow}>
-        <ResponsiveTable cols={roleCols} rows={ROLE_SCOPE_ROWS} noCard aria-label={t("overview.roleScope")} />
+      <DashSection title={t("overview.recentActivity")} icon={BadgeCheck}>
+        <ResponsiveTable
+          cols={activityCols}
+          rows={recentRows}
+          noCard
+          aria-label={t("overview.recentActivity")}
+        />
       </DashSection>
 
       <AuditExplainerDrawer explanation={explanation} onClose={() => setExplanation(null)} />

@@ -10,7 +10,7 @@
   "pages": {
     "overview": {
       "title": "Audit Overview",
-      "description": "All-Circle audit oversight for risk distribution, queue health, reconciliation and review workload. Risk Level is a review priority, not a finding."
+      "description": "Current audit workload across selection, active cases, evidence, controls, review, reconciliation and closure."
     },
     "riskCases": {
       "title": "Risk Cases",
@@ -65,7 +65,45 @@
     "globalAccessTitle": "Global audit access",
     "globalAccessDescription": "This officer can inspect taxpayers across all Circles. Circle is retained for filtering, grouping and operational context.",
     "allCircles": "All Circles",
-    "globalScope": "All Circles"
+    "globalScope": "All Circles",
+    "auditCandidates": "Audit candidates",
+    "auditCandidatesSub": "Selected taxpayers in the audit register",
+    "activeAuditCases": "Active audit cases",
+    "activeAuditCasesSub": "Cases currently moving through audit",
+    "evidenceToResolve": "Evidence to resolve",
+    "evidenceToResolveSub": "Pending, partial or not-yet-requested evidence",
+    "openControlItems": "Open control items",
+    "openControlItemsSub": "Unresolved Control & Data Quality work",
+    "secondReviewWorkload": "Second review workload",
+    "secondReviewWorkloadSub": "Cases in the supervisory review queue",
+    "closedAudits": "Closed audits",
+    "closedAuditsSub": "Completed cases in the current audit data",
+    "auditPipeline": "Audit pipeline",
+    "circleWorkload": "Circle workload",
+    "selectionBreakdown": "Audit selection breakdown",
+    "recentActivity": "Recent audit activity",
+    "existingPlan": "Existing audit plan",
+    "queues": {
+      "risk": "Risk Cases",
+      "control": "Control & Data Quality",
+      "secondReview": "Second Review",
+      "reconciliation": "Reconciliation"
+    },
+    "queueWaiting": {
+      "risk": "Officer / evidence / review",
+      "control": "Data correction / control review",
+      "secondReview": "Supervisory review",
+      "reconciliation": "Missing case resolution"
+    },
+    "pipelineFocus": {
+      "assigned": "Waiting to start",
+      "verifying": "Signal and evidence verification",
+      "evidencePending": "Waiting for evidence",
+      "readyForReview": "Ready for supervisory review",
+      "secondReview": "Supervisory review",
+      "rework": "Returned for additional verification",
+      "closed": "Completed"
+    }
   },
   "columns": {
     "caseId": "Case ID",
@@ -134,7 +172,16 @@
     "dataQuality": "Data Quality",
     "controlFlags": "Control Flags",
     "auditState": "Audit State",
-    "availableData": "Available Data"
+    "availableData": "Available Data",
+    "stage": "Audit stage",
+    "focus": "Current focus",
+    "selectionTrack": "Selection track",
+    "candidateCount": "Candidates",
+    "latestSelection": "Latest selection",
+    "activeCases": "Active cases",
+    "controlOpen": "Open controls",
+    "secondReview": "Second review",
+    "closedCases": "Closed"
   },
   "filters": {
     "all": "All",

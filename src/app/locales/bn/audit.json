@@ -10,7 +10,7 @@
   "pages": {
     "overview": {
       "title": "অডিট ওভারভিউ",
-      "description": "সব Circle-এর risk distribution, queue health, reconciliation ও review workload-এর audit oversight। Risk Level review priority; Finding নয়।"
+      "description": "Selection, active case, evidence, control, review, reconciliation ও closure—বর্তমান audit workload-এর সম্পূর্ণ চিত্র।"
     },
     "riskCases": {
       "title": "রিস্ক কেস",
@@ -65,7 +65,45 @@
     "globalAccessTitle": "Global audit access",
     "globalAccessDescription": "এই officer সব Circle-এর taxpayer inspect করতে পারবেন। Circle filtering, grouping ও operational context হিসেবে থাকবে।",
     "allCircles": "সব Circle",
-    "globalScope": "সব Circle"
+    "globalScope": "সব Circle",
+    "auditCandidates": "অডিট প্রার্থী",
+    "auditCandidatesSub": "Audit register-এ নির্বাচিত taxpayer",
+    "activeAuditCases": "Active audit case",
+    "activeAuditCasesSub": "বর্তমানে audit workflow-এ থাকা case",
+    "evidenceToResolve": "সমাধানযোগ্য evidence",
+    "evidenceToResolveSub": "Pending, partial বা এখনো request না-করা evidence",
+    "openControlItems": "খোলা control item",
+    "openControlItemsSub": "অমীমাংসিত Control & Data Quality কাজ",
+    "secondReviewWorkload": "Second review workload",
+    "secondReviewWorkloadSub": "Supervisory review queue-এর case",
+    "closedAudits": "বন্ধ audit",
+    "closedAuditsSub": "বর্তমান audit data-তে সম্পন্ন case",
+    "auditPipeline": "Audit pipeline",
+    "circleWorkload": "Circle workload",
+    "selectionBreakdown": "Audit selection breakdown",
+    "recentActivity": "সাম্প্রতিক audit activity",
+    "existingPlan": "Existing audit plan",
+    "queues": {
+      "risk": "Risk Cases",
+      "control": "Control & Data Quality",
+      "secondReview": "Second Review",
+      "reconciliation": "Reconciliation"
+    },
+    "queueWaiting": {
+      "risk": "Officer / evidence / review",
+      "control": "Data correction / control review",
+      "secondReview": "Supervisory review",
+      "reconciliation": "Missing case resolution"
+    },
+    "pipelineFocus": {
+      "assigned": "শুরু হওয়ার অপেক্ষায়",
+      "verifying": "Signal ও evidence verification",
+      "evidencePending": "Evidence-এর অপেক্ষায়",
+      "readyForReview": "Supervisory review-এর জন্য প্রস্তুত",
+      "secondReview": "Supervisory review",
+      "rework": "অতিরিক্ত verification-এর জন্য ফেরত",
+      "closed": "সম্পন্ন"
+    }
   },
   "columns": {
     "caseId": "Case ID",
@@ -134,7 +172,16 @@
     "dataQuality": "Data Quality",
     "controlFlags": "Control Flag",
     "auditState": "Audit State",
-    "availableData": "Available Data"
+    "availableData": "Available Data",
+    "stage": "Audit stage",
+    "focus": "বর্তমান focus",
+    "selectionTrack": "Selection track",
+    "candidateCount": "Candidate",
+    "latestSelection": "সর্বশেষ selection",
+    "activeCases": "Active case",
+    "controlOpen": "Open control",
+    "secondReview": "Second review",
+    "closedCases": "Closed"
   },
   "filters": {
     "all": "সব",
