@@ -241,7 +241,7 @@
       },
       "preview": {
         "title": "Candidate preview",
-        "desc": "Funnel-এর আগে initial matched candidate list review করুন। এই list আগের step-এর selection ও filter অনুযায়ী তৈরি হয়েছে।"
+        "desc": "Funnel-এর আগে initial matched candidate list review করুন। এটি আগের step-এর selection ও filter অনুযায়ী তৈরি read-only preview।"
       },
       "review": {
         "title": "Final list ও confirm",
@@ -327,7 +327,7 @@
       "finalCandidates": "Final candidate",
       "allCircles": "সব Circle",
       "afterFunnel": "Funnel-এর পর",
-      "afterPreview": "Preview-এর পর"
+      "afterPreview": "Funnel-এর জন্য প্রস্তুত"
     },
     "populationCriteria": {
       "title": "অতিরিক্ত screening rule প্রয়োজন নেই",
@@ -383,7 +383,7 @@
       "matchedHelp": "বর্তমান track criteria match করা eligible return।",
       "finalHelp": "Funnel-এর পর final list-এ থাকা candidate।",
       "funnelHelp": "Individual preview adjustment-এর আগে funnel rule অনুযায়ী রাখা candidate।",
-      "previewHelp": "Candidate Preview adjustment-এর পর রাখা matched candidate।"
+      "previewHelp": "Candidate Preview-এ review করা matched candidate। Preview candidate বাদ দেয় না; Funnel ধাপে list কমানো হয়।"
     },
     "riskSignals": {
       "help": "Return কোন screening signal match করবে তা নির্বাচন করুন। Signal code বা description দিয়ে search করুন।",
@@ -430,7 +430,8 @@
     "previewInfo": "{{value}}-এর details ও explanation দেখুন",
     "previewSummary": {
       "initialList": "Initial matched list ({{count}})",
-      "keptCount": "{{count}} candidate Funnel step-এ যাবে।"
+      "keptCount": "সব {{count}} matched candidate Funnel step-এ যাবে।",
+      "rowsPerPage": "প্রতি পৃষ্ঠায় রেকর্ড"
     }
   },
   "candidates": {
