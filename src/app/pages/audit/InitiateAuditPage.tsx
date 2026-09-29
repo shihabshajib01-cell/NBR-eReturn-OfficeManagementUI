@@ -198,6 +198,20 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     if (resolved) setExplanation(resolved);
   };
 
+  const handleTrackSelect = (value: string) => {
+    const nextTrack = value as TrackId;
+    if (nextTrack === track) return;
+
+    setTrack(nextTrack);
+    setRiskLevels([]);
+    setSignals([]);
+    setControlFlags([]);
+    setManualReturnIds([]);
+    setManualSearch("");
+    setMatchMode("any");
+    setExclusions({});
+  };
+
   const selectionBasis = useMemo(() => {
     const scope = scopeMode === "all" ? t("initiate.summary.allCircles") : circles.join(", ");
     if (track === "population") return `Population selection · ${scope}`;
@@ -283,7 +297,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   title={t(item.titleKey)}
                   description={t(item.descKey)}
                   selected={track === item.id}
-                  onSelect={(value) => setTrack(value as TrackId)}
+                  onSelect={handleTrackSelect}
                 />
               ))}
             </div>
