@@ -639,7 +639,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   );
                 })}
               </div>
-            </FormSection>
+            </section>
           </FormSection>
         </div>
       );
