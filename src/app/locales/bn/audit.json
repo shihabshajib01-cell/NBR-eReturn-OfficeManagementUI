@@ -465,7 +465,7 @@
     "batchTableTitle": "অডিট selection batch",
     "selectedTitle": "অডিটের জন্য নির্বাচিত candidate",
     "selectedTableTitle": "নির্বাচিত candidate",
-    "selectedTableDescription": "{{batchId}} selection batch-এ {{count}} জন candidate আছে। Candidate খুললে historical return data এবং selection-এর কারণ দেখা যাবে।",
+    "selectedTableDescription": "{{batchId}} · {{track}} · {{funnelRule}} · {{count}} candidate",
     "backToBatches": "Selection batch-এ ফিরে যান",
     "batchContext": "Selection batch context",
     "detail": {
