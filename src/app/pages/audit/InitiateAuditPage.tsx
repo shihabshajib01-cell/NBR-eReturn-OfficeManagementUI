@@ -125,6 +125,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     if (track === "population") return true;
 
     if (track === "risk") {
+      if (riskLevels.length === 0 && signals.length === 0) return false;
       const riskOk = riskLevels.length === 0 || riskLevels.includes(String(row.risk_level));
       const rowSignals = signalIds(row.signals);
       const signalOk = signals.length === 0
@@ -271,7 +272,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
           <div className="form-summary-list__row" key={label}>
             <dt className="form-summary-list__label">
               {label}
-              <span className="form-helper">{help}</span>
+              <p className="form-helper">{help}</p>
             </dt>
             <dd className="form-summary-list__value">{value}</dd>
           </div>
