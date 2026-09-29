@@ -271,7 +271,8 @@
       "controlFlags": "Control Flag",
       "matchLogic": "Signal match logic",
       "manualTaxpayers": "Manualভাবে নির্বাচিত taxpayer",
-      "searchTaxpayer": "TIN, Return ID, taxpayer বা Circle খুঁজুন"
+      "searchTaxpayer": "TIN, Return ID, taxpayer বা Circle খুঁজুন",
+      "searchCircles": "Circle খুঁজুন"
     },
     "tracks": {
       "population": {
@@ -348,7 +349,8 @@
       "confirmDesc": "Confirm করলে candidate record তৈরি হবে। এটি Finding বা final tax determination তৈরি করে না; নতুন candidate Selected / Not Started হিসেবে শুরু হবে।"
     },
     "validation": {
-      "completeStep": "পরবর্তী ধাপে যাওয়ার আগে এই ধাপের required selection সম্পন্ন করুন।"
+      "completeStep": "পরবর্তী ধাপে যাওয়ার আগে এই ধাপের required selection সম্পন্ন করুন।",
+      "noCirclesFound": "এই search-এর সাথে কোনো Circle মেলেনি।"
     },
     "explain": "{{value}} ব্যাখ্যা",
     "toast": {

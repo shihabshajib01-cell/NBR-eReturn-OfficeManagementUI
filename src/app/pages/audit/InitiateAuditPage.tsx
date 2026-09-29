@@ -91,6 +91,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [track, setTrack] = useState<TrackId>("risk");
   const [scopeMode, setScopeMode] = useState("all");
   const [circles, setCircles] = useState<string[]>([]);
+  const [circleSearch, setCircleSearch] = useState("");
   const [dataQuality, setDataQuality] = useState<string[]>(dataQualityAvailable);
   const [coverageTiers, setCoverageTiers] = useState<string[]>(coverageAvailable);
   const [riskLevels, setRiskLevels] = useState<string[]>([]);
@@ -115,6 +116,12 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     if (scopeMode === "all") return baseYearRows;
     return baseYearRows.filter((row) => circles.includes(String(row.circle)));
   }, [baseYearRows, scopeMode, circles]);
+
+  const filteredCircles = useMemo(() => {
+    const needle = circleSearch.trim().toLowerCase();
+    if (!needle) return circlesAvailable;
+    return circlesAvailable.filter((circle) => circle.toLowerCase().includes(needle));
+  }, [circleSearch, circlesAvailable]);
 
   const readinessRows = useMemo(() => populationRows.filter((row) =>
     dataQuality.includes(String(row.data_quality)) &&
@@ -356,26 +363,44 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
 
           {scopeMode === "selected" && (
             <FormSection title={t("initiate.fields.selectCircles")} icon={ListChecks}>
-              <div className="form-section__actions">
-                <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>
-                  {t("initiate.actions.selectAll")}
-                </SecondaryButton>
-                <SecondaryButton size="sm" onClick={() => setCircles([])}>
-                  {t("initiate.actions.clear")}
-                </SecondaryButton>
-              </div>
-              <div className="app-selection-grid">
-                {circlesAvailable.map((circle) => (
-                  <AppSelectionRow
-                    key={circle}
-                    title={circle}
-                    checked={circles.includes(circle)}
-                    onChange={() => setCircles(toggle(circles, circle))}
-                    onInfo={() => explain("circle", circle, { circle })}
-                    infoLabel={t("initiate.explain", { value: circle })}
+              <div className="form-section__toolbar">
+                <div className="form-section__toolbar-search">
+                  <AppSearchField
+                    value={circleSearch}
+                    onChange={setCircleSearch}
+                    label={t("initiate.fields.searchCircles")}
+                    placeholder={t("initiate.fields.searchCircles")}
+                    size="compact"
                   />
-                ))}
+                </div>
+                <div className="form-section__toolbar-actions">
+                  <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>
+                    {t("initiate.actions.selectAll")}
+                  </SecondaryButton>
+                  {circles.length > 0 && (
+                    <SecondaryButton size="sm" onClick={() => setCircles([])}>
+                      {t("initiate.actions.clear")}
+                    </SecondaryButton>
+                  )}
+                </div>
               </div>
+
+              {filteredCircles.length > 0 ? (
+                <div className="app-selection-grid">
+                  {filteredCircles.map((circle) => (
+                    <AppSelectionRow
+                      key={circle}
+                      title={circle}
+                      checked={circles.includes(circle)}
+                      onChange={() => setCircles(toggle(circles, circle))}
+                      onInfo={() => explain("circle", circle, { circle })}
+                      infoLabel={t("initiate.explain", { value: circle })}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="form-helper">{t("initiate.validation.noCirclesFound")}</p>
+              )}
             </FormSection>
           )}
 
