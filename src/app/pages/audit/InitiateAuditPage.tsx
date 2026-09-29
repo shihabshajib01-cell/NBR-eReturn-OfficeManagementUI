@@ -7,11 +7,11 @@ import { toast } from "sonner";
 import { AppSearchField } from "../../components/forms/AppSearchField";
 import { AppSelectField } from "../../components/forms/AppSelectField";
 import { AppNumberField } from "../../components/forms/AppNumberField";
-import { AppTextArea } from "../../components/forms/AppTextArea";
 import { AppChoiceCard } from "../../components/forms/AppChoiceCard";
 import { AppSelectionRow } from "../../components/forms/AppSelectionRow";
 import { FormSection } from "../../components/forms/FormSection";
 import { AppStepper } from "../../components/shared/AppStepper";
+import { Pagination } from "../../components/shared/Pagination";
 import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { SecondaryButton } from "../../components/buttons/SecondaryButton";
 import { AppModal } from "../../components/modals/AppModal";
@@ -108,7 +108,8 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [funnelFixedCount, setFunnelFixedCount] = useState("200");
   const [funnelMinimum, setFunnelMinimum] = useState("200");
   const [funnelMaximum, setFunnelMaximum] = useState("2000");
-  const [exclusions, setExclusions] = useState<Record<string,string>>({});
+  const [previewPage, setPreviewPage] = useState(1);
+  const [previewPerPage, setPreviewPerPage] = useState(10);
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
 
   const activeSteps = TRACK_STEPS[track];
@@ -172,17 +173,14 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     return false;
   }), [readinessRows, track, riskLevels, signals, controlFlags, manualReturnIds]);
 
-  const previewRows = useMemo(
-    () => matchedRows.filter((row) => !(String(row.return_id) in exclusions)),
-    [matchedRows, exclusions],
+  const previewRows = matchedRows;
+  const safePreviewPage = Math.min(
+    previewPage,
+    Math.max(1, Math.ceil(previewRows.length / previewPerPage)),
   );
-
-  const previewExclusionsValid = useMemo(
-    () => matchedRows.every((row) => {
-      const id=String(row.return_id);
-      return !(id in exclusions) || exclusions[id].trim().length > 0;
-    }),
-    [matchedRows, exclusions],
+  const previewPageRows = previewRows.slice(
+    (safePreviewPage - 1) * previewPerPage,
+    safePreviewPage * previewPerPage,
   );
 
   const funnelTargetCount = useMemo(() => {
@@ -265,13 +263,13 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
         return percentage > 0 && percentage <= 100 && minimum >= 0 && maximum > 0 && maximum >= minimum;
       }
       case "preview":
-        return matchedRows.length > 0 && previewRows.length > 0 && previewExclusionsValid;
+        return matchedRows.length > 0;
       case "review":
         return finalRows.length > 0;
       default:
         return false;
     }
-  }, [activeStepId, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, matchedRows.length, previewRows.length, previewExclusionsValid, funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum, finalRows]);
+  }, [activeStepId, assessmentYear, track, scopeMode, circles, dataQuality, coverageTiers, riskLevels, signals, controlFlags, manualReturnIds, matchedRows.length, previewRows.length, funnelMode, funnelPercentage, funnelFixedCount, funnelMinimum, funnelMaximum, finalRows]);
 
 
   const explain = (key: string, value: string, row: TableRow) => {
@@ -298,7 +296,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     setFunnelFixedCount("200");
     setFunnelMinimum("200");
     setFunnelMaximum("2000");
-    setExclusions({});
+    setPreviewPage(1);
   };
 
   const funnelBasis = useMemo(() => {
@@ -342,16 +340,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     toast.success(t("initiate.toast.candidatesConfirmed", { count: finalRows.length }));
     onConfirmed();
     onClose();
-  };
-
-  const setExcluded = (row: TableRow, include: boolean) => {
-    const id = String(row.return_id);
-    setExclusions((prev) => {
-      const next = { ...prev };
-      if (include) delete next[id];
-      else if (!(id in next)) next[id] = "";
-      return next;
-    });
   };
 
   const populationStepIndex = activeSteps.indexOf("population");
@@ -923,9 +911,8 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                 <p className="form-subsection__description">{t("initiate.adjustments.desc")}</p>
               </div>
               <div className="app-selection-stack">
-                {matchedRows.map((row) => {
+                {previewPageRows.map((row) => {
                   const id=String(row.return_id);
-                  const included=!(id in exclusions);
                   const meta=[
                     String(row.tin),
                     String(row.circle),
@@ -935,33 +922,32 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     String(row.control_flags),
                   ].filter((value) => value && value !== "—").join(" · ");
                   return (
-                    <div className="form-stack" key={id}>
-                      <AppSelectionRow
-                        title={String(row.taxpayer_name)}
-                        description={meta}
-                        checked={included}
-                        onChange={(checked) => setExcluded(row, checked)}
-                        onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
-                        infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
-                      />
-                      {!included && (
-                        <AppTextArea
-                          id={`exclude-${id}`}
-                          label={t("initiate.adjustments.reason")}
-                          value={exclusions[id] ?? ""}
-                          onChange={(value) => setExclusions((prev) => ({...prev,[id]:value}))}
-                          placeholder={t("initiate.adjustments.reasonPlaceholder")}
-                          rows={2}
-                          required
-                        />
-                      )}
-                    </div>
+                    <AppSelectionRow
+                      key={id}
+                      title={String(row.taxpayer_name)}
+                      description={meta}
+                      selectionControl={false}
+                      onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
+                      infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
+                    />
                   );
                 })}
               </div>
               <p className="form-helper">
                 {t("initiate.previewSummary.keptCount", { count:previewRows.length })}
               </p>
+              <Pagination
+                total={previewRows.length}
+                page={safePreviewPage}
+                perPage={previewPerPage}
+                onPage={setPreviewPage}
+                perPageOptions={[10, 25, 50]}
+                onPerPageChange={(value) => {
+                  setPreviewPerPage(value);
+                  setPreviewPage(1);
+                }}
+                perPageLabel={t("initiate.previewSummary.rowsPerPage")}
+              />
             </section>
           </FormSection>
         </div>
@@ -1058,9 +1044,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     key={id}
                     title={String(row.taxpayer_name)}
                     description={meta}
-                    checked
-                    disabled
-                    onChange={() => {}}
+                    selectionControl={false}
                     onInfo={() => explain("candidate_record", String(row.taxpayer_name), row)}
                     infoLabel={t("initiate.previewInfo", { value: String(row.taxpayer_name) })}
                   />
