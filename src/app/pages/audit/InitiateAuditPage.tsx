@@ -432,9 +432,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   />
                 </div>
                 <div className="form-section__toolbar-actions">
-                  <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>
-                    {t("initiate.actions.selectAll")}
-                  </SecondaryButton>
+                  {circles.length < circlesAvailable.length && (
+                    <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>
+                      {t("initiate.actions.selectAll")}
+                    </SecondaryButton>
+                  )}
                   {circles.length > 0 && (
                     <SecondaryButton size="sm" onClick={() => setCircles([])}>
                       {t("initiate.actions.clear")}
@@ -490,9 +492,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     />
                   </div>
                   <div className="form-section__toolbar-actions">
-                    <SecondaryButton size="sm" onClick={() => setDataQuality(dataQualityAvailable)}>
-                      {t("initiate.actions.selectAll")}
-                    </SecondaryButton>
+                    {dataQuality.length < dataQualityAvailable.length && (
+                      <SecondaryButton size="sm" onClick={() => setDataQuality(dataQualityAvailable)}>
+                        {t("initiate.actions.selectAll")}
+                      </SecondaryButton>
+                    )}
                     {dataQuality.length > 0 && (
                       <SecondaryButton size="sm" onClick={() => setDataQuality([])}>
                         {t("initiate.actions.clear")}
@@ -530,9 +534,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     />
                   </div>
                   <div className="form-section__toolbar-actions">
-                    <SecondaryButton size="sm" onClick={() => setCoverageTiers(coverageAvailable)}>
-                      {t("initiate.actions.selectAll")}
-                    </SecondaryButton>
+                    {coverageTiers.length < coverageAvailable.length && (
+                      <SecondaryButton size="sm" onClick={() => setCoverageTiers(coverageAvailable)}>
+                        {t("initiate.actions.selectAll")}
+                      </SecondaryButton>
+                    )}
                     {coverageTiers.length > 0 && (
                       <SecondaryButton size="sm" onClick={() => setCoverageTiers([])}>
                         {t("initiate.actions.clear")}
@@ -583,9 +589,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     />
                   </div>
                   <div className="form-section__toolbar-actions">
-                    <SecondaryButton size="sm" onClick={() => setRiskLevels([...RISK_LEVELS])}>
-                      {t("initiate.actions.selectAll")}
-                    </SecondaryButton>
+                    {riskLevels.length < RISK_LEVELS.length && (
+                      <SecondaryButton size="sm" onClick={() => setRiskLevels([...RISK_LEVELS])}>
+                        {t("initiate.actions.selectAll")}
+                      </SecondaryButton>
+                    )}
                     {riskLevels.length > 0 && (
                       <SecondaryButton size="sm" onClick={() => setRiskLevels([])}>
                         {t("initiate.actions.clear")}
@@ -627,9 +635,11 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                     />
                   </div>
                   <div className="form-section__toolbar-actions">
-                    <SecondaryButton size="sm" onClick={() => setSignals(SIGNAL_OPTIONS.map(([id]) => id))}>
-                      {t("initiate.actions.selectAll")}
-                    </SecondaryButton>
+                    {signals.length < SIGNAL_OPTIONS.length && (
+                      <SecondaryButton size="sm" onClick={() => setSignals(SIGNAL_OPTIONS.map(([id]) => id))}>
+                        {t("initiate.actions.selectAll")}
+                      </SecondaryButton>
+                    )}
                     {signals.length > 0 && (
                       <SecondaryButton size="sm" onClick={() => setSignals([])}>
                         {t("initiate.actions.clear")}
