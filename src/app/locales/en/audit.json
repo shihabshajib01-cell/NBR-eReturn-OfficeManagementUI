@@ -465,7 +465,7 @@
     "batchTableTitle": "Audit selection batches",
     "selectedTitle": "Candidates selected for audit",
     "selectedTableTitle": "Selected candidates",
-    "selectedTableDescription": "{{count}} candidates belong to selection batch {{batchId}}. Open a candidate to review historical return data and the reason for selection.",
+    "selectedTableDescription": "{{batchId}} · {{track}} · {{funnelRule}} · {{count}} candidates",
     "backToBatches": "Back to selection batches",
     "batchContext": "Selection batch context",
     "detail": {
