@@ -185,7 +185,7 @@
       },
       "readiness": {
         "title": "Data readiness & coverage",
-        "desc": "Decide which Data Quality states and Coverage Tiers are eligible before applying substantive audit criteria."
+        "desc": "Checked values stay eligible. Uncheck a Data Quality state or Coverage Tier to remove matching returns from the next step."
       },
       "criteria": {
         "title": "Select audit criteria",
@@ -201,7 +201,7 @@
       },
       "riskCriteria": {
         "title": "Risk criteria",
-        "desc": "Select one or more Risk Levels and/or A–E screening signals. When multiple signals are selected, choose whether any or all must match."
+        "desc": "Choose the risk conditions a return must satisfy. The matched count below updates immediately as you change these selections."
       },
       "controlCriteria": {
         "title": "Control criteria",
@@ -280,7 +280,10 @@
     },
     "match": {
       "any": "Match any selected signal",
-      "all": "Match all selected signals"
+      "all": "Match all selected signals",
+      "help": "This only matters when more than one signal is selected.",
+      "anyDesc": "Include a return when at least one selected signal is present.",
+      "allDesc": "Include a return only when every selected signal is present."
     },
     "adjustments": {
       "title": "Candidate adjustments",
@@ -303,6 +306,26 @@
     "explain": "Explain {{value}}",
     "toast": {
       "candidatesConfirmed": "{{count}} audit candidates confirmed."
+    },
+    "readiness": {
+      "dataQualityHelp": "Checked states are included. Uncheck a state to exclude returns with that Data Quality.",
+      "coverageHelp": "Checked tiers are included. Uncheck a tier to exclude returns in that Coverage Tier."
+    },
+    "impact": {
+      "title": "Selection impact",
+      "description": "These counts update automatically from your choices. They do not create audit findings or determinations.",
+      "populationHelp": "Returns in the selected assessment year and Circle scope.",
+      "eligibleHelp": "Returns still included after Data Quality and Coverage filters.",
+      "excludedHelp": "Returns removed by the current readiness selections.",
+      "matchedHelp": "Eligible returns that match the current track criteria.",
+      "finalHelp": "Candidates that will move forward after your preview adjustments."
+    },
+    "riskSignals": {
+      "help": "Select the screening signals a return should match. Search by signal code or description.",
+      "searchLabel": "Search Risk Signals",
+      "searchPlaceholder": "Search R-A1, asset growth, reconciliation…",
+      "selectedCount": "{{count}} signal selected",
+      "noResults": "No Risk Signals match this search."
     }
   },
   "candidates": {

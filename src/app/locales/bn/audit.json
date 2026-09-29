@@ -185,7 +185,7 @@
       },
       "readiness": {
         "title": "Data readiness ও coverage",
-        "desc": "Substantive audit criteria চালানোর আগে কোন Data Quality state ও Coverage Tier eligible হবে তা নির্ধারণ করুন।"
+        "desc": "Checked value-গুলো eligible থাকবে। কোনো Data Quality state বা Coverage Tier uncheck করলে matching return পরের ধাপ থেকে বাদ যাবে।"
       },
       "criteria": {
         "title": "Audit criteria নির্বাচন",
@@ -201,7 +201,7 @@
       },
       "riskCriteria": {
         "title": "Risk criteria",
-        "desc": "এক বা একাধিক Risk Level এবং/অথবা A–E screening signal নির্বাচন করুন। একাধিক signal থাকলে যেকোনো একটি নাকি সবগুলো match করতে হবে তা নির্ধারণ করুন।"
+        "desc": "Return কোন risk condition পূরণ করলে এগোবে তা নির্বাচন করুন। Selection পরিবর্তন করলে নিচের matched count সঙ্গে সঙ্গে update হবে।"
       },
       "controlCriteria": {
         "title": "Control criteria",
@@ -280,7 +280,10 @@
     },
     "match": {
       "any": "নির্বাচিত যেকোনো signal match",
-      "all": "নির্বাচিত সব signal match"
+      "all": "নির্বাচিত সব signal match",
+      "help": "একাধিক signal নির্বাচিত হলে এই logic প্রযোজ্য হবে।",
+      "anyDesc": "নির্বাচিত signal-এর অন্তত একটি থাকলে return অন্তর্ভুক্ত হবে।",
+      "allDesc": "নির্বাচিত সব signal থাকলেই শুধু return অন্তর্ভুক্ত হবে।"
     },
     "adjustments": {
       "title": "Candidate adjustment",
@@ -303,6 +306,26 @@
     "explain": "{{value}} ব্যাখ্যা",
     "toast": {
       "candidatesConfirmed": "{{count}} audit candidate confirm হয়েছে।"
+    },
+    "readiness": {
+      "dataQualityHelp": "Checked state অন্তর্ভুক্ত থাকবে। কোনো state uncheck করলে সেই Data Quality-এর return বাদ যাবে।",
+      "coverageHelp": "Checked tier অন্তর্ভুক্ত থাকবে। কোনো tier uncheck করলে সেই Coverage Tier-এর return বাদ যাবে।"
+    },
+    "impact": {
+      "title": "Selection impact",
+      "description": "আপনার selection বদলালে এই count-গুলো স্বয়ংক্রিয়ভাবে update হবে। এগুলো কোনো audit finding বা determination তৈরি করে না।",
+      "populationHelp": "নির্বাচিত Assessment Year ও Circle scope-এর return।",
+      "eligibleHelp": "Data Quality ও Coverage filter-এর পরও অন্তর্ভুক্ত থাকা return।",
+      "excludedHelp": "বর্তমান readiness selection-এর কারণে বাদ যাওয়া return।",
+      "matchedHelp": "বর্তমান track criteria match করা eligible return।",
+      "finalHelp": "Preview adjustment-এর পর সামনে এগোবে এমন candidate।"
+    },
+    "riskSignals": {
+      "help": "Return কোন screening signal match করবে তা নির্বাচন করুন। Signal code বা description দিয়ে search করুন।",
+      "searchLabel": "Risk Signal খুঁজুন",
+      "searchPlaceholder": "R-A1, asset growth, reconciliation…",
+      "selectedCount": "{{count}}টি signal নির্বাচিত",
+      "noResults": "এই search-এর সাথে কোনো Risk Signal মেলেনি।"
     }
   },
   "candidates": {
