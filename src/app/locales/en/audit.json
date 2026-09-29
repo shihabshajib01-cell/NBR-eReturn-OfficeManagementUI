@@ -271,7 +271,8 @@
       "controlFlags": "Control Flags",
       "matchLogic": "Signal match logic",
       "manualTaxpayers": "Taxpayers selected manually",
-      "searchTaxpayer": "Search TIN, Return ID, taxpayer or Circle"
+      "searchTaxpayer": "Search TIN, Return ID, taxpayer or Circle",
+      "searchCircles": "Search Circles"
     },
     "tracks": {
       "population": {
@@ -348,7 +349,8 @@
       "confirmDesc": "Confirming creates candidate records only. It does not automatically create Findings or final tax determinations, and newly confirmed candidates start as Selected / Not Started."
     },
     "validation": {
-      "completeStep": "Complete the required selections in this step before continuing."
+      "completeStep": "Complete the required selections in this step before continuing.",
+      "noCirclesFound": "No Circles match this search."
     },
     "explain": "Explain {{value}}",
     "toast": {
