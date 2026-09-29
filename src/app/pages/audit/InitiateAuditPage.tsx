@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  CheckCircle2, ClipboardList, Database, FileSearch, ListChecks, Users, XCircle,
+  CheckCircle2, ClipboardList, Database, FileSearch, ListChecks, Users,
 } from "lucide-react";
 import { toast } from "sonner";
 import { AppSearchField } from "../../components/forms/AppSearchField";
@@ -15,8 +15,7 @@ import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { SecondaryButton } from "../../components/buttons/SecondaryButton";
 import { AppModal } from "../../components/modals/AppModal";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
-import { StatCard } from "../../components/cards/StatCard";
-import type { ColDef, IconComponent, TableRow } from "../modulePageUtils";
+import type { ColDef, TableRow } from "../modulePageUtils";
 import { fc } from "../modulePageUtils";
 import { ALL_TAXPAYER_ROWS } from "./auditData";
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
@@ -100,6 +99,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [matchMode, setMatchMode] = useState("any");
   const [manualReturnIds, setManualReturnIds] = useState<string[]>([]);
   const [manualSearch, setManualSearch] = useState("");
+  const [riskSignalSearch, setRiskSignalSearch] = useState("");
   const [exclusions, setExclusions] = useState<Record<string,string>>({});
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
 
@@ -159,6 +159,14 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     ].some((value) => String(value ?? "").toLowerCase().includes(needle)));
   }, [readinessRows, manualSearch]);
 
+  const filteredSignalOptions = useMemo(() => {
+    const needle = riskSignalSearch.trim().toLowerCase();
+    if (!needle) return SIGNAL_OPTIONS;
+    return SIGNAL_OPTIONS.filter(([id, label]) =>
+      id.toLowerCase().includes(needle) || label.toLowerCase().includes(needle)
+    );
+  }, [riskSignalSearch]);
+
   const stepValid = useMemo(() => {
     switch (activeStepId) {
       case "setup":
@@ -208,6 +216,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     setControlFlags([]);
     setManualReturnIds([]);
     setManualSearch("");
+    setRiskSignalSearch("");
     setMatchMode("any");
     setExclusions({});
   };
@@ -248,17 +257,27 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     });
   };
 
-  const metricRow = (items: Array<{
+  const selectionImpact = (items: Array<{
     label: string;
     value: number;
-    icon: IconComponent;
-    tone?: "primary" | "success" | "warning" | "error" | "neutral";
+    help: string;
   }>) => (
-    <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
-      {items.map(({ label, value, icon, tone }) => (
-        <StatCard key={label} icon={icon} value={String(value)} label={label} tone={tone} />
-      ))}
-    </div>
+    <FormSection
+      title={t("initiate.impact.title")}
+      description={t("initiate.impact.description")}
+    >
+      <dl className="form-summary-list">
+        {items.map(({ label, value, help }) => (
+          <div className="form-summary-list__row" key={label}>
+            <dt className="form-summary-list__label">
+              {label}
+              <span className="form-helper">{help}</span>
+            </dt>
+            <dd className="form-summary-list__value">{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </FormSection>
   );
 
   const stepperSteps = activeSteps.map((id) => ({
@@ -359,8 +378,12 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             </FormSection>
           )}
 
-          {metricRow([
-            { label:t("initiate.summary.population"), value:populationRows.length, icon:Users, tone:"primary" },
+          {selectionImpact([
+            {
+              label:t("initiate.summary.population"),
+              value:populationRows.length,
+              help:t("initiate.impact.populationHelp"),
+            },
           ])}
         </div>
       );
@@ -375,7 +398,10 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             icon={Database}
           >
             <div className="form-section-grid">
-              <FormSection title={t("initiate.fields.dataQuality")}>
+              <FormSection
+                title={t("initiate.fields.dataQuality")}
+                description={t("initiate.readiness.dataQualityHelp")}
+              >
                 <div className="app-selection-stack">
                   {dataQualityAvailable.map((quality) => (
                     <AppSelectionRow
@@ -390,7 +416,10 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                 </div>
               </FormSection>
 
-              <FormSection title={t("initiate.fields.coverageTier")}>
+              <FormSection
+                title={t("initiate.fields.coverageTier")}
+                description={t("initiate.readiness.coverageHelp")}
+              >
                 <div className="app-selection-stack">
                   {coverageAvailable.map((tier) => (
                     <AppSelectionRow
@@ -407,10 +436,22 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             </div>
           </FormSection>
 
-          {metricRow([
-            { label:t("initiate.summary.population"), value:populationRows.length, icon:Users, tone:"primary" },
-            { label:t("initiate.summary.eligibleAfterReadiness"), value:readinessRows.length, icon:CheckCircle2, tone:"success" },
-            { label:t("initiate.summary.excludedByReadiness"), value:populationRows.length-readinessRows.length, icon:XCircle, tone:"neutral" },
+          {selectionImpact([
+            {
+              label:t("initiate.summary.population"),
+              value:populationRows.length,
+              help:t("initiate.impact.populationHelp"),
+            },
+            {
+              label:t("initiate.summary.eligibleAfterReadiness"),
+              value:readinessRows.length,
+              help:t("initiate.impact.eligibleHelp"),
+            },
+            {
+              label:t("initiate.summary.excludedByReadiness"),
+              value:populationRows.length-readinessRows.length,
+              help:t("initiate.impact.excludedHelp"),
+            },
           ])}
         </div>
       );
@@ -440,29 +481,50 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                 </div>
               </FormSection>
 
-              <FormSection title={t("initiate.fields.riskSignals")}>
-                <div className="app-selection-grid">
-                  {SIGNAL_OPTIONS.map(([id,label]) => (
-                    <AppSelectionRow
-                      key={id}
-                      code={id}
-                      title={label}
-                      checked={signals.includes(id)}
-                      onChange={() => setSignals(toggle(signals, id))}
-                      onInfo={() => explain("rule_id", id, { rule_id:id })}
-                      infoLabel={t("initiate.explain", { value: id })}
-                    />
-                  ))}
-                </div>
+              <FormSection
+                title={t("initiate.fields.riskSignals")}
+                description={t("initiate.riskSignals.help")}
+              >
+                <AppSearchField
+                  value={riskSignalSearch}
+                  onChange={setRiskSignalSearch}
+                  label={t("initiate.riskSignals.searchLabel")}
+                  placeholder={t("initiate.riskSignals.searchPlaceholder")}
+                  size="standard"
+                />
+                <p className="form-helper">
+                  {t("initiate.riskSignals.selectedCount", { count: signals.length })}
+                </p>
+                {filteredSignalOptions.length > 0 ? (
+                  <div className="app-selection-grid">
+                    {filteredSignalOptions.map(([id,label]) => (
+                      <AppSelectionRow
+                        key={id}
+                        code={id}
+                        title={label}
+                        checked={signals.includes(id)}
+                        onChange={() => setSignals(toggle(signals, id))}
+                        onInfo={() => explain("rule_id", id, { rule_id:id })}
+                        infoLabel={t("initiate.explain", { value: id })}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="form-helper">{t("initiate.riskSignals.noResults")}</p>
+                )}
               </FormSection>
 
               {signals.length > 1 && (
-                <FormSection title={t("initiate.fields.matchLogic")}>
+                <FormSection
+                  title={t("initiate.fields.matchLogic")}
+                  description={t("initiate.match.help")}
+                >
                   <div className="app-choice-grid">
                     <AppChoiceCard
                       name="match-mode"
                       value="any"
                       title={t("initiate.match.any")}
+                      description={t("initiate.match.anyDesc")}
                       selected={matchMode === "any"}
                       onSelect={setMatchMode}
                     />
@@ -470,6 +532,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                       name="match-mode"
                       value="all"
                       title={t("initiate.match.all")}
+                      description={t("initiate.match.allDesc")}
                       selected={matchMode === "all"}
                       onSelect={setMatchMode}
                     />
@@ -479,8 +542,17 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             </div>
           </FormSection>
 
-          {metricRow([
-            { label:t("initiate.summary.matchedCriteria"), value:matchedRows.length, icon:ListChecks, tone:"primary" },
+          {selectionImpact([
+            {
+              label:t("initiate.summary.eligibleAfterReadiness"),
+              value:readinessRows.length,
+              help:t("initiate.impact.eligibleHelp"),
+            },
+            {
+              label:t("initiate.summary.matchedCriteria"),
+              value:matchedRows.length,
+              help:t("initiate.impact.matchedHelp"),
+            },
           ])}
         </div>
       );
@@ -514,8 +586,17 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             </FormSection>
           </FormSection>
 
-          {metricRow([
-            { label:t("initiate.summary.matchedCriteria"), value:matchedRows.length, icon:ListChecks, tone:"primary" },
+          {selectionImpact([
+            {
+              label:t("initiate.summary.eligibleAfterReadiness"),
+              value:readinessRows.length,
+              help:t("initiate.impact.eligibleHelp"),
+            },
+            {
+              label:t("initiate.summary.matchedCriteria"),
+              value:matchedRows.length,
+              help:t("initiate.impact.matchedHelp"),
+            },
           ])}
         </div>
       );
@@ -554,8 +635,17 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             </FormSection>
           </FormSection>
 
-          {metricRow([
-            { label:t("initiate.summary.matchedCriteria"), value:matchedRows.length, icon:ListChecks, tone:"primary" },
+          {selectionImpact([
+            {
+              label:t("initiate.summary.eligibleAfterReadiness"),
+              value:readinessRows.length,
+              help:t("initiate.impact.eligibleHelp"),
+            },
+            {
+              label:t("initiate.summary.matchedCriteria"),
+              value:matchedRows.length,
+              help:t("initiate.impact.matchedHelp"),
+            },
           ])}
         </div>
       );
@@ -569,11 +659,17 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             description={t("initiate.steps.preview.desc")}
             icon={ListChecks}
           >
-            {metricRow([
-              { label:t("initiate.summary.population"), value:populationRows.length, icon:Users, tone:"primary" },
-              { label:t("initiate.summary.eligibleAfterReadiness"), value:readinessRows.length, icon:CheckCircle2, tone:"success" },
-              { label:t("initiate.summary.matchedCriteria"), value:matchedRows.length, icon:ListChecks, tone:"primary" },
-              { label:t("initiate.summary.finalCandidates"), value:finalRows.length, icon:FileSearch, tone:"warning" },
+            {selectionImpact([
+              {
+                label:t("initiate.summary.matchedCriteria"),
+                value:matchedRows.length,
+                help:t("initiate.impact.matchedHelp"),
+              },
+              {
+                label:t("initiate.summary.finalCandidates"),
+                value:finalRows.length,
+                help:t("initiate.impact.finalHelp"),
+              },
             ])}
 
             <div className="table-card">
@@ -690,8 +786,12 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
           </div>
         </FormSection>
 
-        {metricRow([
-          { label:t("initiate.summary.finalCandidates"), value:finalRows.length, icon:CheckCircle2, tone:"success" },
+        {selectionImpact([
+          {
+            label:t("initiate.summary.finalCandidates"),
+            value:finalRows.length,
+            help:t("initiate.impact.finalHelp"),
+          },
         ])}
 
         <FormSection
