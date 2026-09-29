@@ -384,11 +384,13 @@ function ManualSectionPanel({
         </div>
         <ChevronDown className="form-section__chevron" size={16} strokeWidth={1.8} aria-hidden="true" />
       </summary>
-      <div className="form-section__body--stack">
-        {section.blocks.map((block, index) => (
-          <ManualBlockView key={index} block={block} language={language} />
-        ))}
-      </div>
+      {open && (
+        <div className="form-section__body--stack">
+          {section.blocks.map((block, index) => (
+            <ManualBlockView key={index} block={block} language={language} />
+          ))}
+        </div>
+      )}
     </details>
   );
 }
@@ -464,6 +466,10 @@ export function AuditManualPage() {
 
   const expandAll = () => setOpenSections(new Set(filteredSections.map((section) => section.id)));
   const collapseAll = () => setOpenSections(new Set());
+  const printAll = () => {
+    setOpenSections(new Set(filteredSections.map((section) => section.id)));
+    window.setTimeout(() => window.print(), 120);
+  };
 
   return (
     <div className="table-page">
@@ -518,7 +524,7 @@ export function AuditManualPage() {
           <button
             type="button"
             className="table-card__toolbar-btn table-card__toolbar-btn--print"
-            onClick={() => window.print()}
+            onClick={printAll}
           >
             <Printer size={13} aria-hidden="true" /> {txt(COPY.print)}
           </button>
