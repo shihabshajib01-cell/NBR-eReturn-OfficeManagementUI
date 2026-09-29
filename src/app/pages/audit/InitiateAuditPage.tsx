@@ -265,17 +265,39 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     });
   };
 
-  const selectionImpact = (items: Array<{
-    label: string;
-    value: number;
-    help: string;
-  }>) => (
+  const selectionImpactPanel = (
     <FormSection
       title={t("initiate.impact.title")}
       description={t("initiate.impact.description")}
     >
-      <dl className="form-summary-list">
-        {items.map(({ label, value, help }) => (
+      <dl className="form-summary-list form-summary-list--compact">
+        {[
+          {
+            label:t("initiate.summary.population"),
+            value:populationRows.length,
+            help:t("initiate.impact.populationHelp"),
+          },
+          {
+            label:t("initiate.summary.eligibleAfterReadiness"),
+            value:readinessRows.length,
+            help:t("initiate.impact.eligibleHelp"),
+          },
+          {
+            label:t("initiate.summary.excludedByReadiness"),
+            value:populationRows.length-readinessRows.length,
+            help:t("initiate.impact.excludedHelp"),
+          },
+          {
+            label:t("initiate.summary.matchedCriteria"),
+            value:matchedRows.length,
+            help:t("initiate.impact.matchedHelp"),
+          },
+          {
+            label:t("initiate.summary.finalCandidates"),
+            value:finalRows.length,
+            help:t("initiate.impact.finalHelp"),
+          },
+        ].map(({ label, value, help }) => (
           <div className="form-summary-list__row" key={label}>
             <dt className="form-summary-list__label">
               {label}
@@ -403,14 +425,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
               )}
             </FormSection>
           )}
-
-          {selectionImpact([
-            {
-              label:t("initiate.summary.population"),
-              value:populationRows.length,
-              help:t("initiate.impact.populationHelp"),
-            },
-          ])}
         </div>
       );
     }
@@ -461,24 +475,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
               </FormSection>
             </div>
           </FormSection>
-
-          {selectionImpact([
-            {
-              label:t("initiate.summary.population"),
-              value:populationRows.length,
-              help:t("initiate.impact.populationHelp"),
-            },
-            {
-              label:t("initiate.summary.eligibleAfterReadiness"),
-              value:readinessRows.length,
-              help:t("initiate.impact.eligibleHelp"),
-            },
-            {
-              label:t("initiate.summary.excludedByReadiness"),
-              value:populationRows.length-readinessRows.length,
-              help:t("initiate.impact.excludedHelp"),
-            },
-          ])}
         </div>
       );
     }
@@ -567,19 +563,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
               )}
             </div>
           </FormSection>
-
-          {selectionImpact([
-            {
-              label:t("initiate.summary.eligibleAfterReadiness"),
-              value:readinessRows.length,
-              help:t("initiate.impact.eligibleHelp"),
-            },
-            {
-              label:t("initiate.summary.matchedCriteria"),
-              value:matchedRows.length,
-              help:t("initiate.impact.matchedHelp"),
-            },
-          ])}
         </div>
       );
     }
@@ -611,19 +594,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
               </div>
             </FormSection>
           </FormSection>
-
-          {selectionImpact([
-            {
-              label:t("initiate.summary.eligibleAfterReadiness"),
-              value:readinessRows.length,
-              help:t("initiate.impact.eligibleHelp"),
-            },
-            {
-              label:t("initiate.summary.matchedCriteria"),
-              value:matchedRows.length,
-              help:t("initiate.impact.matchedHelp"),
-            },
-          ])}
         </div>
       );
     }
@@ -660,19 +630,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
               </div>
             </FormSection>
           </FormSection>
-
-          {selectionImpact([
-            {
-              label:t("initiate.summary.eligibleAfterReadiness"),
-              value:readinessRows.length,
-              help:t("initiate.impact.eligibleHelp"),
-            },
-            {
-              label:t("initiate.summary.matchedCriteria"),
-              value:matchedRows.length,
-              help:t("initiate.impact.matchedHelp"),
-            },
-          ])}
         </div>
       );
     }
@@ -685,18 +642,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
             description={t("initiate.steps.preview.desc")}
             icon={ListChecks}
           >
-            {selectionImpact([
-              {
-                label:t("initiate.summary.matchedCriteria"),
-                value:matchedRows.length,
-                help:t("initiate.impact.matchedHelp"),
-              },
-              {
-                label:t("initiate.summary.finalCandidates"),
-                value:finalRows.length,
-                help:t("initiate.impact.finalHelp"),
-              },
-            ])}
 
             <div className="table-card">
               <ResponsiveTable
@@ -812,14 +757,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
           </div>
         </FormSection>
 
-        {selectionImpact([
-          {
-            label:t("initiate.summary.finalCandidates"),
-            value:finalRows.length,
-            help:t("initiate.impact.finalHelp"),
-          },
-        ])}
-
         <FormSection
           title={t("initiate.review.confirmTitle")}
           description={t("initiate.review.confirmDesc")}
@@ -870,11 +807,19 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
           ariaLabel={t("initiate.progressLabel")}
         />
 
-        {renderStep()}
+        <div className="app-wizard-layout">
+          <div className="app-wizard-main">
+            {renderStep()}
 
-        {!stepValid && (
-          <p className="form-error" role="status">{t("initiate.validation.completeStep")}</p>
-        )}
+            {!stepValid && (
+              <p className="form-error" role="status">{t("initiate.validation.completeStep")}</p>
+            )}
+          </div>
+
+          <aside className="app-wizard-aside" aria-label={t("initiate.impact.title")}>
+            {selectionImpactPanel}
+          </aside>
+        </div>
 
         <AuditExplainerDrawer explanation={explanation} onClose={() => setExplanation(null)} />
       </div>

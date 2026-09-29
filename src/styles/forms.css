@@ -1060,6 +1060,28 @@
   gap: 1rem;
 }
 
+/* Shared wizard content + live summary layout.
+   Mirrors the established create-role two-column workflow without coupling
+   other modules to role-specific CRM classes. */
+.app-wizard-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 1.25rem;
+  align-items: start;
+  min-width: 0;
+}
+
+.app-wizard-main,
+.app-wizard-aside {
+  min-width: 0;
+}
+
+.app-wizard-aside {
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
+
 .form-section-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1097,6 +1119,26 @@
   font-size: var(--fs-body-sm);
   line-height: var(--lh-body-sm);
   overflow-wrap: anywhere;
+}
+
+.form-summary-list--compact .form-summary-list__row {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.form-summary-list--compact .form-summary-list__value {
+  font-weight: 700;
+  color: var(--color-primary);
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .app-wizard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .app-wizard-aside {
+    position: static;
+  }
 }
 
 @media (max-width: 768px) {
