@@ -398,6 +398,17 @@
   gap: 1rem;
 }
 
+/* Compact action row inside form sections.
+   Unlike filter-actions, this has no external top margin because the
+   FormSection body already provides its own padding and vertical gap. */
+.form-section__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 /* ── Entry form grid ──────────────────────────────────────────────────── */
 .entry-form__grid {
   display: grid;
