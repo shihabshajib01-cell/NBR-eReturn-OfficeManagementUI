@@ -81,7 +81,8 @@
     "reconciliation": "Reconciliation",
     "auditTrail": "Audit Trail",
     "allTaxpayers": "All Taxpayers",
-    "auditCandidates": "Audit Candidates"
+    "auditCandidates": "Audit Candidates",
+    "auditManual": "Audit Manual"
   },
   "administration": {
     "main": "Administration & Requests",
