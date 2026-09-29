@@ -330,6 +330,7 @@ export const AUDIT_MANUAL_CORE_SECTIONS: ManualSection[] = [
           [mt("Tax Payable>0 but Income=0","Tax Payable>0 কিন্তু Income=0"), mt("Usually missing income source or F0 arithmetic issue; then R-A3 may be relevant.","সাধারণত missing income source বা F0 arithmetic; তারপর R-A3।"), mt("Check form arithmetic first.","প্রথমে form arithmetic।")],
           [mt("High income with Asset=0","High income, Asset=0"), mt("Potential statement completeness issue, not automatically a substantive risk signal.","Wealth statement completeness question; substantive risk signal নয়।"), mt("Check Coverage/F5 if the statement is required.","Statement required হলে Coverage/F5।")],
           [mt("Asset band far above income band","Asset income-এর তুলনায় অনেক বড়"), mt("Question proportionality; C1 at DT1, B1 as history context.","Proportionality প্রশ্ন; DT1-এ C1, history থাকলে B1 context।"), mt("Review reconciliation and multi-year movement.","Reconciliation ও multi-year review।")],
+          [mt("Income and asset broadly aligned","Income ও asset মোটামুটি সামঞ্জস্যপূর্ণ"), mt("No single-year signal from this lens.","এই lens থেকে single-year signal নেই।"), mt("No action from this lens.","এই lens থেকে কোনো পদক্ষেপ নয়।")],
         ],
       },
     ],
@@ -415,6 +416,18 @@ export const AUDIT_MANUAL_CORE_SECTIONS: ManualSection[] = [
           [mt("8(a) is already net","8(a) ইতিমধ্যেই net"), mt("Total Asset of Business less Business Liabilities; business liabilities must not be added again in line 6.","Total Asset of Business less Business Liabilities; business liability line 6-এ আবার যোগ নয়।")],
           [mt("Previous NW comes from the system","Previous NW system থেকে"), mt("Line 2 should equal prior-year line 5; mismatch is R-C3. First filing is NULL, not zero.","Line 2 গত বছরের line 5; mismatch হলে R-C3। First filing-এ NULL, zero নয়।")],
           [mt("IT-10B is not mandatory for everyone","IT-10B সবার জন্য নয়"), mt("Source triggers include public servant, total asset above 40 lakh, or below that with motor car, city-corporation house/apartment, foreign asset, or shareholder-director status. IT-10BB filing obligation is not separately established by this form and needs legal validation.","Trigger: public servant; মোট asset ৪০ lakh-এর বেশি; অথবা কম হলেও motor car, city corporation house/apartment, foreign asset, shareholder director। IT-10BB obligation আলাদাভাবে established নয় — legal validation।")],
+        ],
+      },
+      {
+        kind: "formula",
+        title: mt("C1 engine behaviour after reconciliation", "Reconciliation-এর পরে C1 engine behaviour"),
+        lines: [
+          mt("Materiality = max(Sources × 10%, 2 lakh BDT) in the source CONFIG.", "Source CONFIG-এ Materiality = max(Sources × 10%, 2 lakh BDT)।"),
+          mt("If |Gap| ≤ materiality, R-C1 does not fire.", "|Gap| ≤ materiality হলে R-C1 fire করে না।"),
+          mt("Positive Gap: > 3× materiality → strong; otherwise → meaningful.", "Positive Gap: > 3× materiality → strong; অন্যথায় meaningful।"),
+          mt("Negative Gap: |Gap| > 3× materiality → meaningful; otherwise → weak.", "Negative Gap: |Gap| > 3× materiality → meaningful; অন্যথায় weak।"),
+          mt("Driver label: if Uses > Sources → expenditure-driven; otherwise → asset-driven. Negative gap is labelled unexplained shortfall.", "Driver label: Uses > Sources হলে expenditure-driven; অন্যথায় asset-driven। Negative gap = unexplained shortfall।"),
+          mt("The alternative identity is checked numerically: Gap = ΔNet Wealth − (Sources − Uses).", "Alternative identity numerically check হয়: Gap = ΔNet Wealth − (Sources − Uses)।"),
         ],
       },
       {
