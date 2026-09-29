@@ -21,8 +21,8 @@ import { handleExportDisabled } from "../../utils/exportDisabled";
 import type { ColDef, FilterDef, TableRow } from "../modulePageUtils";
 import { fc } from "../modulePageUtils";
 import {
-  ALL_TAXPAYER_ROWS, AUDIT_TRAIL_ROWS, CONTROL_ROWS, QUEUE_HEALTH_ROWS,
-  RECONCILIATION_ROWS, RISK_CASE_ROWS, RISK_DISTRIBUTION_ROWS, ROLE_SCOPE_ROWS,
+  ALL_TAXPAYER_ROWS, AUDIT_TRAIL_ROWS, CONTROL_ROWS,
+  RECONCILIATION_ROWS, RISK_CASE_ROWS, RISK_DISTRIBUTION_ROWS,
   RULE_ROWS, SECOND_REVIEW_ROWS,
 } from "./auditData";
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
