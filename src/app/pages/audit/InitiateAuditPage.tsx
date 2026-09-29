@@ -100,7 +100,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [riskLevels, setRiskLevels] = useState<string[]>([]);
   const [signals, setSignals] = useState<string[]>([]);
   const [controlFlags, setControlFlags] = useState<string[]>([]);
-  const [matchMode, setMatchMode] = useState("any");
   const [manualReturnIds, setManualReturnIds] = useState<string[]>([]);
   const [manualSearch, setManualSearch] = useState("");
   const [riskLevelSearch, setRiskLevelSearch] = useState("");
@@ -153,9 +152,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
       const rowSignals = signalIds(row.signals);
       const signalOk = signals.length === 0
         ? true
-        : matchMode === "all"
-          ? signals.every((id) => rowSignals.includes(id))
-          : signals.some((id) => rowSignals.includes(id));
+        : signals.some((id) => rowSignals.includes(id));
       return riskOk && signalOk;
     }
 
@@ -169,7 +166,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     }
 
     return false;
-  }), [readinessRows, track, riskLevels, signals, matchMode, controlFlags, manualReturnIds]);
+  }), [readinessRows, track, riskLevels, signals, controlFlags, manualReturnIds]);
 
   const finalRows = useMemo(
     () => matchedRows.filter((row) => !(String(row.return_id) in exclusions)),
@@ -250,7 +247,6 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     setManualSearch("");
     setRiskLevelSearch("");
     setRiskSignalSearch("");
-    setMatchMode("any");
     setExclusions({});
   };
 
@@ -260,13 +256,13 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     if (track === "risk") {
       const parts = [
         riskLevels.length ? `Risk: ${riskLevels.join(", ")}` : "",
-        signals.length ? `Signals: ${signals.join(", ")} (${matchMode})` : "",
+        signals.length ? `Signals: ${signals.join(", ")}` : "",
       ].filter(Boolean).join(" · ");
       return `Risk-based · ${scope} · ${parts}`;
     }
     if (track === "control") return `Control / Data Quality · ${scope} · ${controlFlags.join(", ")}`;
     return `Manual selection · ${scope}`;
-  }, [scopeMode, circles, track, riskLevels, signals, matchMode, controlFlags, t]);
+  }, [scopeMode, circles, track, riskLevels, signals, controlFlags, t]);
 
   const confirmCandidates = () => {
     if (!finalRows.length) return;
@@ -669,32 +665,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                 )}
               </section>
 
-              {signals.length > 1 && (
-                <section className="form-subsection">
-                  <div className="form-subsection__heading">
-                    <h4 className="form-subsection__title">{t("initiate.fields.matchLogic")}</h4>
-                    <p className="form-subsection__description">{t("initiate.match.help")}</p>
-                  </div>
-                  <div className="app-choice-grid">
-                    <AppChoiceCard
-                      name="match-mode"
-                      value="any"
-                      title={t("initiate.match.any")}
-                      description={t("initiate.match.anyDesc")}
-                      selected={matchMode === "any"}
-                      onSelect={setMatchMode}
-                    />
-                    <AppChoiceCard
-                      name="match-mode"
-                      value="all"
-                      title={t("initiate.match.all")}
-                      description={t("initiate.match.allDesc")}
-                      selected={matchMode === "all"}
-                      onSelect={setMatchMode}
-                    />
-                  </div>
-                </section>
-              )}
+
             </div>
           </FormSection>
         </div>
