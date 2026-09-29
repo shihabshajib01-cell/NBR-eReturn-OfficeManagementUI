@@ -102,6 +102,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const [matchMode, setMatchMode] = useState("any");
   const [manualReturnIds, setManualReturnIds] = useState<string[]>([]);
   const [manualSearch, setManualSearch] = useState("");
+  const [riskLevelSearch, setRiskLevelSearch] = useState("");
   const [riskSignalSearch, setRiskSignalSearch] = useState("");
   const [exclusions, setExclusions] = useState<Record<string,string>>({});
   const [explanation, setExplanation] = useState<AuditExplanation | null>(null);
@@ -181,6 +182,12 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     ].some((value) => String(value ?? "").toLowerCase().includes(needle)));
   }, [readinessRows, manualSearch]);
 
+  const filteredRiskLevels = useMemo(() => {
+    const needle = riskLevelSearch.trim().toLowerCase();
+    if (!needle) return RISK_LEVELS;
+    return RISK_LEVELS.filter((level) => level.toLowerCase().includes(needle));
+  }, [riskLevelSearch]);
+
   const filteredSignalOptions = useMemo(() => {
     const needle = riskSignalSearch.trim().toLowerCase();
     if (!needle) return SIGNAL_OPTIONS;
@@ -238,6 +245,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     setControlFlags([]);
     setManualReturnIds([]);
     setManualSearch("");
+    setRiskLevelSearch("");
     setRiskSignalSearch("");
     setMatchMode("any");
     setExclusions({});
@@ -550,18 +558,43 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                 <div className="form-subsection__heading">
                   <h4 className="form-subsection__title">{t("initiate.fields.riskLevel")}</h4>
                 </div>
-                <div className="app-selection-grid">
-                  {RISK_LEVELS.map((level) => (
-                    <AppSelectionRow
-                      key={level}
-                      title={level}
-                      checked={riskLevels.includes(level)}
-                      onChange={() => setRiskLevels(toggle(riskLevels, level))}
-                      onInfo={() => explain("risk_level", level, { risk_level:level })}
-                      infoLabel={t("initiate.explain", { value: level })}
+                <div className="form-section__toolbar">
+                  <div className="form-section__toolbar-search">
+                    <AppSearchField
+                      value={riskLevelSearch}
+                      onChange={setRiskLevelSearch}
+                      label={t("initiate.fields.searchRiskLevel")}
+                      placeholder={t("initiate.fields.searchRiskLevel")}
+                      size="compact"
                     />
-                  ))}
+                  </div>
+                  <div className="form-section__toolbar-actions">
+                    <SecondaryButton size="sm" onClick={() => setRiskLevels([...RISK_LEVELS])}>
+                      {t("initiate.actions.selectAll")}
+                    </SecondaryButton>
+                    {riskLevels.length > 0 && (
+                      <SecondaryButton size="sm" onClick={() => setRiskLevels([])}>
+                        {t("initiate.actions.clear")}
+                      </SecondaryButton>
+                    )}
+                  </div>
                 </div>
+                {filteredRiskLevels.length > 0 ? (
+                  <div className="app-selection-grid">
+                    {filteredRiskLevels.map((level) => (
+                      <AppSelectionRow
+                        key={level}
+                        title={level}
+                        checked={riskLevels.includes(level)}
+                        onChange={() => setRiskLevels(toggle(riskLevels, level))}
+                        onInfo={() => explain("risk_level", level, { risk_level:level })}
+                        infoLabel={t("initiate.explain", { value: level })}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="form-helper">{t("initiate.validation.noResults")}</p>
+                )}
               </section>
 
               <section className="form-subsection">
@@ -569,13 +602,27 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   <h4 className="form-subsection__title">{t("initiate.fields.riskSignals")}</h4>
                   <p className="form-subsection__description">{t("initiate.riskSignals.help")}</p>
                 </div>
-                <AppSearchField
-                  value={riskSignalSearch}
-                  onChange={setRiskSignalSearch}
-                  label={t("initiate.riskSignals.searchLabel")}
-                  placeholder={t("initiate.riskSignals.searchPlaceholder")}
-                  size="standard"
-                />
+                <div className="form-section__toolbar">
+                  <div className="form-section__toolbar-search">
+                    <AppSearchField
+                      value={riskSignalSearch}
+                      onChange={setRiskSignalSearch}
+                      label={t("initiate.riskSignals.searchLabel")}
+                      placeholder={t("initiate.riskSignals.searchPlaceholder")}
+                      size="compact"
+                    />
+                  </div>
+                  <div className="form-section__toolbar-actions">
+                    <SecondaryButton size="sm" onClick={() => setSignals(SIGNAL_OPTIONS.map(([id]) => id))}>
+                      {t("initiate.actions.selectAll")}
+                    </SecondaryButton>
+                    {signals.length > 0 && (
+                      <SecondaryButton size="sm" onClick={() => setSignals([])}>
+                        {t("initiate.actions.clear")}
+                      </SecondaryButton>
+                    )}
+                  </div>
+                </div>
                 <p className="form-helper">
                   {t("initiate.riskSignals.selectedCount", { count: signals.length })}
                 </p>

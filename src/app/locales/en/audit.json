@@ -274,7 +274,8 @@
       "searchTaxpayer": "Search TIN, Return ID, taxpayer or Circle",
       "searchCircles": "Search Circles",
       "searchDataQuality": "Search Data Quality",
-      "searchCoverageTier": "Search Coverage Tier"
+      "searchCoverageTier": "Search Coverage Tier",
+      "searchRiskLevel": "Search Risk Level"
     },
     "tracks": {
       "population": {
@@ -352,7 +353,8 @@
     },
     "validation": {
       "completeStep": "Complete the required selections in this step before continuing.",
-      "noCirclesFound": "No Circles match this search."
+      "noCirclesFound": "No Circles match this search.",
+      "noResults": "No matching options found."
     },
     "explain": "Explain {{value}}",
     "toast": {

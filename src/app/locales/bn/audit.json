@@ -274,7 +274,8 @@
       "searchTaxpayer": "TIN, Return ID, taxpayer বা Circle খুঁজুন",
       "searchCircles": "Circle খুঁজুন",
       "searchDataQuality": "Data Quality খুঁজুন",
-      "searchCoverageTier": "Coverage Tier খুঁজুন"
+      "searchCoverageTier": "Coverage Tier খুঁজুন",
+      "searchRiskLevel": "Risk Level খুঁজুন"
     },
     "tracks": {
       "population": {
@@ -352,7 +353,8 @@
     },
     "validation": {
       "completeStep": "পরবর্তী ধাপে যাওয়ার আগে এই ধাপের required selection সম্পন্ন করুন।",
-      "noCirclesFound": "এই search-এর সাথে কোনো Circle মেলেনি।"
+      "noCirclesFound": "এই search-এর সাথে কোনো Circle মেলেনি।",
+      "noResults": "কোনো matching option পাওয়া যায়নি।"
     },
     "explain": "{{value}} ব্যাখ্যা",
     "toast": {
