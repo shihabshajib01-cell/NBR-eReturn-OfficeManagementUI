@@ -28,6 +28,7 @@ import {
 import { AuditExplainerDrawer } from "./AuditExplainerDrawer";
 import { resolveAuditExplanation, type AuditExplanation } from "./auditKnowledge";
 import { AuditCandidatesPage } from "./AuditCandidatesPage";
+import { AuditManualPage } from "./AuditManualPage";
 import { getAuditCandidates } from "./auditCandidateStore";
 
 const PER_PAGE = 10;
@@ -676,6 +677,7 @@ export function AuditModulePage() {
     case "rules-governance": return <AuditTablePage config={rulesConfig} />;
     case "reconciliation": return <AuditTablePage config={reconciliationConfig} />;
     case "audit-trail": return <AuditTablePage config={trailConfig} />;
+    case "audit-manual": return <AuditManualPage />;
     default: return <AuditOverviewPage />;
   }
 }
