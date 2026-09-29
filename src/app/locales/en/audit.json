@@ -366,7 +366,7 @@
     },
     "impact": {
       "title": "Selection impact",
-      "description": "These counts update automatically from your choices. They do not create audit findings or determinations.",
+      "description": "Counts appear after each related step is completed and update if you revise a completed selection. They do not create audit findings or determinations.",
       "populationHelp": "Returns in the selected assessment year and Circle scope.",
       "eligibleHelp": "Returns still included after Data Quality and Coverage filters.",
       "excludedHelp": "Returns removed by the current readiness selections.",

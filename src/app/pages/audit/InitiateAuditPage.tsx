@@ -87,6 +87,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
   const coverageAvailable = unique("coverage_tier");
 
   const [step, setStep] = useState(0);
+  const [maxCompletedStep, setMaxCompletedStep] = useState(-1);
   const [assessmentYear, setAssessmentYear] = useState(assessmentYears[0] ?? "2025-26");
   const [track, setTrack] = useState<TrackId>("risk");
   const [scopeMode, setScopeMode] = useState("all");
@@ -240,6 +241,8 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     if (nextTrack === track) return;
 
     setTrack(nextTrack);
+    setStep(0);
+    setMaxCompletedStep(-1);
     setRiskLevels([]);
     setSignals([]);
     setControlFlags([]);
@@ -287,6 +290,17 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
     });
   };
 
+  const populationStepIndex = activeSteps.indexOf("population");
+  const readinessStepIndex = activeSteps.indexOf("readiness");
+  const criteriaStepIndex = activeSteps.findIndex((id) =>
+    id === "riskCriteria" || id === "controlCriteria" || id === "manualSelection"
+  );
+  const matchedStepIndex = criteriaStepIndex >= 0 ? criteriaStepIndex : readinessStepIndex;
+  const previewStepIndex = activeSteps.indexOf("preview");
+
+  const impactValue = (requiredCompletedStep: number, value: number): number | string =>
+    requiredCompletedStep >= 0 && maxCompletedStep >= requiredCompletedStep ? value : "—";
+
   const selectionImpactPanel = (
     <FormSection
       title={t("initiate.impact.title")}
@@ -296,27 +310,27 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
         {[
           {
             label:t("initiate.summary.population"),
-            value:populationRows.length,
+            value:impactValue(populationStepIndex, populationRows.length),
             help:t("initiate.impact.populationHelp"),
           },
           {
             label:t("initiate.summary.eligibleAfterReadiness"),
-            value:readinessRows.length,
+            value:impactValue(readinessStepIndex, readinessRows.length),
             help:t("initiate.impact.eligibleHelp"),
           },
           {
             label:t("initiate.summary.excludedByReadiness"),
-            value:populationRows.length-readinessRows.length,
+            value:impactValue(readinessStepIndex, populationRows.length-readinessRows.length),
             help:t("initiate.impact.excludedHelp"),
           },
           {
             label:t("initiate.summary.matchedCriteria"),
-            value:matchedRows.length,
+            value:impactValue(matchedStepIndex, matchedRows.length),
             help:t("initiate.impact.matchedHelp"),
           },
           {
             label:t("initiate.summary.finalCandidates"),
-            value:finalRows.length,
+            value:impactValue(previewStepIndex, finalRows.length),
             help:t("initiate.impact.finalHelp"),
           },
         ].map(({ label, value, help }) => (
@@ -894,7 +908,14 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
         </SecondaryButton>
       )}
       {step < activeSteps.length - 1 ? (
-        <PrimaryButton size="sm" disabled={!stepValid} onClick={() => setStep((value) => Math.min(activeSteps.length-1,value+1))}>
+        <PrimaryButton
+          size="sm"
+          disabled={!stepValid}
+          onClick={() => {
+            setMaxCompletedStep((value) => Math.max(value, step));
+            setStep((value) => Math.min(activeSteps.length-1,value+1));
+          }}
+        >
           {t("initiate.actions.continue")}
         </PrimaryButton>
       ) : (

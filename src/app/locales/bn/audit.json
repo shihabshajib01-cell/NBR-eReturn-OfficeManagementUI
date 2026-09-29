@@ -366,7 +366,7 @@
     },
     "impact": {
       "title": "Selection impact",
-      "description": "আপনার selection বদলালে এই count-গুলো স্বয়ংক্রিয়ভাবে update হবে। এগুলো কোনো audit finding বা determination তৈরি করে না।",
+      "description": "প্রাসঙ্গিক step সম্পন্ন হলে count দেখা যাবে; completed selection পরিবর্তন করলে তা আপডেট হবে। এগুলো audit finding বা determination তৈরি করে না।",
       "populationHelp": "নির্বাচিত Assessment Year ও Circle scope-এর return।",
       "eligibleHelp": "Data Quality ও Coverage filter-এর পরও অন্তর্ভুক্ত থাকা return।",
       "excludedHelp": "বর্তমান readiness selection-এর কারণে বাদ যাওয়া return।",
