@@ -356,7 +356,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
 
           {scopeMode === "selected" && (
             <FormSection title={t("initiate.fields.selectCircles")} icon={ListChecks}>
-              <div className="entry-form__actions">
+              <div className="filter-actions">
                 <SecondaryButton size="sm" onClick={() => setCircles(circlesAvailable)}>
                   {t("initiate.actions.selectAll")}
                 </SecondaryButton>
@@ -364,7 +364,7 @@ export function InitiateAuditModal({ open, onClose, onConfirmed }: InitiateAudit
                   {t("initiate.actions.clear")}
                 </SecondaryButton>
               </div>
-              <div className="app-selection-grid app-selection-grid--3">
+              <div className="app-selection-grid">
                 {circlesAvailable.map((circle) => (
                   <AppSelectionRow
                     key={circle}
