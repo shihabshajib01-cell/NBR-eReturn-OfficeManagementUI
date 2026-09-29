@@ -1068,30 +1068,14 @@ export function AuditCandidatesPage({
   const tableDescription = selectedBatchId
     ? t("candidates.selectedTableDescription", {
         batchId: selectedBatch?.batch_id ?? "",
+        track: selectedBatch?.selection_track ?? "",
+        funnelRule: selectedBatch?.funnel_rule ?? "",
         count: batchCandidates.length,
       })
     : t("candidates.description");
 
   return (
     <div className="table-page">
-      {selectedBatchId && selectedBatch && (
-        <div className="audit-hierarchy-path">
-          <button
-            type="button"
-            className="audit-hierarchy-back"
-            onClick={backToBatches}
-          >
-            <ArrowLeft size={15} aria-hidden="true" />
-            <p>{t("candidates.backToBatches")}</p>
-          </button>
-          <div className="audit-hierarchy-path__trail">
-            <p>{t("candidates.title")}</p>
-            <ChevronRight size={14} aria-hidden="true" />
-            <p>{selectedBatch.batch_id}</p>
-          </div>
-        </div>
-      )}
-
       <div className="table-page__header">
         <div>
           <h1 className="table-page__title">
@@ -1102,43 +1086,28 @@ export function AuditCandidatesPage({
           <p className="table-page__desc">{tableDescription}</p>
         </div>
 
-        {!selectedBatchId && (
-          <div className="table-page__actions">
+        <div className="table-page__actions">
+          {selectedBatchId ? (
             <button
               type="button"
-              className="action-btn action-btn--primary"
+              className="table-card__toolbar-btn"
+              onClick={backToBatches}
+            >
+              <ArrowLeft size={13} aria-hidden="true" />
+              {t("candidates.backToBatches")}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="table-card__toolbar-btn table-card__toolbar-btn--primary"
               onClick={() => setInitiateOpen(true)}
             >
-              <Plus size={11} strokeWidth={3} aria-hidden="true" />
+              <Plus size={13} aria-hidden="true" />
               {t("candidates.initiateAction")}
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-
-      {selectedBatchId && selectedBatch && (
-        <section
-          className="audit-batch-context"
-          aria-label={t("candidates.batchContext")}
-        >
-          <div className="audit-batch-context__item">
-            <p>{t("candidates.columns.batchId")}</p>
-            <strong>{selectedBatch.batch_id}</strong>
-          </div>
-          <div className="audit-batch-context__item">
-            <p>{t("candidates.columns.selectionTrack")}</p>
-            <strong>{selectedBatch.selection_track}</strong>
-          </div>
-          <div className="audit-batch-context__item">
-            <p>{t("candidates.columns.candidateCount")}</p>
-            <strong>{selectedBatch.candidate_count}</strong>
-          </div>
-          <div className="audit-batch-context__item audit-batch-context__item--wide">
-            <p>{t("candidates.columns.funnelRule")}</p>
-            <strong>{selectedBatch.funnel_rule}</strong>
-          </div>
-        </section>
-      )}
 
       <MobileSearchFilter
         searchValue={q}
