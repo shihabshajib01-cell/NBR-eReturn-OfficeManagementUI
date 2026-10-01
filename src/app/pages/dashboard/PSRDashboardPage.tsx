@@ -97,7 +97,7 @@ const PSR_FILTERS: FilterDef[] = [
     label: "Zone",
     labelKey: "labels.zone",
     type: "select",
-    options: ["All", ...CIRCLE_PSR_DATA.map(row => row.zone)],
+    options: ["All"],
   },
   {
     key: "status",
