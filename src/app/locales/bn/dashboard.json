@@ -52,18 +52,24 @@
   },
   "combined": {
     "title": "দ্বৈত এন্ট্রি ড্যাশবোর্ড",
-    "subtitle": "মূল্যায়ন বছর {{assessmentYear}}-এর সমস্ত রিপোর্ট বিভাগের সংক্ষিপ্ত বিবরণ",
+    "subtitle": "জোন, সার্কেল ও ব্যবহারকারী অনুযায়ী ডাবল এন্ট্রির শুরু, সম্পন্ন হওয়া ও অনুমোদনের অগ্রগতি দেখুন।",
     "kpis": {
-      "totalReturnsFiled": "মোট রিটার্ন দাখিল",
-      "pendingApprovals": "অপেক্ষমান অনুমোদন",
-      "totalTaxCollected": "মোট কর সংগৃহীত",
-      "activeUsers": "সক্রিয় ব্যবহারকারী"
+      "notInitialized": "শুরু হয়নি",
+      "initialized": "শুরু হয়েছে",
+      "pending": "অপেক্ষমান",
+      "totalApproved": "মোট অনুমোদিত"
     },
     "sections": {
       "offlineReturnsToday": "অফলাইন রিটার্ন (আজ)",
       "litigationArrearToday": "মামলা বকেয়া (আজ)",
-      "taxCategorySubmissions": "কর বিভাগ জমা"
-    }
+      "taxCategorySubmissions": "কর বিভাগ জমা",
+      "overview": "ডাবল এন্ট্রি সারসংক্ষেপ",
+      "zonewiseStatus": "জোনভিত্তিক ডাবল এন্ট্রি অবস্থা",
+      "circlewiseStatus": "সার্কেলভিত্তিক ডাবল এন্ট্রি অবস্থা",
+      "userwiseStatus": "ব্যবহারকারীভিত্তিক ডাবল এন্ট্রি অবস্থা"
+    },
+    "zoneSubtitle": "{{zone}}-এর সার্কেলভিত্তিক ডাবল এন্ট্রি অগ্রগতি দেখানো হচ্ছে।",
+    "circleSubtitle": "{{zone}}-এর {{circle}} সার্কেলের কর্মকর্তাভিত্তিক ডাবল এন্ট্রি অগ্রগতি দেখানো হচ্ছে।"
   },
   "combineDashboard": {
     "title": "কম্বাইন ড্যাশবোর্ড",

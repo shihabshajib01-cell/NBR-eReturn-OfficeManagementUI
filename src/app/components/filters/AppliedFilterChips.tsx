@@ -9,7 +9,6 @@ interface AppliedFilterChipsProps {
 
 export function AppliedFilterChips({ values, onClear, inCard }: AppliedFilterChipsProps) {
   const { t: translateFilters } = useTranslation("filters");
-  const { t: translateCommon } = useTranslation("common");
   const active = Object.entries(values).filter(([, v]) => v && !v.startsWith("All"));
   if (!active.length) return null;
 
@@ -19,9 +18,14 @@ export function AppliedFilterChips({ values, onClear, inCard }: AppliedFilterChi
       {active.map(([k, v]) => (
         <span key={k} className="applied-chips__tag">{v}</span>
       ))}
-      <button type="button" onClick={onClear} className="applied-chips__clear">
+      <button
+        type="button"
+        onClick={onClear}
+        className="applied-chips__clear"
+        aria-label={translateFilters("buttons.reset")}
+      >
         <X size={12} aria-hidden="true" />
-        {translateCommon("actions.clear")}
+        {translateFilters("buttons.reset")}
       </button>
     </div>
   );
