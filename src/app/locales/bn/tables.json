@@ -23,6 +23,8 @@
     "taxCollected": "কর সংগৃহীত",
     "taxTotal": "মোট কর",
     "totalPsr": "মোট PSR",
+    "doubleEntry": "ডাবল এন্ট্রি",
+    "doubleEntryPercentage": "ডাবল এন্ট্রি শতাংশ (%)",
     "psrNo": "PSR নম্বর",
     "submittedBy": "জমাদানকারী",
     "assessmentYear": "মূল্যায়ন বছর",
