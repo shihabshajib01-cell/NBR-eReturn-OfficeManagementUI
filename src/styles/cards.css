@@ -863,7 +863,6 @@
   color: var(--color-text-primary);
   line-height: 1.4;
   padding-bottom: 6px;
-  border-bottom: 1px solid var(--color-border);
   margin: 0;
 }
 
