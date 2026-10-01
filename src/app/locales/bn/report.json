@@ -63,12 +63,12 @@
     "payment": "পরিশোধ"
   },
   "columns": {
+    "212": "২১২",
     "circle": "সার্কেল",
     "taxCircle": "কর সার্কেল",
     "category": "শ্রেণি",
     "82bb": "৮২বিবি",
     "82c2": "৮২সি(২)",
-    "212": "২১২",
     "normal": "স্বাভাবিক",
     "totalEntry": "মোট এন্ট্রি",
     "taxPaidWithReturnTds": "রিটার্নের সাথে প্রদত্ত কর (TDS)",
@@ -141,5 +141,40 @@
     "paymentInfo": "পেমেন্ট তথ্য",
     "notes": "নোট",
     "close": "বন্ধ করুন"
+  },
+  "userActivityWorkspace": {
+    "tabs": {
+      "users": "ব্যবহারকারী কার্যক্রম",
+      "organization": "জোনাল / সার্কেল কার্যক্রম"
+    },
+    "filters": {
+      "userType": "ব্যবহারকারীর ধরন",
+      "assessmentYear": "মূল্যায়ন বছর",
+      "zone": "জোন",
+      "circle": "সার্কেল"
+    },
+    "kpis": {
+      "totalUsers": "মোট ব্যবহারকারী",
+      "active": "সক্রিয়",
+      "released": "অব্যাহতি",
+      "totalEntryToday": "আজকের মোট এন্ট্রি"
+    },
+    "tables": {
+      "users": "ব্যবহারকারী কার্যক্রম",
+      "zonal": "জোনাল কার্যক্রম",
+      "circle": "সার্কেল কার্যক্রম"
+    },
+    "actions": {
+      "backToZonal": "জোনাল তালিকায় ফিরুন"
+    },
+    "groups": {
+      "reportingScope": "রিপোর্টিং পরিধি"
+    },
+    "fields": {
+      "range": "রেঞ্জ"
+    },
+    "details": {
+      "title": "ব্যবহারকারী কার্যক্রমের বিস্তারিত"
+    }
   }
 }
