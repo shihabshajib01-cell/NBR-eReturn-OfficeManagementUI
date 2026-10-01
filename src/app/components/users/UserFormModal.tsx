@@ -8,6 +8,7 @@ import { usePermissionRegistry } from "../../hooks/usePermissionRegistry";
 import { SToggle } from "../forms/SToggle";
 import { AppTextField } from "../forms/AppTextField";
 import { AppSelectField } from "../forms/AppSelectField";
+import { TaxZoneSelectField } from "../forms/TaxZoneSelectField";
 import { AppPhoneField } from "../forms/AppPhoneField";
 import { AppModal } from "../modals/AppModal";
 import { PrimaryButton } from "../buttons/PrimaryButton";
@@ -146,12 +147,11 @@ export function UserFormModal({ open, userId, users, roles, onClose, onSave, onN
                 options={USER_DESIGNATIONS_LIST}
                 required
               />
-              <AppSelectField
+              <TaxZoneSelectField
                 id="ufm-zone"
                 label={translate("form.zone")}
                 value={zone}
                 onChange={setZone}
-                options={USER_ZONES_LIST}
                 required
                 helper="Assigned tax administration zone"
               />
