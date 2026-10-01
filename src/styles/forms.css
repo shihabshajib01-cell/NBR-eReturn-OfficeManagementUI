@@ -244,51 +244,75 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  background: var(--color-primary-alpha-3);
-  border-radius: 10px;
-  margin-bottom: 14px;
-  padding: 10px 14px;
+  gap: 6px;
+  min-height: 34px;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 12px;
+  padding: 6px 10px;
 }
 
 .applied-chips--in-card {
+  border-left: 0;
+  border-right: 0;
   border-radius: 0;
   margin-bottom: 0;
-  padding: 8px 16px;
-  border-top: 1px solid var(--color-primary-alpha-10);
-  border-bottom: 1px solid var(--color-primary-alpha-10);
+  padding: 6px 16px;
 }
 
 .applied-chips__label {
   font-size: var(--fs-caption);
+  font-weight: 500;
   color: var(--color-text-secondary);
 }
 
 .applied-chips__tag {
   font-size: var(--fs-caption);
   font-weight: 600;
-  background: var(--color-primary-alpha-10);
+  line-height: 1.25;
+  background: var(--color-primary-alpha-8);
   color: var(--color-primary);
-  padding: 2px 10px;
+  padding: 2px 8px;
   border-radius: 9999px;
 }
 
 .applied-chips__clear {
   margin-left: auto;
+  min-height: 24px;
+  padding: 2px 0;
   font-size: var(--fs-caption);
   font-weight: 600;
-  color: var(--color-error);
+  color: var(--color-text-secondary);
   background: transparent;
   border: none;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 4px;
-  transition: opacity var(--motion-fast);
+  transition: color var(--motion-fast), opacity var(--motion-fast);
   outline: none;
 }
 
-.applied-chips__clear:hover { opacity: 0.75; }
+.applied-chips__clear:hover {
+  color: var(--color-error);
+}
+
+.applied-chips__clear:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 640px) {
+  .applied-chips {
+    align-items: flex-start;
+  }
+
+  .applied-chips__clear {
+    margin-left: 0;
+  }
+}
 
 /* ── Toggle switch ────────────────────────────────────────────────────── */
 .s-toggle-wrapper {
