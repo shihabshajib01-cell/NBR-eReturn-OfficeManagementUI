@@ -28,10 +28,18 @@ export function TaxZoneSelectField({
   disabled,
   compact,
 }: TaxZoneSelectFieldProps) {
+  const legacyValue =
+    value &&
+    value !== allOptionValue &&
+    !TAX_ZONES.includes(value)
+      ? [{ value, label: value }]
+      : [];
+
   const options = [
     ...(allOptionValue
       ? [{ value: allOptionValue, label: allOptionLabel ?? allOptionValue }]
       : []),
+    ...legacyValue,
     ...TAX_ZONES.map(zone => ({ value: zone, label: zone })),
   ];
 
