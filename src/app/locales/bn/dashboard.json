@@ -16,6 +16,7 @@
     "totalTaxCollected": "মোট কর সংগৃহীত",
     "activeUsers": "সক্রিয় ব্যবহারকারী",
     "totalPsrEntries": "মোট PSR এন্ট্রি",
+      "totalDoubleEntry": "মোট ডাবল এন্ট্রি",
     "pendingApproval": "অপেক্ষমান অনুমোদন"
   },
   "sections": {
