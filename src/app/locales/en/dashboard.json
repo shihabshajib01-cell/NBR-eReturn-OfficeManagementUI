@@ -41,6 +41,11 @@
     "sections": {
       "circlewisePsrStatus": "Circle-wise PSR Status",
       "recentPsrEntries": "Recent PSR Entries"
+    },
+    "requestSummary": {
+      "today": "Today",
+      "thisMonth": "This Month (October 2026)",
+      "totalToDate": "Total to Date"
     }
   },
   "combined": {
