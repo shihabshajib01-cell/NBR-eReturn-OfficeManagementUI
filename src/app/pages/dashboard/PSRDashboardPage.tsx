@@ -26,6 +26,11 @@ const CIRCLE_PSR_MOBILE_MAPPING: MobileCardMapping = {
   meta: ["total_psr", "double_entry", "double_entry_percentage"],
 };
 
+const PSR_OVERVIEW_TOTALS = {
+  totalPsrEntries: 174,
+  totalDoubleEntry: 34,
+};
+
 const CIRCLE_PSR_DATA = [
   { serial_no: "1", zone: "Large Taxpayers Unit (Tax)", total_psr: "4", double_entry: "0", double_entry_percentage: "0.00" },
   { serial_no: "2", zone: "01, Dhaka", total_psr: "1", double_entry: "0", double_entry_percentage: "0.00" },
@@ -131,6 +136,25 @@ export function PSRDashboardPage() {
     });
   }, [search, appliedFilters]);
 
+  const filteredPsrSummary = useMemo(() => {
+    const selectedZone = appliedFilters.zone;
+
+    // The current mock source exposes zone-level totals, but not taxpayer
+    // category/status or per-assessment-year totals. Preserve the confirmed
+    // overall totals for the unscoped view and only derive totals where the
+    // source data can support it without fabricating missing dimensions.
+    if (!selectedZone || selectedZone === "All") {
+      return PSR_OVERVIEW_TOTALS;
+    }
+
+    const zoneRows = CIRCLE_PSR_DATA.filter(row => row.zone === selectedZone);
+
+    return {
+      totalPsrEntries: zoneRows.reduce((sum, row) => sum + Number(row.total_psr || 0), 0),
+      totalDoubleEntry: zoneRows.reduce((sum, row) => sum + Number(row.double_entry || 0), 0),
+    };
+  }, [appliedFilters.zone]);
+
   const handleFilterChange = (key: string, value: string) => {
     setFilterValues(prev => ({ ...prev, [key]: value }));
   };
@@ -147,10 +171,22 @@ export function PSRDashboardPage() {
   };
 
   const kpiCards = [
-    { label: translate("psr.kpis.totalPsrEntries"), value: "174", icon: Shield, tone: "primary" as const },
-    { label: translate("psr.kpis.totalDoubleEntry"), value: "34", icon: Activity, tone: "success" as const },
+    {
+      label: translate("psr.kpis.totalPsrEntries"),
+      value: String(filteredPsrSummary.totalPsrEntries),
+      icon: Shield,
+      tone: "primary" as const,
+    },
+    {
+      label: translate("psr.kpis.totalDoubleEntry"),
+      value: String(filteredPsrSummary.totalDoubleEntry),
+      icon: Activity,
+      tone: "success" as const,
+    },
   ];
 
+  // Separate request-summary dataset. Intentionally independent of the
+  // original PSR table filters (assessment year / zone / status).
   const requestSummaryCards = [
     { label: translate("psr.requestSummary.today"), value: "5", icon: CalendarCheck, tone: "primary" as const },
     { label: translate("psr.requestSummary.thisMonth"), value: "5", icon: CalendarDays, tone: "success" as const },
