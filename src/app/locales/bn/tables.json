@@ -181,7 +181,16 @@
     "activeReleased": "সক্রিয় / অব্যাহতি",
     "range": "রেঞ্জ",
     "zoneName": "জোনের নাম",
-    "circleRangeZone": "সার্কেল / রেঞ্জ / জোন"
+    "circleRangeZone": "সার্কেল / রেঞ্জ / জোন",
+    "name": "নাম",
+    "notInitialized": "শুরু হয়নি",
+    "initialized": "শুরু হয়েছে",
+    "doubleEntryComplete": "ডাবল এন্ট্রি সম্পন্ন",
+    "coOngoing": "CO চলমান",
+    "draftEntry": "খসড়া এন্ট্রি",
+    "savedEntry": "সংরক্ষিত এন্ট্রি",
+    "entryComplete": "এন্ট্রি সম্পন্ন",
+    "approvedEntry": "অনুমোদিত এন্ট্রি"
   },
   "groups": {
     "entryToday": "আজকের এন্ট্রি",
