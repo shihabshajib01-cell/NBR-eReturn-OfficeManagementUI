@@ -4,8 +4,6 @@ import { useTranslation } from "react-i18next";
 import { StatCard } from "../../components/cards/StatCard";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
 import { AppSearchField } from "../../components/forms/AppSearchField";
-import { AppSelectField } from "../../components/forms/AppSelectField";
-import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { FilterPanel } from "../../components/filters/FilterPanel";
 import { MobileFilterOverlay } from "../../components/filters/MobileFilterOverlay";
 import { AppliedFilterChips } from "../../components/filters/AppliedFilterChips";
@@ -83,16 +81,25 @@ const PSR_STATUS_OPTIONS = [
 
 const PSR_FILTERS: FilterDef[] = [
   {
+    key: "assessment_year",
+    label: "Assessment Year",
+    labelKey: "labels.assessmentYear",
+    type: "select",
+    options: ["2025-26", "2024-25", "2023-24", "2022-23", "2021-22"],
+  },
+  {
     key: "zone",
     label: "Zone",
+    labelKey: "labels.zone",
     type: "select",
     options: ["All", ...CIRCLE_PSR_DATA.map(row => row.zone)],
   },
   {
-    key: "double_entry",
-    label: "Double Entry",
+    key: "status",
+    label: "Status",
+    labelKey: "labels.status",
     type: "select",
-    options: ["All", "Has Double Entry", "No Double Entry"],
+    options: PSR_STATUS_OPTIONS,
   },
 ];
 
@@ -107,12 +114,6 @@ export function PSRDashboardPage() {
   const [showFilter, setShowFilter] = useState(false);
   const [filterValues, setFilterValues] = useState<Record<string, string>>({});
   const [appliedFilters, setAppliedFilters] = useState<Record<string, string>>({});
-  const [dashboardAssessmentYear, setDashboardAssessmentYear] = useState(ay);
-  const [dashboardZone, setDashboardZone] = useState("All");
-  const [dashboardStatus, setDashboardStatus] = useState("All");
-  const [appliedDashboardAssessmentYear, setAppliedDashboardAssessmentYear] = useState(ay);
-  const [appliedDashboardZone, setAppliedDashboardZone] = useState("All");
-  const [appliedDashboardStatus, setAppliedDashboardStatus] = useState("All");
 
   const filteredRows = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -123,12 +124,9 @@ export function PSRDashboardPage() {
         Object.values(row).some(value => String(value).toLowerCase().includes(query));
 
       const matchesZone =
-        (!appliedFilters.zone ||
-          appliedFilters.zone === "All" ||
-          row.zone === appliedFilters.zone) &&
-        (!appliedDashboardZone ||
-          appliedDashboardZone === "All" ||
-          row.zone === appliedDashboardZone);
+        !appliedFilters.zone ||
+        appliedFilters.zone === "All" ||
+        row.zone === appliedFilters.zone;
 
       const doubleEntryCount = Number(row.double_entry);
       const matchesDoubleEntry =
@@ -139,7 +137,7 @@ export function PSRDashboardPage() {
 
       return matchesSearch && matchesZone && matchesDoubleEntry;
     });
-  }, [search, appliedFilters, appliedDashboardZone]);
+  }, [search, appliedFilters]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilterValues(prev => ({ ...prev, [key]: value }));
@@ -156,16 +154,6 @@ export function PSRDashboardPage() {
     setShowFilter(false);
   };
 
-  const handleApplyDashboardFilters = () => {
-    setAppliedDashboardAssessmentYear(dashboardAssessmentYear);
-    setAppliedDashboardZone(dashboardZone);
-    setAppliedDashboardStatus(dashboardStatus);
-  };
-
-  const assessmentYearOptions = Array.from(new Set([ay, "2025-26", "2024-25", "2023-24", "2022-23", "2021-22"]));
-
-  void appliedDashboardStatus;
-
   const kpiCards = [
     { label: translate("psr.kpis.totalPsrEntries"), value: "174", icon: Shield, tone: "primary" as const },
     { label: translate("psr.kpis.totalDoubleEntry"), value: "34", icon: Activity, tone: "success" as const },
@@ -176,38 +164,6 @@ export function PSRDashboardPage() {
       <div className="dashboard-page__header">
         <h1 className="dashboard-page__title">{translate("psr.title")}</h1>
         <p className="dashboard-page__subtitle">{translate("psr.subtitle")}</p>
-      </div>
-
-      <div className="psr-dashboard__filters" role="group" aria-label={translateFilters("labels.filters")}>
-        <AppSelectField
-          id="psr-dashboard-assessment-year"
-          label={translateFilters("labels.assessmentYear")}
-          value={dashboardAssessmentYear}
-          onChange={setDashboardAssessmentYear}
-          options={assessmentYearOptions}
-          compact
-        />
-        <AppSelectField
-          id="psr-dashboard-zone"
-          label={translateFilters("labels.zone")}
-          value={dashboardZone}
-          onChange={setDashboardZone}
-          options={["All", ...CIRCLE_PSR_DATA.map(row => row.zone)]}
-          compact
-        />
-        <AppSelectField
-          id="psr-dashboard-status"
-          label={translateFilters("labels.status")}
-          value={dashboardStatus}
-          onChange={setDashboardStatus}
-          options={PSR_STATUS_OPTIONS}
-          compact
-        />
-        <div className="psr-dashboard__filter-action">
-          <PrimaryButton size="sm" onClick={handleApplyDashboardFilters}>
-            {translateCommon("actions.apply")}
-          </PrimaryButton>
-        </div>
       </div>
 
       <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
@@ -225,7 +181,7 @@ export function PSRDashboardPage() {
                 {filteredRows.length} {translateCommon("common.records")}
               </span>
               <span className="dash-section__badge">
-                {translateCommon("common.ayAbbrev")} {appliedDashboardAssessmentYear}
+                {translateCommon("common.ayAbbrev")} {appliedFilters.assessment_year || ay}
               </span>
             </div>
 
