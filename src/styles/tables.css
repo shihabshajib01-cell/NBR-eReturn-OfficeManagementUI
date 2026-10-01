@@ -1299,3 +1299,57 @@
 .mobile-table-card__field-link--badge {
   display: inline-flex;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Double Entry Dashboard — table normalization
+   Reuses the shared table typography/color tokens; only hierarchy affordance
+   and metric alignment are scoped here so other solved tables stay untouched.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.double-entry-table .card-table__th {
+  font-size: var(--fs-table-header);
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.double-entry-table .card-table__td {
+  font-size: var(--fs-table-body);
+  font-weight: 400;
+  color: var(--color-text-primary);
+}
+
+.double-entry-table .card-table__cell-link:not(.card-table__cell-link--badge) {
+  color: var(--color-text-primary);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+
+.double-entry-table .card-table__cell-link:hover:not(.card-table__cell-link--badge) {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.double-entry-table .card-table__cell-link:focus-visible {
+  color: var(--color-primary);
+}
+
+/* Aggregate Zone/Circle tables: align status metrics as a readable matrix. */
+.double-entry-table--zone .card-table__th:nth-child(n+3),
+.double-entry-table--zone .card-table__td:nth-child(n+3),
+.double-entry-table--circle .card-table__th:nth-child(n+3),
+.double-entry-table--circle .card-table__td:nth-child(n+3) {
+  text-align: center;
+}
+
+/* User activity table: keep identity columns left, center entry counters. */
+.double-entry-table--user .card-table__th:nth-child(n+4):nth-child(-n+8),
+.double-entry-table--user .card-table__td:nth-child(n+4):nth-child(-n+8),
+.double-entry-table--user .card-table__th:last-child,
+.double-entry-table--user .card-table__td:last-child {
+  text-align: center;
+}
