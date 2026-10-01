@@ -105,10 +105,10 @@ export function FilterPanel({ filters, values, onChange, onApply, onReset, cardL
   if (cardLayout) {
     return (
       <>
-        <div className="card-body">
+        <div className="card-body filter-card__body">
           {fields}
         </div>
-        <div className="card-footer filter-actions filter-actions--card">
+        <div className="card-footer filter-actions filter-actions--card filter-card__footer">
           {actions}
         </div>
       </>
