@@ -105,10 +105,15 @@ export function FilterPanel({ filters, values, onChange, onApply, onReset, cardL
   if (cardLayout) {
     return (
       <>
-        <div className="card-body filter-card__body">
+        <div className="card-header">
+          <h3 className="dash-section__title-text">
+            {translate("buttons.applyFilters")}
+          </h3>
+        </div>
+        <div className="card-body">
           {fields}
         </div>
-        <div className="card-footer filter-actions filter-actions--card filter-card__footer">
+        <div className="card-footer filter-actions filter-actions--card">
           {actions}
         </div>
       </>
