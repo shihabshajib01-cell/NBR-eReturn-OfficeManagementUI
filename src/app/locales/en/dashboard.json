@@ -40,7 +40,8 @@
     },
     "sections": {
       "circlewisePsrStatus": "Circle-wise PSR Status",
-      "recentPsrEntries": "Recent PSR Entries"
+      "recentPsrEntries": "Recent PSR Entries",
+      "overview": "PSR Overview"
     },
     "requestSummary": {
       "today": "Today",
