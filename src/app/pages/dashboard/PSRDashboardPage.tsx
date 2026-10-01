@@ -7,6 +7,7 @@ import { AppSearchField } from "../../components/forms/AppSearchField";
 import { FilterPanel } from "../../components/filters/FilterPanel";
 import { MobileFilterOverlay } from "../../components/filters/MobileFilterOverlay";
 import { AppliedFilterChips } from "../../components/filters/AppliedFilterChips";
+import { useSettings } from "../../hooks/useSettings";
 import { useUIState } from "../../hooks/useUI";
 import { handleExportDisabled } from "../../utils/exportDisabled";
 import type { ColDef, FilterDef, MobileCardMapping } from "../modulePageUtils";
@@ -52,6 +53,7 @@ const PSR_FILTERS: FilterDef[] = [
 ];
 
 export function PSRDashboardPage() {
+  const { assessmentYear: ay } = useSettings();
   const { isDesktop } = useUIState();
   const { t: translate } = useTranslation("dashboard");
   const { t: translateCommon } = useTranslation("common");
@@ -125,6 +127,9 @@ export function PSRDashboardPage() {
               <h2 className="table-card__title">{translate("psr.sections.circlewisePsrStatus")}</h2>
               <span className="table-card__count" aria-live="polite" aria-atomic="true">
                 {filteredRows.length} {translateCommon("common.records")}
+              </span>
+              <span className="dash-section__badge">
+                {translateCommon("common.ayAbbrev")} {ay}
               </span>
             </div>
 
