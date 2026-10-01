@@ -16,7 +16,7 @@
     "totalTaxCollected": "Total Tax Collected",
     "activeUsers": "Active Users",
     "totalPsrEntries": "Total PSR Entries",
-      "totalDoubleEntry": "Total Double Entry",
+    "totalDoubleEntry": "Total Double Entry",
     "pendingApproval": "Pending Approval"
   },
   "sections": {
@@ -35,7 +35,8 @@
       "totalPsrEntries": "Total PSR Entries",
       "pendingApproval": "Pending Approval",
       "approvedToday": "Approved Today",
-      "rejectedToday": "Rejected Today"
+      "rejectedToday": "Rejected Today",
+      "totalDoubleEntry": "Total Double Entry"
     },
     "sections": {
       "circlewisePsrStatus": "Circle-wise PSR Status",
