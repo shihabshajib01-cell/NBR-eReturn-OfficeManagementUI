@@ -172,7 +172,14 @@ export function CombinedDashboardPage() {
           : ["All Status", "Not Initialized", "Initialized", "Double Entry Complete", "CO Ongoing", "Approved"],
         optionKeys: level === "user"
           ? { "All Status": "options.allStatus", "Active": "options.active", "Inactive": "options.inactive" }
-          : { "All Status": "options.allStatus" },
+          : {
+              "All Status": "options.allStatus",
+              "Not Initialized": "options.notInitialized",
+              "Initialized": "options.initialized",
+              "Double Entry Complete": "options.doubleEntryComplete",
+              "CO Ongoing": "options.coOngoing",
+              "Approved": "options.approved",
+            },
       },
       { key: "from", label: "From Date", labelKey: "labels.fromDate", type: "date" },
       { key: "to", label: "To Date", labelKey: "labels.toDate", type: "date" },
