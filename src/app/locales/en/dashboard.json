@@ -69,7 +69,11 @@
       "userwiseStatus": "User Entry Activity"
     },
     "zoneSubtitle": "Showing circle-level Double Entry progress for {{zone}}.",
-    "circleSubtitle": "Showing officer-level Double Entry progress for {{circle}} in {{zone}}."
+    "circleSubtitle": "Showing officer-level Double Entry progress for {{circle}} in {{zone}}.",
+    "actions": {
+      "backToZones": "Back to Zones",
+      "backToCircles": "Back to Circles"
+    }
   },
   "combineDashboard": {
     "title": "Combine Dashboard",
