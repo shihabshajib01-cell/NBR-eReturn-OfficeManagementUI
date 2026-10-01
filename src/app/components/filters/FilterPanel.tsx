@@ -89,7 +89,7 @@ export function FilterPanel({ filters, values, onChange, onApply, onReset }: Fil
           );
         })}
       </div>
-      <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 12 }}>
+      <div className="filter-actions">
         <SecondaryButton size="sm" onClick={onReset} aria-label={translate("buttons.reset") || "Reset filters"}>
           {translate("buttons.reset")}
         </SecondaryButton>
