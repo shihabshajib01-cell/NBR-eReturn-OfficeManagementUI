@@ -1,17 +1,23 @@
-import { Shield, Activity } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Activity, Filter, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { StatCard } from "../../components/cards/StatCard";
 import { DashSection } from "../../components/dashboard/DashSection";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
+import { AppSearchField } from "../../components/forms/AppSearchField";
+import { FilterPanel } from "../../components/filters/FilterPanel";
+import { MobileFilterOverlay } from "../../components/filters/MobileFilterOverlay";
+import { AppliedFilterChips } from "../../components/filters/AppliedFilterChips";
 import { useSettings } from "../../hooks/useSettings";
-import type { ColDef, MobileCardMapping } from "../modulePageUtils";
+import { useUIState } from "../../hooks/useUI";
+import type { ColDef, FilterDef, MobileCardMapping } from "../modulePageUtils";
 
 const CIRCLE_PSR_COLS: ColDef[] = [
-  { type: "col", col: { key: "serial_no", label: "S/N", headerKey: "headers.serialNo", mono: true } },
-  { type: "col", col: { key: "zone", label: "Zone", headerKey: "headers.zone" } },
-  { type: "col", col: { key: "total_psr", label: "Total PSR", headerKey: "headers.totalPsr", mono: true } },
-  { type: "col", col: { key: "double_entry", label: "Double Entry", headerKey: "headers.doubleEntry", mono: true } },
-  { type: "col", col: { key: "double_entry_percentage", label: "Double Entry Percentage (%)", headerKey: "headers.doubleEntryPercentage", mono: true } },
+  { type: "col", col: { key: "serial_no", label: "S/N", headerKey: "headers.serialNo", mono: true, truncate: "none" } },
+  { type: "col", col: { key: "zone", label: "Zone", headerKey: "headers.zone", truncate: "none" } },
+  { type: "col", col: { key: "total_psr", label: "Total PSR", headerKey: "headers.totalPsr", mono: true, truncate: "none" } },
+  { type: "col", col: { key: "double_entry", label: "Double Entry", headerKey: "headers.doubleEntry", mono: true, truncate: "none" } },
+  { type: "col", col: { key: "double_entry_percentage", label: "Double Entry Percentage (%)", headerKey: "headers.doubleEntryPercentage", mono: true, truncate: "none" } },
 ];
 
 const CIRCLE_PSR_MOBILE_MAPPING: MobileCardMapping = {
@@ -31,10 +37,70 @@ const CIRCLE_PSR_DATA = [
   { serial_no: "8", zone: "14, Dhaka", total_psr: "10", double_entry: "7", double_entry_percentage: "70.00" },
 ];
 
+const PSR_FILTERS: FilterDef[] = [
+  {
+    key: "zone",
+    label: "Zone",
+    type: "select",
+    options: ["All", ...CIRCLE_PSR_DATA.map(row => row.zone)],
+  },
+  {
+    key: "double_entry",
+    label: "Double Entry",
+    type: "select",
+    options: ["All", "Has Double Entry", "No Double Entry"],
+  },
+];
+
 export function PSRDashboardPage() {
   const { assessmentYear: ay } = useSettings();
+  const { isDesktop } = useUIState();
   const { t: translate } = useTranslation("dashboard");
   const { t: translateCommon } = useTranslation("common");
+
+  const [search, setSearch] = useState("");
+  const [showFilter, setShowFilter] = useState(false);
+  const [filterValues, setFilterValues] = useState<Record<string, string>>({});
+  const [appliedFilters, setAppliedFilters] = useState<Record<string, string>>({});
+
+  const filteredRows = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    return CIRCLE_PSR_DATA.filter(row => {
+      const matchesSearch =
+        !query ||
+        Object.values(row).some(value => String(value).toLowerCase().includes(query));
+
+      const matchesZone =
+        !appliedFilters.zone ||
+        appliedFilters.zone === "All" ||
+        row.zone === appliedFilters.zone;
+
+      const doubleEntryCount = Number(row.double_entry);
+      const matchesDoubleEntry =
+        !appliedFilters.double_entry ||
+        appliedFilters.double_entry === "All" ||
+        (appliedFilters.double_entry === "Has Double Entry" && doubleEntryCount > 0) ||
+        (appliedFilters.double_entry === "No Double Entry" && doubleEntryCount === 0);
+
+      return matchesSearch && matchesZone && matchesDoubleEntry;
+    });
+  }, [search, appliedFilters]);
+
+  const handleFilterChange = (key: string, value: string) => {
+    setFilterValues(prev => ({ ...prev, [key]: value }));
+  };
+
+  const handleApplyFilters = () => {
+    setAppliedFilters(filterValues);
+    setShowFilter(false);
+  };
+
+  const handleResetFilters = () => {
+    setFilterValues({});
+    setAppliedFilters({});
+    setShowFilter(false);
+  };
 
   const kpiCards = [
     { label: translate("psr.kpis.totalPsrEntries"), value: "174", icon: Shield, tone: "primary" as const },
@@ -55,15 +121,77 @@ export function PSRDashboardPage() {
       </div>
 
       <div className="dashboard-content-stack">
-        <DashSection title={translate("psr.sections.circlewisePsrStatus")} icon={Shield} badge={`${translateCommon("common.ayAbbrev")} ${ay}`}>
+        <DashSection
+          title={translate("psr.sections.circlewisePsrStatus")}
+          icon={Shield}
+          badge={`${translateCommon("common.ayAbbrev")} ${ay}`}
+        >
+          <div className="table-card__toolbar">
+            <div className="table-card__title-group">
+              <span className="table-card__count">
+                {filteredRows.length} {translateCommon("common.records")}
+              </span>
+            </div>
+
+            <div className="table-card__search-wrapper">
+              <AppSearchField
+                value={search}
+                onChange={setSearch}
+                placeholder={translateCommon("common.searchPlaceholder")}
+                label={translateCommon("common.searchPlaceholder")}
+                size="compact"
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowFilter(open => !open)}
+              className={`table-card__toolbar-btn${showFilter ? " table-card__toolbar-btn--active" : ""}`}
+              aria-expanded={showFilter}
+            >
+              <Filter size={13} aria-hidden="true" />
+              {translateCommon("actions.filter")}
+            </button>
+          </div>
+
+          {isDesktop && showFilter && (
+            <div className="table-card__filter-panel">
+              <FilterPanel
+                filters={PSR_FILTERS}
+                values={filterValues}
+                onChange={handleFilterChange}
+                onApply={handleApplyFilters}
+                onReset={handleResetFilters}
+              />
+            </div>
+          )}
+
+          <AppliedFilterChips
+            values={appliedFilters}
+            onClear={handleResetFilters}
+            inCard
+          />
+
           <ResponsiveTable
             cols={CIRCLE_PSR_COLS}
-            rows={CIRCLE_PSR_DATA}
+            rows={filteredRows}
             mobileCardMapping={CIRCLE_PSR_MOBILE_MAPPING}
             noCard
           />
         </DashSection>
       </div>
+
+      {!isDesktop && (
+        <MobileFilterOverlay
+          isOpen={showFilter}
+          filters={PSR_FILTERS}
+          values={filterValues}
+          onChange={handleFilterChange}
+          onApply={handleApplyFilters}
+          onReset={handleResetFilters}
+          onClose={() => setShowFilter(false)}
+        />
+      )}
     </div>
   );
 }
