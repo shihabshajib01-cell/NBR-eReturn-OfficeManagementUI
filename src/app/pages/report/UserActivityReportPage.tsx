@@ -455,7 +455,7 @@ export function UserActivityReportPage() {
           <h1 className="table-page__title">{title}</h1>
           <p className="table-page__desc">{desc}</p>
         </div>
-        {activeTab === "users" && (
+        {activeTab === "users" && activityGenerated && (
           <div className="table-page__actions">
             <button
               onClick={() => setSummaryOpen((open) => !open)}
