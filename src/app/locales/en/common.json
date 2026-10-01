@@ -29,7 +29,9 @@
     "duplicate": "Duplicate",
     "tableView": "Table",
     "cardView": "Cards",
-    "viewMode": "View mode"
+    "viewMode": "View mode",
+    "hideSummary": "Hide Summary",
+    "showSummary": "Show Summary"
   },
   "status": {
     "active": "Active",
