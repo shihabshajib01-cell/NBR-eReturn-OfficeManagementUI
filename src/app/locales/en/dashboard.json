@@ -16,6 +16,7 @@
     "totalTaxCollected": "Total Tax Collected",
     "activeUsers": "Active Users",
     "totalPsrEntries": "Total PSR Entries",
+      "totalDoubleEntry": "Total Double Entry",
     "pendingApproval": "Pending Approval"
   },
   "sections": {
