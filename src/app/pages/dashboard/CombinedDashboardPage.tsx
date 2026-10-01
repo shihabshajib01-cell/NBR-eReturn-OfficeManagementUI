@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Activity, BadgeCheck, Clock, ClipboardList, Download, Filter, Printer } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
+import { Activity, ArrowLeft, BadgeCheck, Clock, ClipboardList, Download, Filter, Printer } from "lucide-react";
 import { useSearchParams } from "react-router";
 import { useTranslation } from "react-i18next";
 import { StatCard } from "../../components/cards/StatCard";
@@ -8,6 +8,7 @@ import { AppSearchField } from "../../components/forms/AppSearchField";
 import { FilterPanel } from "../../components/filters/FilterPanel";
 import { MobileFilterOverlay } from "../../components/filters/MobileFilterOverlay";
 import { AppliedFilterChips } from "../../components/filters/AppliedFilterChips";
+import { SecondaryButton } from "../../components/buttons/SecondaryButton";
 import { useSettings } from "../../hooks/useSettings";
 import { useUIState } from "../../hooks/useUI";
 import { handleExportDisabled } from "../../utils/exportDisabled";
@@ -115,7 +116,6 @@ export function CombinedDashboardPage() {
   const { isDesktop } = useUIState();
   const { t: translate } = useTranslation("dashboard");
   const { t: translateCommon } = useTranslation("common");
-  const { t: translateFilters } = useTranslation("filters");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const selectedZone = searchParams.get("zone") || "";
@@ -127,98 +127,38 @@ export function CombinedDashboardPage() {
   const [filterValues, setFilterValues] = useState<Record<string, string>>({});
   const [appliedFilters, setAppliedFilters] = useState<Record<string, string>>({});
 
-  const filterZone =
-    filterValues.tax_zone && !filterValues.tax_zone.startsWith("All")
-      ? filterValues.tax_zone
-      : selectedZone;
-
-  const filters = useMemo<FilterDef[]>(() => {
-    const circleOptions = filterZone
-      ? (CIRCLE_ROWS_BY_ZONE[filterZone] ?? []).map(row => String(row.circle))
-      : [];
-
-    return [
-      {
-        key: "assessment_year",
-        label: "Assessment Year",
-        labelKey: "labels.assessmentYear",
-        type: "select",
-        options: ["All Years", "2026-27", "2025-26", "2024-25", "2023-24"],
-        optionKeys: { "All Years": "options.allYears" },
+  const filters = useMemo<FilterDef[]>(() => [
+    {
+      key: "assessment_year",
+      label: "Assessment Year",
+      labelKey: "labels.assessmentYear",
+      type: "select",
+      options: ["2025-26", "2024-25", "2023-24", "2022-23", "2021-22"],
+    },
+    {
+      key: "tax_zone",
+      label: "Zone",
+      labelKey: "labels.zone",
+      type: "select",
+      options: ["All Zones", ...ZONE_ROWS.map(row => String(row.zone))],
+      optionKeys: { "All Zones": "options.allZones" },
+    },
+    {
+      key: "status",
+      label: "Status",
+      labelKey: "labels.status",
+      type: "select",
+      options: ["All Status", "Not Initialized", "Initialized", "Double Entry Complete", "CO Ongoing", "Approved"],
+      optionKeys: {
+        "All Status": "options.allStatus",
+        "Not Initialized": "options.notInitialized",
+        "Initialized": "options.initialized",
+        "Double Entry Complete": "options.doubleEntryComplete",
+        "CO Ongoing": "options.coOngoing",
+        "Approved": "options.approved",
       },
-      {
-        key: "tax_zone",
-        label: "Zone",
-        labelKey: "labels.zone",
-        type: "select",
-        options: ["All Zones", ...ZONE_ROWS.map(row => String(row.zone))],
-        optionKeys: { "All Zones": "options.allZones" },
-      },
-      {
-        key: "circle",
-        label: "Circle",
-        labelKey: "labels.circle",
-        type: "select",
-        options: ["All Circles", ...circleOptions],
-        optionKeys: { "All Circles": "options.allCircles" },
-      },
-      {
-        key: "status",
-        label: "Status",
-        labelKey: "labels.status",
-        type: "select",
-        options: level === "user"
-          ? ["All Status", "Active", "Inactive"]
-          : ["All Status", "Not Initialized", "Initialized", "Double Entry Complete", "CO Ongoing", "Approved"],
-        optionKeys: level === "user"
-          ? { "All Status": "options.allStatus", "Active": "options.active", "Inactive": "options.inactive" }
-          : {
-              "All Status": "options.allStatus",
-              "Not Initialized": "options.notInitialized",
-              "Initialized": "options.initialized",
-              "Double Entry Complete": "options.doubleEntryComplete",
-              "CO Ongoing": "options.coOngoing",
-              "Approved": "options.approved",
-            },
-      },
-      { key: "from", label: "From Date", labelKey: "labels.fromDate", type: "date" },
-      { key: "to", label: "To Date", labelKey: "labels.toDate", type: "date" },
-    ];
-  }, [filterZone, level]);
-
-  useEffect(() => {
-    setFilterValues(prev => {
-      const next = {
-        ...prev,
-        tax_zone: selectedZone,
-        circle: selectedCircle,
-      };
-
-      if (level === "user" && next.status && !["All Status", "Active", "Inactive"].includes(next.status)) {
-        delete next.status;
-      }
-
-      if (level !== "user" && ["Active", "Inactive"].includes(next.status ?? "")) {
-        delete next.status;
-      }
-
-      return next;
-    });
-
-    setAppliedFilters(prev => {
-      const next = { ...prev };
-
-      if (level === "user" && next.status && !["All Status", "Active", "Inactive"].includes(next.status)) {
-        delete next.status;
-      }
-
-      if (level !== "user" && ["Active", "Inactive"].includes(next.status ?? "")) {
-        delete next.status;
-      }
-
-      return next;
-    });
-  }, [level, selectedCircle, selectedZone]);
+    },
+  ], []);
 
   const sourceRows = useMemo<TableRow[]>(() => {
     if (level === "user") {
@@ -232,17 +172,18 @@ export function CombinedDashboardPage() {
   }, [level, selectedCircle, selectedZone]);
 
   const scopeRows = useMemo(() => {
-    return sourceRows.filter(row => {
-      const statusFilter = appliedFilters.status;
-      if (level === "user") {
-        if (statusFilter && !statusFilter.startsWith("All") && row.status_code !== statusFilter) return false;
-      } else if (!rowMatchesAggregateStatus(row, statusFilter)) {
-        return false;
-      }
+    if (level !== "zone") return sourceRows;
 
-      // The verified legacy source is aggregate-only and does not expose
-      // per-date or per-assessment-year row dimensions. Keep those controls as
-      // report context without fabricating unsupported row-level values.
+    return sourceRows.filter(row => {
+      const zoneFilter = appliedFilters.tax_zone;
+      if (zoneFilter && !zoneFilter.startsWith("All") && row.zone !== zoneFilter) return false;
+
+      const statusFilter = appliedFilters.status;
+      if (!rowMatchesAggregateStatus(row, statusFilter)) return false;
+
+      // The current verified source is aggregate-only and does not expose
+      // per-assessment-year row dimensions. Preserve AY as report context
+      // without inventing unsupported row-level values.
       return true;
     });
   }, [sourceRows, appliedFilters, level]);
@@ -258,12 +199,9 @@ export function CombinedDashboardPage() {
   const summary = useMemo(() => {
     if (level === "user") {
       const circleRow = (CIRCLE_ROWS_BY_ZONE[selectedZone] ?? []).find(row => row.circle === selectedCircle);
-      return circleRow ? aggregateSummary([circleRow]) : { notInitialized: 0, initialized: 0, pending: 0, approved: 0 };
-    }
-
-    if (level === "circle" && scopeRows.length === 0) {
-      const zoneRow = ZONE_ROWS.find(row => row.zone === selectedZone);
-      return zoneRow ? aggregateSummary([zoneRow]) : { notInitialized: 0, initialized: 0, pending: 0, approved: 0 };
+      return circleRow
+        ? aggregateSummary([circleRow])
+        : { notInitialized: 0, initialized: 0, pending: 0, approved: 0 };
     }
 
     return aggregateSummary(scopeRows);
@@ -276,91 +214,49 @@ export function CombinedDashboardPage() {
     { label: translate("combined.kpis.totalApproved"), value: String(summary.approved), icon: BadgeCheck, tone: "neutral" as const },
   ];
 
-  const stripContextFilters = useCallback((values: Record<string, string>) => {
-    const next = { ...values };
-    delete next.tax_zone;
-    delete next.circle;
-    return next;
-  }, []);
-
   const handleFilterChange = useCallback((key: string, value: string) => {
-    setFilterValues(prev => {
-      if (key === "tax_zone") {
-        return { ...prev, tax_zone: value, circle: "" };
-      }
-      return { ...prev, [key]: value };
-    });
+    setFilterValues(prev => ({ ...prev, [key]: value }));
   }, []);
 
   const handleApplyFilters = useCallback(() => {
-    const requestedZone =
-      filterValues.tax_zone && !filterValues.tax_zone.startsWith("All")
-        ? filterValues.tax_zone
-        : "";
-
-    const availableCircles = requestedZone ? (CIRCLE_ROWS_BY_ZONE[requestedZone] ?? []) : [];
-    const requestedCircle =
-      filterValues.circle &&
-      !filterValues.circle.startsWith("All") &&
-      availableCircles.some(row => row.circle === filterValues.circle)
-        ? filterValues.circle
-        : "";
-
-    const targetLevel = requestedCircle ? "user" : requestedZone ? "circle" : "zone";
-    const nextApplied = stripContextFilters(filterValues);
-
-    if (targetLevel === "user" && nextApplied.status && !["All Status", "Active", "Inactive"].includes(nextApplied.status)) {
-      delete nextApplied.status;
-    }
-    if (targetLevel !== "user" && ["Active", "Inactive"].includes(nextApplied.status ?? "")) {
-      delete nextApplied.status;
-    }
-
-    const nextParams = new URLSearchParams();
-    if (requestedZone) nextParams.set("zone", requestedZone);
-    if (requestedCircle) nextParams.set("circle", requestedCircle);
-
-    setSearchParams(nextParams);
-    setAppliedFilters(nextApplied);
-    setSearch("");
+    setAppliedFilters(filterValues);
     setShowFilter(false);
-  }, [filterValues, setSearchParams, stripContextFilters]);
+  }, [filterValues]);
 
   const handleResetFilters = useCallback(() => {
-    setFilterValues({
-      tax_zone: selectedZone,
-      circle: selectedCircle,
-    });
+    setFilterValues({});
     setAppliedFilters({});
     setShowFilter(false);
-  }, [selectedCircle, selectedZone]);
+  }, []);
+
+  const resetNestedState = useCallback(() => {
+    setSearch("");
+    setFilterValues({});
+    setAppliedFilters({});
+    setShowFilter(false);
+  }, []);
 
   const handleCellClick = useCallback((key: string, value: string) => {
     if (key === "zone") {
       setSearchParams({ zone: value });
-      setSearch("");
-      setFilterValues(prev => ({ ...stripContextFilters(prev), tax_zone: value, circle: "" }));
-      setAppliedFilters(stripContextFilters);
-      setShowFilter(false);
+      resetNestedState();
       return;
     }
 
     if (key === "circle" && selectedZone) {
       setSearchParams({ zone: selectedZone, circle: value });
-      setSearch("");
-      setFilterValues(prev => {
-        const next = stripContextFilters(prev);
-        delete next.status;
-        return { ...next, tax_zone: selectedZone, circle: value };
-      });
-      setAppliedFilters(prev => {
-        const next = stripContextFilters(prev);
-        delete next.status;
-        return next;
-      });
-      setShowFilter(false);
+      resetNestedState();
     }
-  }, [selectedZone, setSearchParams, stripContextFilters]);
+  }, [resetNestedState, selectedZone, setSearchParams]);
+
+  const handleBack = useCallback(() => {
+    if (level === "user" && selectedZone) {
+      setSearchParams({ zone: selectedZone });
+    } else {
+      setSearchParams({});
+    }
+    resetNestedState();
+  }, [level, resetNestedState, selectedZone, setSearchParams]);
 
   const cols = level === "user" ? USER_COLS : level === "circle" ? CIRCLE_COLS : AGGREGATE_COLS;
   const clickableKeys = level === "zone" ? ["zone"] : level === "circle" ? ["circle"] : undefined;
@@ -383,6 +279,19 @@ export function CombinedDashboardPage() {
   return (
     <div className="dashboard-page">
       <div className="dashboard-page__header">
+        {level !== "zone" && (
+          <div className="mb-3">
+            <SecondaryButton
+              size="sm"
+              icon={ArrowLeft}
+              onClick={handleBack}
+            >
+              {level === "user"
+                ? translate("combined.actions.backToCircles")
+                : translate("combined.actions.backToZones")}
+            </SecondaryButton>
+          </div>
+        )}
         <h1 className="dashboard-page__title">{translate("combined.title")}</h1>
         <p className="dashboard-page__subtitle">{subtitle}</p>
       </div>
@@ -394,15 +303,17 @@ export function CombinedDashboardPage() {
           </h2>
 
           <div className="table-page__actions ml-auto">
-            <button
-              type="button"
-              onClick={() => setShowFilter(open => !open)}
-              className={`table-card__toolbar-btn${showFilter ? " table-card__toolbar-btn--active" : ""}`}
-              aria-expanded={showFilter}
-            >
-              <Filter size={13} aria-hidden="true" />
-              {translateCommon("actions.filter")}
-            </button>
+            {level === "zone" && (
+              <button
+                type="button"
+                onClick={() => setShowFilter(open => !open)}
+                className={`table-card__toolbar-btn${showFilter ? " table-card__toolbar-btn--active" : ""}`}
+                aria-expanded={showFilter}
+              >
+                <Filter size={13} aria-hidden="true" />
+                {translateCommon("actions.filter")}
+              </button>
+            )}
 
             <button
               type="button"
@@ -424,22 +335,22 @@ export function CombinedDashboardPage() {
           </div>
         </div>
 
-        {isDesktop && showFilter && (
-          <div className="card double-entry-filter-panel">
-            <h3 className="double-entry-filter-panel__title">
-              {translateFilters("buttons.applyFilters")}
-            </h3>
+        {level === "zone" && isDesktop && showFilter && (
+          <div className="card">
             <FilterPanel
               filters={filters}
               values={filterValues}
               onChange={handleFilterChange}
               onApply={handleApplyFilters}
               onReset={handleResetFilters}
+              cardLayout
             />
           </div>
         )}
 
-        <AppliedFilterChips values={appliedFilters} onClear={handleResetFilters} />
+        {level === "zone" && (
+          <AppliedFilterChips values={appliedFilters} onClear={handleResetFilters} />
+        )}
 
         <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
           {kpiCards.map((card, index) => (
@@ -463,7 +374,7 @@ export function CombinedDashboardPage() {
                 {filteredRows.length} {translateCommon("common.records")}
               </span>
               <span className="dash-section__badge">
-                {translateCommon("common.ayAbbrev")} {appliedFilters.assessment_year && !appliedFilters.assessment_year.startsWith("All") ? appliedFilters.assessment_year : assessmentYear}
+                {translateCommon("common.ayAbbrev")} {level === "zone" && appliedFilters.assessment_year ? appliedFilters.assessment_year : assessmentYear}
               </span>
             </div>
 
@@ -489,7 +400,7 @@ export function CombinedDashboardPage() {
         </div>
       </div>
 
-      {!isDesktop && (
+      {level === "zone" && !isDesktop && (
         <MobileFilterOverlay
           isOpen={showFilter}
           filters={filters}
