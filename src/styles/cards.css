@@ -35,6 +35,11 @@
   border-top: 1px solid var(--color-border);
 }
 
+/* User Activity Report — compact criteria header only */
+.user-activity-report__criteria-header {
+  padding: var(--space-3) var(--space-4);
+}
+
 /* Stat Card Component */
 .stat-card {
   background: var(--color-surface);
