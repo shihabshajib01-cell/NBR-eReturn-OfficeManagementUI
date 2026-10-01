@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import type { FilterDef } from "../../pages/modulePageUtils";
 import { AppTextField } from "../forms/AppTextField";
 import { AppSelectField } from "../forms/AppSelectField";
+import { TaxZoneSelectField } from "../forms/TaxZoneSelectField";
 import { AppDateField } from "../forms/AppDateField";
 import { PrimaryButton } from "../buttons/PrimaryButton";
 import { SecondaryButton } from "../buttons/SecondaryButton";
@@ -29,6 +30,27 @@ export function FilterPanel({ filters, values, onChange, onApply, onReset }: Fil
               value: o,
               label: f.optionKeys?.[o] ? translate(f.optionKeys[o]) || o : o,
             }));
+
+            if (f.key === "zone") {
+              const allOption = (f.options ?? []).find(o => o.startsWith("All"));
+              const allLabel = allOption
+                ? (f.optionKeys?.[allOption] ? translate(f.optionKeys[allOption]) || allOption : allOption)
+                : undefined;
+
+              return (
+                <TaxZoneSelectField
+                  key={f.key}
+                  id={id}
+                  label={label}
+                  value={values[f.key] ?? ""}
+                  onChange={v => onChange(f.key, v)}
+                  allOptionValue={allOption}
+                  allOptionLabel={allLabel}
+                  compact
+                />
+              );
+            }
+
             return (
               <AppSelectField
                 key={f.key}
