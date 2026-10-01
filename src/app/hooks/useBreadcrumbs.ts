@@ -29,13 +29,17 @@ export function useBreadcrumbs() {
     return translateNav(`${mainKey}.main`, fallback || mainId);
   }
 
+  const isDoubleEntryRoute =
+    activeMainItem.id === "dashboard" && activeSub === "combined-dashboard";
+
   const breadcrumbs: BreadcrumbItem[] = [
-    { label: translateBreadcrumb("home"), to: "/dashboard/dashboard-main" },
+    {
+      label: translateBreadcrumb("home"),
+      to: isDoubleEntryRoute ? "/dashboard/dashboard-main" : undefined,
+    },
     {
       label: getNavLabel(activeMainItem.id, undefined, undefined, activeMainItem.label),
-      to: activeMainItem.id === "dashboard" && activeSub && activeSub !== "dashboard-main"
-        ? "/dashboard/dashboard-main"
-        : undefined,
+      to: isDoubleEntryRoute ? "/dashboard/dashboard-main" : undefined,
     },
   ];
 
