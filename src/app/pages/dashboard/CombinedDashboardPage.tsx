@@ -389,14 +389,16 @@ export function CombinedDashboardPage() {
             </div>
           </div>
 
-          <ResponsiveTable
-            cols={cols}
-            rows={filteredRows}
-            mobileCardMapping={mobileCardMapping}
-            clickableKeys={clickableKeys}
-            onCellClick={handleCellClick}
-            noCard
-          />
+          <div className={`double-entry-table double-entry-table--${level}`}>
+            <ResponsiveTable
+              cols={cols}
+              rows={filteredRows}
+              mobileCardMapping={mobileCardMapping}
+              clickableKeys={clickableKeys}
+              onCellClick={handleCellClick}
+              noCard
+            />
+          </div>
         </div>
       </div>
 
