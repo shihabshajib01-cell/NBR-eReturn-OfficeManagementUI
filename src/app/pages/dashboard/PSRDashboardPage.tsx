@@ -1,15 +1,14 @@
 import { useMemo, useState } from "react";
-import { Activity, Filter, Shield } from "lucide-react";
+import { Activity, Download, Filter, Printer, Shield } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { StatCard } from "../../components/cards/StatCard";
-import { DashSection } from "../../components/dashboard/DashSection";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
 import { AppSearchField } from "../../components/forms/AppSearchField";
 import { FilterPanel } from "../../components/filters/FilterPanel";
 import { MobileFilterOverlay } from "../../components/filters/MobileFilterOverlay";
 import { AppliedFilterChips } from "../../components/filters/AppliedFilterChips";
-import { useSettings } from "../../hooks/useSettings";
 import { useUIState } from "../../hooks/useUI";
+import { handleExportDisabled } from "../../utils/exportDisabled";
 import type { ColDef, FilterDef, MobileCardMapping } from "../modulePageUtils";
 
 const CIRCLE_PSR_COLS: ColDef[] = [
@@ -53,7 +52,6 @@ const PSR_FILTERS: FilterDef[] = [
 ];
 
 export function PSRDashboardPage() {
-  const { assessmentYear: ay } = useSettings();
   const { isDesktop } = useUIState();
   const { t: translate } = useTranslation("dashboard");
   const { t: translateCommon } = useTranslation("common");
@@ -121,14 +119,11 @@ export function PSRDashboardPage() {
       </div>
 
       <div className="dashboard-content-stack">
-        <DashSection
-          title={translate("psr.sections.circlewisePsrStatus")}
-          icon={Shield}
-          badge={`${translateCommon("common.ayAbbrev")} ${ay}`}
-        >
+        <div className="table-card">
           <div className="table-card__toolbar">
             <div className="table-card__title-group">
-              <span className="table-card__count">
+              <h2 className="table-card__title">{translate("psr.sections.circlewisePsrStatus")}</h2>
+              <span className="table-card__count" aria-live="polite" aria-atomic="true">
                 {filteredRows.length} {translateCommon("common.records")}
               </span>
             </div>
@@ -151,6 +146,24 @@ export function PSRDashboardPage() {
             >
               <Filter size={13} aria-hidden="true" />
               {translateCommon("actions.filter")}
+            </button>
+
+            <button
+              type="button"
+              className="table-card__toolbar-btn table-card__toolbar-btn--download"
+              onClick={() => handleExportDisabled(translateCommon("actions.exportDisabled"))}
+            >
+              <Download size={13} aria-hidden="true" />
+              {translateCommon("actions.export")}
+            </button>
+
+            <button
+              type="button"
+              className="table-card__toolbar-btn table-card__toolbar-btn--print"
+              onClick={() => window.print()}
+            >
+              <Printer size={13} aria-hidden="true" />
+              {translateCommon("actions.print")}
             </button>
           </div>
 
@@ -178,7 +191,7 @@ export function PSRDashboardPage() {
             mobileCardMapping={CIRCLE_PSR_MOBILE_MAPPING}
             noCard
           />
-        </DashSection>
+        </div>
       </div>
 
       {!isDesktop && (
