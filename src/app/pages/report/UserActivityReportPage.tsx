@@ -605,13 +605,11 @@ export function UserActivityReportPage() {
                   </div>
                 </div>
 
-                <div className="card">
-                  <AppliedFilterChips
-                    values={activityApplied}
-                    onClear={resetActivityFilters}
-                    inCard
-                  />
-                </div>
+                <AppliedFilterChips
+                  values={activityApplied}
+                  onClear={resetActivityFilters}
+                  cardView
+                />
 
                 <CollapsibleKpiSection kpis={activityKpis} open={summaryOpen} />
               </div>
