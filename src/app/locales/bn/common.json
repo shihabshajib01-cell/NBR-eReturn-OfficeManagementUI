@@ -29,7 +29,9 @@
     "duplicate": "নকল করুন",
     "tableView": "টেবিল",
     "cardView": "কার্ড",
-    "viewMode": "দেখার ধরন"
+    "viewMode": "দেখার ধরন",
+    "hideSummary": "সারসংক্ষেপ লুকান",
+    "showSummary": "সারসংক্ষেপ দেখান"
   },
   "status": {
     "active": "সক্রিয়",
