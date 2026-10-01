@@ -182,6 +182,9 @@
     },
     "validation": {
       "required": "Select this field."
+    },
+    "sections": {
+      "overview": "User Activity Overview"
     }
   }
 }
