@@ -207,13 +207,11 @@ export function PSRDashboardPage() {
       </div>
 
       <div className="combine-dashboard__metric-group">
-        <div className="dash-section__header">
-          <div className="dash-section__title">
-            <h2 className="dash-section__title-text">
-              {translate("psr.sections.overview")}
-            </h2>
-          </div>
-          <div className="table-page__actions">
+        <div className="combine-dashboard__group-label flex items-center gap-2">
+          <h2 className="dash-section__title-text">
+            {translate("psr.sections.overview")}
+          </h2>
+          <div className="table-page__actions ml-auto">
             <button
               type="button"
               onClick={() => setShowFilter(open => !open)}
@@ -243,23 +241,6 @@ export function PSRDashboardPage() {
             </button>
           </div>
         </div>
-
-        {isDesktop && showFilter && (
-          <div className="table-card__filter-panel">
-            <FilterPanel
-              filters={PSR_FILTERS}
-              values={filterValues}
-              onChange={handleFilterChange}
-              onApply={handleApplyFilters}
-              onReset={handleResetFilters}
-            />
-          </div>
-        )}
-
-        <AppliedFilterChips
-          values={appliedFilters}
-          onClear={handleResetFilters}
-        />
 
         <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
           {kpiCards.map((card, i) => (
@@ -292,6 +273,24 @@ export function PSRDashboardPage() {
             </div>
 
           </div>
+
+          {isDesktop && showFilter && (
+            <div className="table-card__filter-panel">
+              <FilterPanel
+                filters={PSR_FILTERS}
+                values={filterValues}
+                onChange={handleFilterChange}
+                onApply={handleApplyFilters}
+                onReset={handleResetFilters}
+              />
+            </div>
+          )}
+
+          <AppliedFilterChips
+            values={appliedFilters}
+            onClear={handleResetFilters}
+            inCard
+          />
 
           <ResponsiveTable
             cols={CIRCLE_PSR_COLS}
