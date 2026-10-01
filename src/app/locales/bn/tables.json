@@ -177,7 +177,11 @@
     "endpoint": "API এন্ডপয়েন্ট",
     "method": "মেথড",
     "service": "সার্ভিস",
-    "access": "অ্যাক্সেস"
+    "access": "অ্যাক্সেস",
+    "activeReleased": "সক্রিয় / অব্যাহতি",
+    "range": "রেঞ্জ",
+    "zoneName": "জোনের নাম",
+    "circleRangeZone": "সার্কেল / রেঞ্জ / জোন"
   },
   "groups": {
     "entryToday": "আজকের এন্ট্রি",
