@@ -266,6 +266,7 @@ export function PSRDashboardPage() {
         <AppliedFilterChips
           values={appliedFilters}
           onClear={handleResetFilters}
+          cardView
         />
 
         <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
