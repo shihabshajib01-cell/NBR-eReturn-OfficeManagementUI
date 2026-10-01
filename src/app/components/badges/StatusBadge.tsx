@@ -10,7 +10,7 @@ const SUCCESS_STATUSES = new Set([
   "closed", "signed off", "live",
 ]);
 const ERROR_STATUSES = new Set([
-  "rejected", "inactive", "invalid", "unpaid", "failed", "cancelled",
+  "rejected", "inactive", "released", "invalid", "unpaid", "failed", "cancelled",
   "mismatched", "suspended", "missing case",
 ]);
 const WARNING_STATUSES = new Set([
@@ -23,7 +23,7 @@ const WARNING_STATUSES = new Set([
 const SECONDARY_STATUSES = new Set(["waived", "superseded", "refuted", "not verified", "read only"]);
 
 const STATUS_KEYS: Record<string, string> = {
-  "active": "active", "inactive": "inactive", "pending": "pending",
+  "active": "active", "inactive": "inactive", "released": "released", "pending": "pending",
   "approved": "approved", "rejected": "rejected", "verified": "verified",
   "unverified": "unverified", "draft": "draft", "submitted": "submitted",
   "completed": "completed", "in progress": "inProgress", "cancelled": "cancelled",
