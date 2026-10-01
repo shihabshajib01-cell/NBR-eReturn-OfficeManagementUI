@@ -41,6 +41,11 @@
     "sections": {
       "circlewisePsrStatus": "সার্কেলওয়ারি PSR অবস্থা",
       "recentPsrEntries": "সাম্প্রতিক PSR এন্ট্রি"
+    },
+    "requestSummary": {
+      "today": "আজ",
+      "thisMonth": "এই মাস (অক্টোবর ২০২৬)",
+      "totalToDate": "এখন পর্যন্ত মোট"
     }
   },
   "combined": {
