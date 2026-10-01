@@ -568,7 +568,40 @@ export function UserActivityReportPage() {
 
           {activityGenerated && (
             <>
-              <CollapsibleKpiSection kpis={activityKpis} open={summaryOpen} />
+              <div className="combine-dashboard__metric-group">
+                <div className="combine-dashboard__group-label flex items-center gap-2">
+                  <h2 className="dash-section__title-text">
+                    {tr("userActivityWorkspace.sections.overview")}
+                  </h2>
+
+                  <div className="table-page__actions ml-auto">
+                    <button
+                      type="button"
+                      className="table-card__toolbar-btn table-card__toolbar-btn--download"
+                      onClick={() => handleExportDisabled(tc("actions.exportDisabled"))}
+                    >
+                      <Download size={13} aria-hidden="true" />
+                      {tc("actions.export")}
+                    </button>
+
+                    <button
+                      type="button"
+                      className="table-card__toolbar-btn table-card__toolbar-btn--print"
+                      onClick={() => window.print()}
+                    >
+                      <Printer size={13} aria-hidden="true" />
+                      {tc("actions.print")}
+                    </button>
+                  </div>
+                </div>
+
+                <AppliedFilterChips
+                  values={activityApplied}
+                  onClear={resetActivityFilters}
+                />
+
+                <CollapsibleKpiSection kpis={activityKpis} open={summaryOpen} />
+              </div>
 
               <div className="table-card">
                 <div className="table-card__toolbar">
@@ -588,18 +621,6 @@ export function UserActivityReportPage() {
                       size="compact"
                     />
                   </div>
-                  <button
-                    className="table-card__toolbar-btn table-card__toolbar-btn--download"
-                    onClick={() => handleExportDisabled(tc("actions.exportDisabled"))}
-                  >
-                    <Download size={13} aria-hidden="true" /> {tc("actions.export")}
-                  </button>
-                  <button
-                    className="table-card__toolbar-btn table-card__toolbar-btn--print"
-                    onClick={() => window.print()}
-                  >
-                    <Printer size={13} aria-hidden="true" /> {tc("actions.print")}
-                  </button>
                 </div>
 
                 <ResponsiveTable
