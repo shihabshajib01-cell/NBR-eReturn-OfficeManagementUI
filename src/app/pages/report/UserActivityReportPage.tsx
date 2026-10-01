@@ -481,7 +481,7 @@ export function UserActivityReportPage() {
       {activeTab === "users" ? (
         <>
           <div className="card mb-4">
-            <div className="card-header">
+            <div className="card-header user-activity-report__criteria-header">
               <h2 className="dash-section__title-text">
                 {tr("userActivityWorkspace.criteria.title")}
               </h2>
