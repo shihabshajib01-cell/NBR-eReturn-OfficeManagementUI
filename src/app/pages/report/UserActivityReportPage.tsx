@@ -493,85 +493,88 @@ export function UserActivityReportPage() {
 
       {activeTab === "users" ? (
         <>
-          <div className="card mb-4">
-            <div className="card-header user-activity-report__criteria-header">
-              <h2 className="dash-section__title-text">
-                {tr("userActivityWorkspace.criteria.title")}
-              </h2>
-            </div>
+          {!activityGenerated && (
+            <div className="card mb-4">
+              <div className="card-header user-activity-report__criteria-header">
+                <h2 className="dash-section__title-text">
+                  {tr("userActivityWorkspace.criteria.title")}
+                </h2>
+              </div>
 
-            <div className="card-body">
-              <div className="filter-grid">
-                <AppSelectField
-                  id="user-activity-user-type"
-                  label={tr("userActivityWorkspace.filters.userType")}
-                  value={activityDraft.user_type ?? ""}
-                  onChange={(value) => handleActivityFilterChange("user_type", value)}
-                  options={[
-                    { value: "", label: tc("common.selectPlaceholder") },
-                    ...USER_TYPES.map((value) => ({ value, label: value })),
-                  ]}
-                  error={activitySubmitAttempted && !activityDraft.user_type
-                    ? tr("userActivityWorkspace.validation.required")
-                    : undefined}
-                  required
-                  compact
-                />
-
-                <AppSelectField
-                  id="user-activity-assessment-year"
-                  label={tr("userActivityWorkspace.filters.assessmentYear")}
-                  value={activityDraft.assessment_year || currentAssessmentYear}
-                  onChange={(value) => handleActivityFilterChange("assessment_year", value)}
-                  options={Array.from(new Set([currentAssessmentYear, ...ASSESSMENT_YEARS]))
-                    .map((value) => ({ value, label: value }))}
-                  compact
-                />
-
-                {needsZoneCircle(activityDraft.user_type ?? "") && (
-                  <TaxZoneSelectField
-                    id="user-activity-zone"
-                    label={tr("userActivityWorkspace.filters.zone")}
-                    value={activityDraft.zone ?? ""}
-                    onChange={(value) => handleActivityFilterChange("zone", value)}
-                    placeholder={tc("common.selectPlaceholder")}
-                    error={activitySubmitAttempted && !activityDraft.zone
-                      ? tr("userActivityWorkspace.validation.required")
-                      : undefined}
-                    required
-                    compact
-                  />
-                )}
-
-                {needsZoneCircle(activityDraft.user_type ?? "") && activityDraft.zone && (
+              <div className="card-body">
+                <div className="filter-grid">
                   <AppSelectField
-                    id="user-activity-circle"
-                    label={tr("userActivityWorkspace.filters.circle")}
-                    value={activityDraft.circle ?? ""}
-                    onChange={(value) => handleActivityFilterChange("circle", value)}
+                    id="user-activity-user-type"
+                    label={tr("userActivityWorkspace.filters.userType")}
+                    value={activityDraft.user_type ?? ""}
+                    onChange={(value) => handleActivityFilterChange("user_type", value)}
                     options={[
                       { value: "", label: tc("common.selectPlaceholder") },
-                      ...circlesForZone(activityDraft.zone).map((value) => ({ value, label: value })),
+                      ...USER_TYPES.map((value) => ({ value, label: value })),
                     ]}
-                    error={activitySubmitAttempted && !activityDraft.circle
+                    error={activitySubmitAttempted && !activityDraft.user_type
                       ? tr("userActivityWorkspace.validation.required")
                       : undefined}
                     required
                     compact
                   />
-                )}
+
+                  <AppSelectField
+                    id="user-activity-assessment-year"
+                    label={tr("userActivityWorkspace.filters.assessmentYear")}
+                    value={activityDraft.assessment_year || currentAssessmentYear}
+                    onChange={(value) => handleActivityFilterChange("assessment_year", value)}
+                    options={Array.from(new Set([currentAssessmentYear, ...ASSESSMENT_YEARS]))
+                      .map((value) => ({ value, label: value }))}
+                    compact
+                  />
+
+                  {needsZoneCircle(activityDraft.user_type ?? "") && (
+                    <TaxZoneSelectField
+                      id="user-activity-zone"
+                      label={tr("userActivityWorkspace.filters.zone")}
+                      value={activityDraft.zone ?? ""}
+                      onChange={(value) => handleActivityFilterChange("zone", value)}
+                      placeholder={tc("common.selectPlaceholder")}
+                      error={activitySubmitAttempted && !activityDraft.zone
+                        ? tr("userActivityWorkspace.validation.required")
+                        : undefined}
+                      required
+                      compact
+                    />
+                  )}
+
+                  {needsZoneCircle(activityDraft.user_type ?? "") && activityDraft.zone && (
+                    <AppSelectField
+                      id="user-activity-circle"
+                      label={tr("userActivityWorkspace.filters.circle")}
+                      value={activityDraft.circle ?? ""}
+                      onChange={(value) => handleActivityFilterChange("circle", value)}
+                      options={[
+                        { value: "", label: tc("common.selectPlaceholder") },
+                        ...circlesForZone(activityDraft.zone).map((value) => ({ value, label: value })),
+                      ]}
+                      error={activitySubmitAttempted && !activityDraft.circle
+                        ? tr("userActivityWorkspace.validation.required")
+                        : undefined}
+                      required
+                      compact
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="card-footer filter-actions filter-actions--card">
+                <SecondaryButton size="sm" onClick={resetActivityFilters}>
+                  {tc("actions.reset")}
+                </SecondaryButton>
+                <PrimaryButton size="sm" onClick={applyActivityFilters}>
+                  {tr("userActivityWorkspace.actions.generateReport")}
+                </PrimaryButton>
               </div>
             </div>
 
-            <div className="card-footer filter-actions filter-actions--card">
-              <SecondaryButton size="sm" onClick={resetActivityFilters}>
-                {tc("actions.reset")}
-              </SecondaryButton>
-              <PrimaryButton size="sm" onClick={applyActivityFilters}>
-                {tr("userActivityWorkspace.actions.generateReport")}
-              </PrimaryButton>
-            </div>
-          </div>
+          )}
 
           {activityGenerated && (
             <>
@@ -602,10 +605,13 @@ export function UserActivityReportPage() {
                   </div>
                 </div>
 
-                <AppliedFilterChips
-                  values={activityApplied}
-                  onClear={resetActivityFilters}
-                />
+                <div className="card">
+                  <AppliedFilterChips
+                    values={activityApplied}
+                    onClear={resetActivityFilters}
+                    inCard
+                  />
+                </div>
 
                 <CollapsibleKpiSection kpis={activityKpis} open={summaryOpen} />
               </div>
