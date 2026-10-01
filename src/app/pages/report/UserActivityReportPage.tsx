@@ -210,7 +210,7 @@ export function UserActivityReportPage() {
     } catch {
       // keep default
     }
-  }, [currentAssessmentYear]);
+  }, []);
 
   useEffect(() => {
     try {
@@ -234,7 +234,7 @@ export function UserActivityReportPage() {
 
   const activityRows = useMemo<TableRow[]>(() => {
     const roleValues = USER_TYPES;
-    const years = ASSESSMENT_YEARS;
+    const years = Array.from(new Set([currentAssessmentYear, ...ASSESSMENT_YEARS]));
     return baseCfg.rows.map((row, index) => {
       const zone = TAX_ZONES[index % Math.min(TAX_ZONES.length, 8)];
       const circleList = circlesForZone(zone);
@@ -249,7 +249,7 @@ export function UserActivityReportPage() {
         active_status: String(row.active_status) === "Inactive" ? "Released" : "Active",
       };
     });
-  }, [baseCfg.rows]);
+  }, [baseCfg.rows, currentAssessmentYear]);
 
   const handleActivityFilterChange = useCallback((key: string, value: string) => {
     setActivityDraft((previous) => {
@@ -300,7 +300,7 @@ export function UserActivityReportPage() {
     setActivitySubmitAttempted(false);
     setActivityQuery("");
     setActivityPage(1);
-  }, []);
+  }, [currentAssessmentYear]);
 
   const activityFilteredBySelection = useMemo(() => {
     if (!activityGenerated) return [];
