@@ -58,5 +58,6 @@
   "awaitingEndorsement": "এন্ডোর্সমেন্টের অপেক্ষায়",
   "awaitingApproval": "অনুমোদনের অপেক্ষায়",
   "missingCase": "কেস অনুপস্থিত",
-  "readOnly": "শুধু দেখা যাবে"
+  "readOnly": "শুধু দেখা যাবে",
+  "released": "অব্যাহতি"
 }
