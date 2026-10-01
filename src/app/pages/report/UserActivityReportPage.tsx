@@ -9,6 +9,9 @@ import { handleExportDisabled } from "../../utils/exportDisabled";
 import { TabBar } from "../../components/tabs/TabBar";
 import { CollapsibleKpiSection } from "../../components/cards/CollapsibleKpiSection";
 import { FilterPanel } from "../../components/filters/FilterPanel";
+import { AppSelectField } from "../../components/forms/AppSelectField";
+import { TaxZoneSelectField } from "../../components/forms/TaxZoneSelectField";
+import { PrimaryButton } from "../../components/buttons/PrimaryButton";
 import { AppliedFilterChips } from "../../components/filters/AppliedFilterChips";
 import { MobileFilterOverlay } from "../../components/filters/MobileFilterOverlay";
 import { MobileSearchFilter } from "../../components/shared/MobileSearchFilter";
@@ -21,7 +24,6 @@ import { SecondaryButton } from "../../components/buttons/SecondaryButton";
 const PER_PAGE = 10;
 
 const USER_TYPES = [
-  "All User Types",
   "DATA ENTRY OPERATOR",
   "CIRCLE INSPECTOR",
   "CIRCLE OFFICER (DCT)",
@@ -35,7 +37,7 @@ const USER_TYPES = [
   "ADMIN",
 ];
 
-const ASSESSMENT_YEARS = ["All Years", "2025-26", "2024-25", "2023-24", "2022-23"];
+const ASSESSMENT_YEARS = ["2025-26", "2024-25", "2023-24", "2022-23"];
 
 const BARISHAL_CIRCLES = [
   "Circle-01(Companies)",
@@ -135,7 +137,7 @@ function circlesForZone(zone: string): string[] {
 }
 
 function needsZoneCircle(userType: string): boolean {
-  return userType === "DATA ENTRY OPERATOR" || userType === "CIRCLE INSPECTOR";
+  return userType === "DATA ENTRY OPERATOR";
 }
 
 function rowContains(row: TableRow, query: string): boolean {
@@ -183,9 +185,13 @@ export function UserActivityReportPage() {
 
   const [activityQuery, setActivityQuery] = useState("");
   const [activityPage, setActivityPage] = useState(1);
-  const [activityShowFilter, setActivityShowFilter] = useState(false);
-  const [activityDraft, setActivityDraft] = useState<Record<string, string>>({});
+  const [activityDraft, setActivityDraft] = useState<Record<string, string>>({
+    user_type: "",
+    assessment_year: "",
+  });
   const [activityApplied, setActivityApplied] = useState<Record<string, string>>({});
+  const [activityGenerated, setActivityGenerated] = useState(false);
+  const [activitySubmitAttempted, setActivitySubmitAttempted] = useState(false);
 
   const [orgQuery, setOrgQuery] = useState("");
   const [orgPage, setOrgPage] = useState(1);
@@ -213,8 +219,8 @@ export function UserActivityReportPage() {
   }, [summaryOpen]);
 
   const activityRows = useMemo<TableRow[]>(() => {
-    const roleValues = USER_TYPES.slice(1);
-    const years = ASSESSMENT_YEARS.slice(1);
+    const roleValues = USER_TYPES;
+    const years = ASSESSMENT_YEARS;
     return baseCfg.rows.map((row, index) => {
       const zone = TAX_ZONES[index % Math.min(TAX_ZONES.length, 8)];
       const circleList = circlesForZone(zone);
@@ -231,84 +237,73 @@ export function UserActivityReportPage() {
     });
   }, [baseCfg.rows]);
 
-  const activityFilterDefs = useMemo<FilterDef[]>(() => {
-    const userType = activityDraft.user_type ?? "";
-    const zone = activityDraft.zone ?? "";
-    const defs: FilterDef[] = [
-      {
-        key: "user_type",
-        label: tr("userActivityWorkspace.filters.userType"),
-        type: "select",
-        options: USER_TYPES,
-      },
-      {
-        key: "assessment_year",
-        label: tr("userActivityWorkspace.filters.assessmentYear"),
-        type: "select",
-        options: ASSESSMENT_YEARS,
-      },
-    ];
-
-    if (needsZoneCircle(userType)) {
-      defs.push({
-        key: "zone",
-        label: tr("userActivityWorkspace.filters.zone"),
-        type: "select",
-        options: ["All Zones", ...TAX_ZONES],
-      });
-      if (zone && zone !== "All Zones") {
-        defs.push({
-          key: "circle",
-          label: tr("userActivityWorkspace.filters.circle"),
-          type: "select",
-          options: ["All Circles", ...circlesForZone(zone)],
-        });
-      }
-    }
-
-    return defs;
-  }, [activityDraft.user_type, activityDraft.zone, tr]);
-
   const handleActivityFilterChange = useCallback((key: string, value: string) => {
     setActivityDraft((previous) => {
       const next = { ...previous, [key]: value };
-      if (key === "user_type" && !needsZoneCircle(value)) {
-        delete next.zone;
-        delete next.circle;
+      if (key === "user_type") {
+        if (needsZoneCircle(value)) {
+          next.zone = "";
+          next.circle = "";
+        } else {
+          delete next.zone;
+          delete next.circle;
+        }
       }
       if (key === "zone") {
-        delete next.circle;
+        next.circle = "";
       }
       return next;
     });
+    setActivityApplied({});
+    setActivityGenerated(false);
+    setActivitySubmitAttempted(false);
+    setActivityQuery("");
+    setActivityPage(1);
   }, []);
 
-  const applyActivityFilters = useCallback(() => {
-    setActivityApplied(activityDraft);
-    setActivityPage(1);
-    setActivityShowFilter(false);
+  const activityCriteriaComplete = useMemo(() => {
+    const userType = activityDraft.user_type ?? "";
+    const assessmentYear = activityDraft.assessment_year ?? "";
+    if (!userType || !assessmentYear) return false;
+    if (needsZoneCircle(userType)) {
+      return Boolean(activityDraft.zone && activityDraft.circle);
+    }
+    return true;
   }, [activityDraft]);
 
+  const applyActivityFilters = useCallback(() => {
+    setActivitySubmitAttempted(true);
+    if (!activityCriteriaComplete) return;
+    setActivityApplied(activityDraft);
+    setActivityGenerated(true);
+    setActivityPage(1);
+    setActivityQuery("");
+  }, [activityDraft, activityCriteriaComplete]);
+
   const resetActivityFilters = useCallback(() => {
-    setActivityDraft({});
+    setActivityDraft({ user_type: "", assessment_year: "" });
     setActivityApplied({});
+    setActivityGenerated(false);
+    setActivitySubmitAttempted(false);
+    setActivityQuery("");
     setActivityPage(1);
   }, []);
 
   const activityFilteredBySelection = useMemo(() => {
+    if (!activityGenerated) return [];
     return activityRows.filter((row) => {
       const userType = activityApplied.user_type;
       const year = activityApplied.assessment_year;
       const zone = activityApplied.zone;
       const circle = activityApplied.circle;
 
-      if (userType && userType !== "All User Types" && String(row.user_type) !== userType) return false;
-      if (year && year !== "All Years" && String(row.assessment_year) !== year) return false;
-      if (zone && zone !== "All Zones" && String(row.zone) !== zone) return false;
-      if (circle && circle !== "All Circles" && String(row.circle) !== circle) return false;
+      if (userType && String(row.user_type) !== userType) return false;
+      if (year && String(row.assessment_year) !== year) return false;
+      if (zone && String(row.zone) !== zone) return false;
+      if (circle && String(row.circle) !== circle) return false;
       return true;
     });
-  }, [activityRows, activityApplied]);
+  }, [activityRows, activityApplied, activityGenerated]);
 
   const activityFiltered = useMemo(
     () => activityFilteredBySelection.filter((row) => rowContains(row, activityQuery)),
@@ -451,7 +446,6 @@ export function UserActivityReportPage() {
     { id: "organization", label: tr("userActivityWorkspace.tabs.organization") },
   ];
 
-  const activityHasFilters = Object.keys(activeFilterValues(activityApplied)).length > 0;
   const orgHasFilters = Object.keys(activeFilterValues(orgApplied)).length > 0;
 
   return (
@@ -486,111 +480,154 @@ export function UserActivityReportPage() {
 
       {activeTab === "users" ? (
         <>
-          <CollapsibleKpiSection kpis={activityKpis} open={summaryOpen} />
-
-          <MobileSearchFilter
-            searchValue={activityQuery}
-            onSearchChange={(value) => {
-              setActivityQuery(value);
-              setActivityPage(1);
-            }}
-            onFilterClick={() => setActivityShowFilter((open) => !open)}
-            placeholder={tc("common.searchPlaceholder")}
-            hasActiveFilters={activityHasFilters}
-          />
-
-          <div className="table-card">
-            <div className="table-card__toolbar">
-              <div className="table-card__title-group">
-                <h2 className="table-card__title">{tr("userActivityWorkspace.tables.users")}</h2>
-                <span className="table-card__count">{activityFiltered.length} {tc("common.records")}</span>
-              </div>
-              <div className="table-card__search-wrapper">
-                <AppSearchField
-                  value={activityQuery}
-                  onChange={(value) => {
-                    setActivityQuery(value);
-                    setActivityPage(1);
-                  }}
-                  placeholder={tc("common.searchPlaceholder")}
-                  label={tc("common.searchPlaceholder")}
-                  size="compact"
-                />
-              </div>
-              <button
-                onClick={() => setActivityShowFilter((open) => !open)}
-                className={"table-card__toolbar-btn" + (activityShowFilter ? " table-card__toolbar-btn--active" : "")}
-              >
-                <Filter size={13} aria-hidden="true" /> {tc("actions.filter")}
-              </button>
-              <button
-                className="table-card__toolbar-btn table-card__toolbar-btn--download"
-                onClick={() => handleExportDisabled(tc("actions.exportDisabled"))}
-              >
-                <Download size={13} aria-hidden="true" /> {tc("actions.export")}
-              </button>
-              <button
-                className="table-card__toolbar-btn table-card__toolbar-btn--print"
-                onClick={() => window.print()}
-              >
-                <Printer size={13} aria-hidden="true" /> {tc("actions.print")}
-              </button>
+          <div className="card mb-4">
+            <div className="card-header">
+              <h2 className="dash-section__title-text">
+                {tr("userActivityWorkspace.criteria.title")}
+              </h2>
             </div>
 
-            {isDesktop && activityShowFilter && (
-              <div className="table-card__filter-panel">
-                <FilterPanel
-                  filters={activityFilterDefs}
-                  values={activityDraft}
-                  onChange={handleActivityFilterChange}
-                  onApply={applyActivityFilters}
-                  onReset={resetActivityFilters}
+            <div className="card-body">
+              <div className="filter-grid">
+                <AppSelectField
+                  id="user-activity-user-type"
+                  label={tr("userActivityWorkspace.filters.userType")}
+                  value={activityDraft.user_type ?? ""}
+                  onChange={(value) => handleActivityFilterChange("user_type", value)}
+                  options={[
+                    { value: "", label: tc("common.selectPlaceholder") },
+                    ...USER_TYPES.map((value) => ({ value, label: value })),
+                  ]}
+                  error={activitySubmitAttempted && !activityDraft.user_type
+                    ? tr("userActivityWorkspace.validation.required")
+                    : undefined}
+                  required
+                  compact
                 />
+
+                <AppSelectField
+                  id="user-activity-assessment-year"
+                  label={tr("userActivityWorkspace.filters.assessmentYear")}
+                  value={activityDraft.assessment_year ?? ""}
+                  onChange={(value) => handleActivityFilterChange("assessment_year", value)}
+                  options={[
+                    { value: "", label: tc("common.selectPlaceholder") },
+                    ...ASSESSMENT_YEARS.map((value) => ({ value, label: value })),
+                  ]}
+                  error={activitySubmitAttempted && !activityDraft.assessment_year
+                    ? tr("userActivityWorkspace.validation.required")
+                    : undefined}
+                  required
+                  compact
+                />
+
+                {needsZoneCircle(activityDraft.user_type ?? "") && (
+                  <TaxZoneSelectField
+                    id="user-activity-zone"
+                    label={tr("userActivityWorkspace.filters.zone")}
+                    value={activityDraft.zone ?? ""}
+                    onChange={(value) => handleActivityFilterChange("zone", value)}
+                    placeholder={tc("common.selectPlaceholder")}
+                    error={activitySubmitAttempted && !activityDraft.zone
+                      ? tr("userActivityWorkspace.validation.required")
+                      : undefined}
+                    required
+                    compact
+                  />
+                )}
+
+                {needsZoneCircle(activityDraft.user_type ?? "") && activityDraft.zone && (
+                  <AppSelectField
+                    id="user-activity-circle"
+                    label={tr("userActivityWorkspace.filters.circle")}
+                    value={activityDraft.circle ?? ""}
+                    onChange={(value) => handleActivityFilterChange("circle", value)}
+                    options={[
+                      { value: "", label: tc("common.selectPlaceholder") },
+                      ...circlesForZone(activityDraft.zone).map((value) => ({ value, label: value })),
+                    ]}
+                    error={activitySubmitAttempted && !activityDraft.circle
+                      ? tr("userActivityWorkspace.validation.required")
+                      : undefined}
+                    required
+                    compact
+                  />
+                )}
               </div>
-            )}
+            </div>
 
-            <AppliedFilterChips
-              values={activityApplied}
-              onClear={resetActivityFilters}
-              inCard
-            />
-
-            <ResponsiveTable
-              cols={USER_ACTIVITY_COLS}
-              rows={activityPageRows}
-              actions={ROW_VIEW}
-              onRowClick={setDrawerRow}
-              onActionClick={(_id, row) => setDrawerRow(row)}
-              mobileCardMapping={{
-                primary: "user_name",
-                identifier: "user_id",
-                meta: ["zone", "circle", "designation"],
-                status: "active_status",
-                date: "last_login",
-              }}
-              noCard
-            />
-
-            <div className="table-card__pagination">
-              <Pagination
-                page={activityPage}
-                total={activityFiltered.length}
-                perPage={PER_PAGE}
-                onPage={setActivityPage}
-              />
+            <div className="card-footer filter-actions filter-actions--card">
+              <SecondaryButton size="sm" onClick={resetActivityFilters}>
+                {tc("actions.reset")}
+              </SecondaryButton>
+              <PrimaryButton size="sm" onClick={applyActivityFilters}>
+                {tr("userActivityWorkspace.actions.generateReport")}
+              </PrimaryButton>
             </div>
           </div>
 
-          {!isDesktop && (
-            <MobileFilterOverlay
-              isOpen={activityShowFilter}
-              filters={activityFilterDefs}
-              values={activityDraft}
-              onChange={handleActivityFilterChange}
-              onApply={applyActivityFilters}
-              onReset={resetActivityFilters}
-              onClose={() => setActivityShowFilter(false)}
-            />
+          {activityGenerated && (
+            <>
+              <CollapsibleKpiSection kpis={activityKpis} open={summaryOpen} />
+
+              <div className="table-card">
+                <div className="table-card__toolbar">
+                  <div className="table-card__title-group">
+                    <h2 className="table-card__title">{tr("userActivityWorkspace.tables.users")}</h2>
+                    <span className="table-card__count">{activityFiltered.length} {tc("common.records")}</span>
+                  </div>
+                  <div className="table-card__search-wrapper">
+                    <AppSearchField
+                      value={activityQuery}
+                      onChange={(value) => {
+                        setActivityQuery(value);
+                        setActivityPage(1);
+                      }}
+                      placeholder={tc("common.searchPlaceholder")}
+                      label={tc("common.searchPlaceholder")}
+                      size="compact"
+                    />
+                  </div>
+                  <button
+                    className="table-card__toolbar-btn table-card__toolbar-btn--download"
+                    onClick={() => handleExportDisabled(tc("actions.exportDisabled"))}
+                  >
+                    <Download size={13} aria-hidden="true" /> {tc("actions.export")}
+                  </button>
+                  <button
+                    className="table-card__toolbar-btn table-card__toolbar-btn--print"
+                    onClick={() => window.print()}
+                  >
+                    <Printer size={13} aria-hidden="true" /> {tc("actions.print")}
+                  </button>
+                </div>
+
+                <ResponsiveTable
+                  cols={USER_ACTIVITY_COLS}
+                  rows={activityPageRows}
+                  actions={ROW_VIEW}
+                  onRowClick={setDrawerRow}
+                  onActionClick={(_id, row) => setDrawerRow(row)}
+                  mobileCardMapping={{
+                    primary: "user_name",
+                    identifier: "user_id",
+                    meta: ["zone", "circle", "designation"],
+                    status: "active_status",
+                    date: "last_login",
+                  }}
+                  noCard
+                />
+
+                <div className="table-card__pagination">
+                  <Pagination
+                    page={activityPage}
+                    total={activityFiltered.length}
+                    perPage={PER_PAGE}
+                    onPage={setActivityPage}
+                  />
+                </div>
+              </div>
+            </>
           )}
         </>
       ) : (
