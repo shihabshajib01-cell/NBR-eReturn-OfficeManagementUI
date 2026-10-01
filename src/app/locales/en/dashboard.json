@@ -63,10 +63,10 @@
       "offlineReturnsToday": "Offline Returns (Today)",
       "litigationArrearToday": "Litigation Arrear (Today)",
       "taxCategorySubmissions": "Tax Category Submissions",
-      "overview": "Double Entry Overview",
+      "overview": "PSR Status Overview",
       "zonewiseStatus": "Zone-wise Double Entry Status",
       "circlewiseStatus": "Circle-wise Double Entry Status",
-      "userwiseStatus": "User-wise Double Entry Status"
+      "userwiseStatus": "User Entry Activity"
     },
     "zoneSubtitle": "Showing circle-level Double Entry progress for {{zone}}.",
     "circleSubtitle": "Showing officer-level Double Entry progress for {{circle}} in {{zone}}."
