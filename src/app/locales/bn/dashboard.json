@@ -16,7 +16,7 @@
     "totalTaxCollected": "মোট কর সংগৃহীত",
     "activeUsers": "সক্রিয় ব্যবহারকারী",
     "totalPsrEntries": "মোট PSR এন্ট্রি",
-      "totalDoubleEntry": "মোট ডাবল এন্ট্রি",
+    "totalDoubleEntry": "মোট ডাবল এন্ট্রি",
     "pendingApproval": "অপেক্ষমান অনুমোদন"
   },
   "sections": {
@@ -35,7 +35,8 @@
       "totalPsrEntries": "মোট PSR এন্ট্রি",
       "pendingApproval": "অপেক্ষমান অনুমোদন",
       "approvedToday": "আজ অনুমোদিত",
-      "rejectedToday": "আজ প্রত্যাখ্যাত"
+      "rejectedToday": "আজ প্রত্যাখ্যাত",
+      "totalDoubleEntry": "মোট ডাবল এন্ট্রি"
     },
     "sections": {
       "circlewisePsrStatus": "সার্কেলওয়ারি PSR অবস্থা",
