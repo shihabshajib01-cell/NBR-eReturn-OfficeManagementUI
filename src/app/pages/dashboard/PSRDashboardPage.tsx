@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Activity, Download, Filter, Printer, Shield } from "lucide-react";
+import { Activity, CalendarCheck, CalendarDays, Download, Filter, Printer, Shield, Sigma } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { StatCard } from "../../components/cards/StatCard";
 import { ResponsiveTable } from "../../components/tables/ResponsiveTable";
@@ -151,6 +151,12 @@ export function PSRDashboardPage() {
     { label: translate("psr.kpis.totalDoubleEntry"), value: "34", icon: Activity, tone: "success" as const },
   ];
 
+  const requestSummaryCards = [
+    { label: translate("psr.requestSummary.today"), value: "5", icon: CalendarCheck, tone: "primary" as const },
+    { label: translate("psr.requestSummary.thisMonth"), value: "5", icon: CalendarDays, tone: "success" as const },
+    { label: translate("psr.requestSummary.totalToDate"), value: "72", icon: Sigma, tone: "neutral" as const },
+  ];
+
   return (
     <div className="dashboard-page">
       <div className="dashboard-page__header">
@@ -160,6 +166,12 @@ export function PSRDashboardPage() {
 
       <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
         {kpiCards.map((card, i) => (
+          <StatCard key={i} icon={card.icon} value={card.value} label={card.label} tone={card.tone} />
+        ))}
+      </div>
+
+      <div className="dashboard-kpi-grid">
+        {requestSummaryCards.map((card, i) => (
           <StatCard key={i} icon={card.icon} value={card.value} label={card.label} tone={card.tone} />
         ))}
       </div>
