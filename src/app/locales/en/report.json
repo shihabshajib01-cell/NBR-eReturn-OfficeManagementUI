@@ -63,12 +63,12 @@
     "payment": "Payment"
   },
   "columns": {
+    "212": "212",
     "circle": "Circle",
     "taxCircle": "Tax Circle",
     "category": "Category",
     "82bb": "82BB",
     "82c2": "82C(2)",
-    "212": "212",
     "normal": "Normal",
     "totalEntry": "Total Entry",
     "taxPaidWithReturnTds": "Tax Paid With Return (TDS)",
@@ -141,5 +141,40 @@
     "paymentInfo": "Payment Information",
     "notes": "Notes",
     "close": "Close"
+  },
+  "userActivityWorkspace": {
+    "tabs": {
+      "users": "User Activity",
+      "organization": "Zonal / Circle Activity"
+    },
+    "filters": {
+      "userType": "User Type",
+      "assessmentYear": "Assessment Year",
+      "zone": "Zone",
+      "circle": "Circle"
+    },
+    "kpis": {
+      "totalUsers": "Total Users",
+      "active": "Active",
+      "released": "Released",
+      "totalEntryToday": "Total Entry Today"
+    },
+    "tables": {
+      "users": "User Activity",
+      "zonal": "Zonal Activity",
+      "circle": "Circle Activity"
+    },
+    "actions": {
+      "backToZonal": "Back to Zonal"
+    },
+    "groups": {
+      "reportingScope": "Reporting Scope"
+    },
+    "fields": {
+      "range": "Range"
+    },
+    "details": {
+      "title": "User Activity Details"
+    }
   }
 }
