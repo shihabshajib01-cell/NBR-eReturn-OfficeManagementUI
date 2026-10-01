@@ -13,6 +13,7 @@ interface TaxZoneSelectFieldProps {
   required?: boolean;
   disabled?: boolean;
   compact?: boolean;
+  placeholder?: string;
 }
 
 export function TaxZoneSelectField({
@@ -27,6 +28,7 @@ export function TaxZoneSelectField({
   required,
   disabled,
   compact,
+  placeholder,
 }: TaxZoneSelectFieldProps) {
   const legacyValue =
     value &&
@@ -36,6 +38,7 @@ export function TaxZoneSelectField({
       : [];
 
   const options = [
+    ...(placeholder ? [{ value: "", label: placeholder }] : []),
     ...(allOptionValue
       ? [{ value: allOptionValue, label: allOptionLabel ?? allOptionValue }]
       : []),
