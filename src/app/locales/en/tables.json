@@ -23,6 +23,8 @@
     "taxCollected": "Tax Collected",
     "taxTotal": "Tax Total",
     "totalPsr": "Total PSR",
+    "doubleEntry": "Double Entry",
+    "doubleEntryPercentage": "Double Entry Percentage (%)",
     "psrNo": "PSR No.",
     "submittedBy": "Submitted By",
     "assessmentYear": "Assessment Year",
