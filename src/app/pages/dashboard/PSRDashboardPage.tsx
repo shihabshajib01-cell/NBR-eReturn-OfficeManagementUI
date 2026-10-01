@@ -207,9 +207,38 @@ export function PSRDashboardPage() {
       </div>
 
       <div className="combine-dashboard__metric-group">
-        <h2 className="combine-dashboard__group-label">
-          {translate("psr.sections.overview")}
-        </h2>
+        <div className="combine-dashboard__group-label flex items-center gap-2">
+          <h2>{translate("psr.sections.overview")}</h2>
+          <div className="ml-auto flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShowFilter(open => !open)}
+              className={`table-card__toolbar-btn${showFilter ? " table-card__toolbar-btn--active" : ""}`}
+              aria-expanded={showFilter}
+            >
+              <Filter size={13} aria-hidden="true" />
+              {translateCommon("actions.filter")}
+            </button>
+
+            <button
+              type="button"
+              className="table-card__toolbar-btn table-card__toolbar-btn--download"
+              onClick={() => handleExportDisabled(translateCommon("actions.exportDisabled"))}
+            >
+              <Download size={13} aria-hidden="true" />
+              {translateCommon("actions.export")}
+            </button>
+
+            <button
+              type="button"
+              className="table-card__toolbar-btn table-card__toolbar-btn--print"
+              onClick={() => window.print()}
+            >
+              <Printer size={13} aria-hidden="true" />
+              {translateCommon("actions.print")}
+            </button>
+          </div>
+        </div>
         <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
           {kpiCards.map((card, i) => (
             <StatCard key={i} icon={card.icon} value={card.value} label={card.label} tone={card.tone} />
@@ -240,33 +269,6 @@ export function PSRDashboardPage() {
               />
             </div>
 
-            <button
-              type="button"
-              onClick={() => setShowFilter(open => !open)}
-              className={`table-card__toolbar-btn${showFilter ? " table-card__toolbar-btn--active" : ""}`}
-              aria-expanded={showFilter}
-            >
-              <Filter size={13} aria-hidden="true" />
-              {translateCommon("actions.filter")}
-            </button>
-
-            <button
-              type="button"
-              className="table-card__toolbar-btn table-card__toolbar-btn--download"
-              onClick={() => handleExportDisabled(translateCommon("actions.exportDisabled"))}
-            >
-              <Download size={13} aria-hidden="true" />
-              {translateCommon("actions.export")}
-            </button>
-
-            <button
-              type="button"
-              className="table-card__toolbar-btn table-card__toolbar-btn--print"
-              onClick={() => window.print()}
-            >
-              <Printer size={13} aria-hidden="true" />
-              {translateCommon("actions.print")}
-            </button>
           </div>
 
           {isDesktop && showFilter && (
