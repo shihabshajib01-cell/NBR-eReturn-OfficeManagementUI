@@ -110,6 +110,9 @@ export function PSRDashboardPage() {
   const [dashboardAssessmentYear, setDashboardAssessmentYear] = useState(ay);
   const [dashboardZone, setDashboardZone] = useState("All");
   const [dashboardStatus, setDashboardStatus] = useState("All");
+  const [appliedDashboardAssessmentYear, setAppliedDashboardAssessmentYear] = useState(ay);
+  const [appliedDashboardZone, setAppliedDashboardZone] = useState("All");
+  const [appliedDashboardStatus, setAppliedDashboardStatus] = useState("All");
 
   const filteredRows = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -120,9 +123,12 @@ export function PSRDashboardPage() {
         Object.values(row).some(value => String(value).toLowerCase().includes(query));
 
       const matchesZone =
-        !appliedFilters.zone ||
-        appliedFilters.zone === "All" ||
-        row.zone === appliedFilters.zone;
+        (!appliedFilters.zone ||
+          appliedFilters.zone === "All" ||
+          row.zone === appliedFilters.zone) &&
+        (!appliedDashboardZone ||
+          appliedDashboardZone === "All" ||
+          row.zone === appliedDashboardZone);
 
       const doubleEntryCount = Number(row.double_entry);
       const matchesDoubleEntry =
@@ -133,7 +139,7 @@ export function PSRDashboardPage() {
 
       return matchesSearch && matchesZone && matchesDoubleEntry;
     });
-  }, [search, appliedFilters]);
+  }, [search, appliedFilters, appliedDashboardZone]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilterValues(prev => ({ ...prev, [key]: value }));
@@ -150,7 +156,15 @@ export function PSRDashboardPage() {
     setShowFilter(false);
   };
 
+  const handleApplyDashboardFilters = () => {
+    setAppliedDashboardAssessmentYear(dashboardAssessmentYear);
+    setAppliedDashboardZone(dashboardZone);
+    setAppliedDashboardStatus(dashboardStatus);
+  };
+
   const assessmentYearOptions = Array.from(new Set([ay, "2025-26", "2024-25", "2023-24", "2022-23", "2021-22"]));
+
+  void appliedDashboardStatus;
 
   const kpiCards = [
     { label: translate("psr.kpis.totalPsrEntries"), value: "174", icon: Shield, tone: "primary" as const },
@@ -190,7 +204,7 @@ export function PSRDashboardPage() {
           compact
         />
         <div className="psr-dashboard__filter-action">
-          <PrimaryButton size="sm">
+          <PrimaryButton size="sm" onClick={handleApplyDashboardFilters}>
             {translateCommon("actions.apply")}
           </PrimaryButton>
         </div>
@@ -211,7 +225,7 @@ export function PSRDashboardPage() {
                 {filteredRows.length} {translateCommon("common.records")}
               </span>
               <span className="dash-section__badge">
-                {translateCommon("common.ayAbbrev")} {ay}
+                {translateCommon("common.ayAbbrev")} {appliedDashboardAssessmentYear}
               </span>
             </div>
 
