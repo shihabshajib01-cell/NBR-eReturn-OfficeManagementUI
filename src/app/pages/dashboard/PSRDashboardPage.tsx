@@ -246,15 +246,14 @@ export function PSRDashboardPage() {
 
         {isDesktop && showFilter && (
           <div className="card">
-            <div className="card-body">
-              <FilterPanel
-                filters={PSR_FILTERS}
-                values={filterValues}
-                onChange={handleFilterChange}
-                onApply={handleApplyFilters}
-                onReset={handleResetFilters}
-              />
-            </div>
+            <FilterPanel
+              filters={PSR_FILTERS}
+              values={filterValues}
+              onChange={handleFilterChange}
+              onApply={handleApplyFilters}
+              onReset={handleResetFilters}
+              cardLayout
+            />
           </div>
         )}
 
