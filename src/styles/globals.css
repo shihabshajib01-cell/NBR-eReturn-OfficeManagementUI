@@ -187,7 +187,7 @@ nav[aria-label="Breadcrumb"]::-webkit-scrollbar {
   justify-content: center;
   outline: none;
   border: none;
-  background: transparent;
+  background: var(--color-surface);
   color: var(--color-text-secondary);
   cursor: pointer;
   transition: background-color 120ms, color 120ms;
