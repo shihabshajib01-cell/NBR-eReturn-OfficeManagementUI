@@ -5,15 +5,16 @@ interface AppliedFilterChipsProps {
   values: Record<string, string>;
   onClear: () => void;
   inCard?: boolean;
+  cardView?: boolean;
 }
 
-export function AppliedFilterChips({ values, onClear, inCard }: AppliedFilterChipsProps) {
+export function AppliedFilterChips({ values, onClear, inCard, cardView }: AppliedFilterChipsProps) {
   const { t: translateFilters } = useTranslation("filters");
   const active = Object.entries(values).filter(([, v]) => v && !v.startsWith("All"));
   if (!active.length) return null;
 
-  return (
-    <div className={`applied-chips${inCard ? " applied-chips--in-card" : ""}`}>
+  const content = (
+    <div className={`applied-chips${inCard ? " applied-chips--in-card" : ""}${cardView ? " applied-chips--card-content" : ""}`}>
       <span className="applied-chips__label">{translateFilters("filteredBy")}</span>
       {active.map(([k, v]) => (
         <span key={k} className="applied-chips__tag">{v}</span>
@@ -29,4 +30,10 @@ export function AppliedFilterChips({ values, onClear, inCard }: AppliedFilterChi
       </button>
     </div>
   );
+
+  if (cardView) {
+    return <div className="card applied-filter-card">{content}</div>;
+  }
+
+  return content;
 }
