@@ -254,11 +254,22 @@
 }
 
 .applied-chips--in-card {
-  border-left: 0;
-  border-right: 0;
+  border: 0;
   border-radius: 0;
   margin-bottom: 0;
   padding: 6px 16px;
+}
+
+.applied-filter-card {
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.applied-chips--card-content {
+  border: 0;
+  border-radius: 0;
+  margin-bottom: 0;
+  padding: 8px 12px;
 }
 
 .applied-chips__label {
