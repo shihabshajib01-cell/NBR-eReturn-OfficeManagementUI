@@ -58,5 +58,6 @@
   "awaitingEndorsement": "Awaiting Endorsement",
   "awaitingApproval": "Awaiting Approval",
   "missingCase": "Missing Case",
-  "readOnly": "Read only"
+  "readOnly": "Read only",
+  "released": "Released"
 }
