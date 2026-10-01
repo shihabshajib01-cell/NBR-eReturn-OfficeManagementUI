@@ -49,7 +49,12 @@
     "foundation": "ফাউন্ডেশন",
     "soleProprietorship": "এককমালিকানা",
     "partnership": "অংশীদারি প্রতিষ্ঠান",
-    "company": "কোম্পানি"
+    "company": "কোম্পানি",
+    "notInitialized": "শুরু হয়নি",
+    "initialized": "শুরু হয়েছে",
+    "doubleEntryComplete": "ডাবল এন্ট্রি সম্পন্ন",
+    "coOngoing": "CO চলমান",
+    "approved": "অনুমোদিত"
   },
   "placeholders": {
     "search": "অনুসন্ধান করুন…",
