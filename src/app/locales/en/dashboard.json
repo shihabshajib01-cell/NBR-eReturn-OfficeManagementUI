@@ -52,18 +52,24 @@
   },
   "combined": {
     "title": "Double Entry Dashboard",
-    "subtitle": "Overview of all report categories for Assessment Year {{assessmentYear}}",
+    "subtitle": "Track double-entry initialization, completion, and approvals by zone, circle, and user.",
     "kpis": {
-      "totalReturnsFiled": "Total Returns Filed",
-      "pendingApprovals": "Pending Approvals",
-      "totalTaxCollected": "Total Tax Collected",
-      "activeUsers": "Active Users"
+      "notInitialized": "Not Initialized",
+      "initialized": "Initialized",
+      "pending": "Pending",
+      "totalApproved": "Total Approved"
     },
     "sections": {
       "offlineReturnsToday": "Offline Returns (Today)",
       "litigationArrearToday": "Litigation Arrear (Today)",
-      "taxCategorySubmissions": "Tax Category Submissions"
-    }
+      "taxCategorySubmissions": "Tax Category Submissions",
+      "overview": "Double Entry Overview",
+      "zonewiseStatus": "Zone-wise Double Entry Status",
+      "circlewiseStatus": "Circle-wise Double Entry Status",
+      "userwiseStatus": "User-wise Double Entry Status"
+    },
+    "zoneSubtitle": "Showing circle-level Double Entry progress for {{zone}}.",
+    "circleSubtitle": "Showing officer-level Double Entry progress for {{circle}} in {{zone}}."
   },
   "combineDashboard": {
     "title": "Combine Dashboard",
