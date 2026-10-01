@@ -108,7 +108,6 @@ export function PSRDashboardPage() {
   const { isDesktop } = useUIState();
   const { t: translate } = useTranslation("dashboard");
   const { t: translateCommon } = useTranslation("common");
-  const { t: translateFilters } = useTranslation("filters");
 
   const [search, setSearch] = useState("");
   const [showFilter, setShowFilter] = useState(false);
@@ -128,14 +127,7 @@ export function PSRDashboardPage() {
         appliedFilters.zone === "All" ||
         row.zone === appliedFilters.zone;
 
-      const doubleEntryCount = Number(row.double_entry);
-      const matchesDoubleEntry =
-        !appliedFilters.double_entry ||
-        appliedFilters.double_entry === "All" ||
-        (appliedFilters.double_entry === "Has Double Entry" && doubleEntryCount > 0) ||
-        (appliedFilters.double_entry === "No Double Entry" && doubleEntryCount === 0);
-
-      return matchesSearch && matchesZone && matchesDoubleEntry;
+      return matchesSearch && matchesZone;
     });
   }, [search, appliedFilters]);
 
