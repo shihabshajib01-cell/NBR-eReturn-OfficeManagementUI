@@ -23,18 +23,6 @@
   margin-top: 0;
 }
 
-.filter-card__body {
-  padding: var(--space-4);
-}
-
-.filter-card__body .filter-grid {
-  gap: 12px;
-}
-
-.filter-card__footer {
-  padding: 10px var(--space-4);
-  background: var(--color-surface-secondary);
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    Mobile Filter Overlay
