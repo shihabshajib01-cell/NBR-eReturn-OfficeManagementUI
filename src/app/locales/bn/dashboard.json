@@ -40,7 +40,8 @@
     },
     "sections": {
       "circlewisePsrStatus": "সার্কেলওয়ারি PSR অবস্থা",
-      "recentPsrEntries": "সাম্প্রতিক PSR এন্ট্রি"
+      "recentPsrEntries": "সাম্প্রতিক PSR এন্ট্রি",
+      "overview": "PSR সারসংক্ষেপ"
     },
     "requestSummary": {
       "today": "আজ",
