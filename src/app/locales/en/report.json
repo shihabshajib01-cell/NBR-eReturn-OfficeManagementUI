@@ -165,7 +165,8 @@
       "circle": "Circle Activity"
     },
     "actions": {
-      "backToZonal": "Back to Zonal"
+      "backToZonal": "Back to Zonal",
+      "generateReport": "Generate Report"
     },
     "groups": {
       "reportingScope": "Reporting Scope"
@@ -175,6 +176,12 @@
     },
     "details": {
       "title": "User Activity Details"
+    },
+    "criteria": {
+      "title": "Report Criteria"
+    },
+    "validation": {
+      "required": "Select this field."
     }
   }
 }
