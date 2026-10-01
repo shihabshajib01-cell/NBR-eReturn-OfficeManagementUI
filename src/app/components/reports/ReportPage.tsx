@@ -1,6 +1,7 @@
 import { GenPage } from "../pages/GeneratedTablePage";
 import { ROW_VIEW, VIEW, REPORT_CFGS, REPORT_DRAWER_FIELDS } from "../../data/modulePageConfigs";
 import type { KpiDef, TableRow } from "../../pages/modulePageUtils";
+import { UserActivityReportPage } from "../../pages/report/UserActivityReportPage";
 
 interface ReportPageProps {
   reportId: string;
@@ -95,6 +96,8 @@ function buildReportKpis(reportId: string, rows: TableRow[]): KpiDef[] {
 }
 
 export function ReportPage({ reportId }: ReportPageProps) {
+  if (reportId === "user-activity-report") return <UserActivityReportPage />;
+
   const cfg = reportId ? REPORT_CFGS[reportId] : null;
   if (!cfg) {
     return (
