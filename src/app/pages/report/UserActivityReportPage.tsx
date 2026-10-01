@@ -519,16 +519,6 @@ export function UserActivityReportPage() {
                     compact
                   />
 
-                  <AppSelectField
-                    id="user-activity-assessment-year"
-                    label={tr("userActivityWorkspace.filters.assessmentYear")}
-                    value={activityDraft.assessment_year || currentAssessmentYear}
-                    onChange={(value) => handleActivityFilterChange("assessment_year", value)}
-                    options={Array.from(new Set([currentAssessmentYear, ...ASSESSMENT_YEARS]))
-                      .map((value) => ({ value, label: value }))}
-                    compact
-                  />
-
                   {needsZoneCircle(activityDraft.user_type ?? "") && (
                     <TaxZoneSelectField
                       id="user-activity-zone"
@@ -561,6 +551,16 @@ export function UserActivityReportPage() {
                       compact
                     />
                   )}
+
+                  <AppSelectField
+                    id="user-activity-assessment-year"
+                    label={tr("userActivityWorkspace.filters.assessmentYear")}
+                    value={activityDraft.assessment_year || currentAssessmentYear}
+                    onChange={(value) => handleActivityFilterChange("assessment_year", value)}
+                    options={Array.from(new Set([currentAssessmentYear, ...ASSESSMENT_YEARS]))
+                      .map((value) => ({ value, label: value }))}
+                    compact
+                  />
                 </div>
               </div>
 
