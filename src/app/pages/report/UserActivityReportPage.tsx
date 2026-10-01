@@ -5,6 +5,7 @@ import { REPORT_CFGS, ROW_VIEW } from "../../data/modulePageConfigs";
 import { TAX_ZONES } from "../../data/taxZones";
 import { fc, type ColDef, type FilterDef, type KpiDef, type TableRow } from "../../pages/modulePageUtils";
 import { useUIState } from "../../hooks/useUI";
+import { useSettings } from "../../hooks/useSettings";
 import { handleExportDisabled } from "../../utils/exportDisabled";
 import { TabBar } from "../../components/tabs/TabBar";
 import { CollapsibleKpiSection } from "../../components/cards/CollapsibleKpiSection";
@@ -173,6 +174,7 @@ function flattenDrawerColumns(cols: ColDef[] | undefined) {
 
 export function UserActivityReportPage() {
   const { isDesktop } = useUIState();
+  const { assessmentYear: currentAssessmentYear } = useSettings();
   const { t: tc } = useTranslation("common");
   const { t: tp } = useTranslation("pages");
   const { t: tr } = useTranslation("report");
@@ -187,7 +189,7 @@ export function UserActivityReportPage() {
   const [activityPage, setActivityPage] = useState(1);
   const [activityDraft, setActivityDraft] = useState<Record<string, string>>({
     user_type: "",
-    assessment_year: "",
+    assessment_year: currentAssessmentYear,
   });
   const [activityApplied, setActivityApplied] = useState<Record<string, string>>({});
   const [activityGenerated, setActivityGenerated] = useState(false);
@@ -208,7 +210,7 @@ export function UserActivityReportPage() {
     } catch {
       // keep default
     }
-  }, []);
+  }, [currentAssessmentYear]);
 
   useEffect(() => {
     try {
@@ -217,6 +219,18 @@ export function UserActivityReportPage() {
       // ignore storage failures
     }
   }, [summaryOpen]);
+
+  useEffect(() => {
+    setActivityDraft((previous) => ({
+      ...previous,
+      assessment_year: currentAssessmentYear,
+    }));
+    setActivityApplied({});
+    setActivityGenerated(false);
+    setActivitySubmitAttempted(false);
+    setActivityQuery("");
+    setActivityPage(1);
+  }, [currentAssessmentYear]);
 
   const activityRows = useMemo<TableRow[]>(() => {
     const roleValues = USER_TYPES;
@@ -263,8 +277,7 @@ export function UserActivityReportPage() {
 
   const activityCriteriaComplete = useMemo(() => {
     const userType = activityDraft.user_type ?? "";
-    const assessmentYear = activityDraft.assessment_year ?? "";
-    if (!userType || !assessmentYear) return false;
+    if (!userType) return false;
     if (needsZoneCircle(userType)) {
       return Boolean(activityDraft.zone && activityDraft.circle);
     }
@@ -281,7 +294,7 @@ export function UserActivityReportPage() {
   }, [activityDraft, activityCriteriaComplete]);
 
   const resetActivityFilters = useCallback(() => {
-    setActivityDraft({ user_type: "", assessment_year: "" });
+    setActivityDraft({ user_type: "", assessment_year: currentAssessmentYear });
     setActivityApplied({});
     setActivityGenerated(false);
     setActivitySubmitAttempted(false);
@@ -508,16 +521,10 @@ export function UserActivityReportPage() {
                 <AppSelectField
                   id="user-activity-assessment-year"
                   label={tr("userActivityWorkspace.filters.assessmentYear")}
-                  value={activityDraft.assessment_year ?? ""}
+                  value={activityDraft.assessment_year || currentAssessmentYear}
                   onChange={(value) => handleActivityFilterChange("assessment_year", value)}
-                  options={[
-                    { value: "", label: tc("common.selectPlaceholder") },
-                    ...ASSESSMENT_YEARS.map((value) => ({ value, label: value })),
-                  ]}
-                  error={activitySubmitAttempted && !activityDraft.assessment_year
-                    ? tr("userActivityWorkspace.validation.required")
-                    : undefined}
-                  required
+                  options={Array.from(new Set([currentAssessmentYear, ...ASSESSMENT_YEARS]))
+                    .map((value) => ({ value, label: value }))}
                   compact
                 />
 
