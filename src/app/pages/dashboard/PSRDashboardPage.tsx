@@ -200,6 +200,12 @@ export function PSRDashboardPage() {
         <p className="dashboard-page__subtitle">{translate("psr.subtitle")}</p>
       </div>
 
+      <div className="combine-dashboard__group-label">
+        <h2 className="dash-section__title-text">
+          {translate("psr.sections.requestSummary")}
+        </h2>
+      </div>
+
       <div className="dashboard-kpi-grid">
         {requestSummaryCards.map((card, i) => (
           <StatCard key={i} icon={card.icon} value={card.value} label={card.label} tone={card.tone} />
