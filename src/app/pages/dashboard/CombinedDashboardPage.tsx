@@ -185,12 +185,12 @@ export function CombinedDashboardPage() {
     if (level === "user") {
       return (USER_ROWS_BY_CIRCLE[selectedCircle] ?? []).map(row => ({
         ...row,
-        status: row.status_code === "Active" ? translateCommon("status.active") : translateCommon("status.inactive"),
+        status: String(row.status_code ?? ""),
       }));
     }
     if (level === "circle") return CIRCLE_ROWS_BY_ZONE[selectedZone] ?? [];
     return ZONE_ROWS;
-  }, [level, selectedCircle, selectedZone, translateCommon]);
+  }, [level, selectedCircle, selectedZone]);
 
   const scopeRows = useMemo(() => {
     return sourceRows.filter(row => {
