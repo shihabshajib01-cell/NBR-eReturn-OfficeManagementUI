@@ -1,6 +1,7 @@
 // ─── Shared Types and Utilities for Module Pages ────────────────────────────
 import type React from "react";
 import type { AttachmentItem } from "../components/attachments/attachmentTypes";
+import { TAX_ZONE_FILTER_OPTIONS } from "../data/taxZones";
 
 export type TableCellValue = string | number | boolean | null | undefined | AttachmentItem[];
 export type TableRow = Record<string, TableCellValue>;
@@ -48,7 +49,7 @@ export interface PageCfg {
 }
 
 // ─── Data Constants ──────────────────────────────────────────────────────────
-export const ZONES = ["All Zones", "Zone-1", "Zone-2", "Zone-3", "Zone-4"];
+export const ZONES = TAX_ZONE_FILTER_OPTIONS;
 export const CIRCLES = ["All Circles", "Circle-1"];
 export const AY_OPTS = ["All Years", "2024-25", "2023-24", "2022-23", "2021-22"];
 export const CIRCLES_DATA = ["Circle-1", "Circle-1", "Circle-1", "Circle-1", "Circle-1", "Circle-1", "Circle-1", "Circle-1"];
