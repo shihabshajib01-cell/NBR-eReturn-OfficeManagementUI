@@ -177,7 +177,11 @@
     "endpoint": "API Endpoint",
     "method": "Method",
     "service": "Service",
-    "access": "Access"
+    "access": "Access",
+    "activeReleased": "Active / Released",
+    "range": "Range",
+    "zoneName": "Zone Name",
+    "circleRangeZone": "Circle / Range / Zone"
   },
   "groups": {
     "entryToday": "Entry Today",
