@@ -181,7 +181,16 @@
     "activeReleased": "Active / Released",
     "range": "Range",
     "zoneName": "Zone Name",
-    "circleRangeZone": "Circle / Range / Zone"
+    "circleRangeZone": "Circle / Range / Zone",
+    "name": "Name",
+    "notInitialized": "Not Initialized",
+    "initialized": "Initialized",
+    "doubleEntryComplete": "Double Entry Complete",
+    "coOngoing": "CO Ongoing",
+    "draftEntry": "Draft Entry",
+    "savedEntry": "Saved Entry",
+    "entryComplete": "Entry Complete",
+    "approvedEntry": "Approved Entry"
   },
   "groups": {
     "entryToday": "Entry Today",
