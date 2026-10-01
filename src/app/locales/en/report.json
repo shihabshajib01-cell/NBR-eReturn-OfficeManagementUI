@@ -166,7 +166,7 @@
     },
     "actions": {
       "backToZonal": "Back to Zonal",
-      "generateReport": "Generate Report"
+      "generateReport": "View Report"
     },
     "groups": {
       "reportingScope": "Reporting Scope"
