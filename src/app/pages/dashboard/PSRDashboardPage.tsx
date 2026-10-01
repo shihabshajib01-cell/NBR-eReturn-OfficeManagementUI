@@ -206,6 +206,8 @@ export function PSRDashboardPage() {
         ))}
       </div>
 
+      <div className="border-t border-[var(--color-border)] mb-2" aria-hidden="true" />
+
       <div className="combine-dashboard__metric-group">
         <div className="combine-dashboard__group-label flex items-center gap-2">
           <h2 className="dash-section__title-text">
@@ -243,13 +245,17 @@ export function PSRDashboardPage() {
         </div>
 
         {isDesktop && showFilter && (
-          <FilterPanel
-            filters={PSR_FILTERS}
-            values={filterValues}
-            onChange={handleFilterChange}
-            onApply={handleApplyFilters}
-            onReset={handleResetFilters}
-          />
+          <div className="card">
+            <div className="card-body">
+              <FilterPanel
+                filters={PSR_FILTERS}
+                values={filterValues}
+                onChange={handleFilterChange}
+                onApply={handleApplyFilters}
+                onReset={handleResetFilters}
+              />
+            </div>
+          </div>
         )}
 
         <AppliedFilterChips
