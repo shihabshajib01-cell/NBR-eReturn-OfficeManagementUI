@@ -206,7 +206,7 @@ export function PSRDashboardPage() {
         ))}
       </div>
 
-      <div className="border-t border-[var(--color-border)] mb-2" aria-hidden="true" />
+      <div className="border-t border-[var(--color-border)] mb-4" aria-hidden="true" />
 
       <div className="combine-dashboard__metric-group">
         <div className="combine-dashboard__group-label flex items-center gap-2">
