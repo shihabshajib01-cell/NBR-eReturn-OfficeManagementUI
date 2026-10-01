@@ -249,6 +249,19 @@ export function CombinedDashboardPage() {
     }
   }, [resetNestedState, selectedZone, setSearchParams]);
 
+  const handleRowClick = useCallback((row: TableRow) => {
+    if (level === "zone") {
+      const zone = String(row.zone ?? "");
+      if (zone) handleCellClick("zone", zone);
+      return;
+    }
+
+    if (level === "circle") {
+      const circle = String(row.circle ?? "");
+      if (circle) handleCellClick("circle", circle);
+    }
+  }, [handleCellClick, level]);
+
   const handleBack = useCallback(() => {
     if (level === "user" && selectedZone) {
       setSearchParams({ zone: selectedZone });
@@ -396,6 +409,7 @@ export function CombinedDashboardPage() {
               mobileCardMapping={mobileCardMapping}
               clickableKeys={clickableKeys}
               onCellClick={handleCellClick}
+              onRowClick={level === "user" ? undefined : handleRowClick}
               noCard
             />
           </div>
