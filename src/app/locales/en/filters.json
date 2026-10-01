@@ -49,7 +49,12 @@
     "foundation": "Foundation",
     "soleProprietorship": "Sole Proprietorship",
     "partnership": "Partnership",
-    "company": "Company"
+    "company": "Company",
+    "notInitialized": "Not Initialized",
+    "initialized": "Initialized",
+    "doubleEntryComplete": "Double Entry Complete",
+    "coOngoing": "CO Ongoing",
+    "approved": "Approved"
   },
   "placeholders": {
     "search": "Search…",
