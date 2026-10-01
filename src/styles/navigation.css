@@ -1312,6 +1312,7 @@
 .breadcrumb-crumb--ancestor {
   color: var(--color-text-secondary);
   cursor: pointer;
+  text-decoration: none;
   transition: opacity 150ms;
 }
 
