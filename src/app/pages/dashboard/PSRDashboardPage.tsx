@@ -239,6 +239,22 @@ export function PSRDashboardPage() {
             </button>
           </div>
         </div>
+
+        {isDesktop && showFilter && (
+          <FilterPanel
+            filters={PSR_FILTERS}
+            values={filterValues}
+            onChange={handleFilterChange}
+            onApply={handleApplyFilters}
+            onReset={handleResetFilters}
+          />
+        )}
+
+        <AppliedFilterChips
+          values={appliedFilters}
+          onClear={handleResetFilters}
+        />
+
         <div className="dashboard-kpi-grid dashboard-kpi-grid--1row">
           {kpiCards.map((card, i) => (
             <StatCard key={i} icon={card.icon} value={card.value} label={card.label} tone={card.tone} />
@@ -270,24 +286,6 @@ export function PSRDashboardPage() {
             </div>
 
           </div>
-
-          {isDesktop && showFilter && (
-            <div className="table-card__filter-panel">
-              <FilterPanel
-                filters={PSR_FILTERS}
-                values={filterValues}
-                onChange={handleFilterChange}
-                onApply={handleApplyFilters}
-                onReset={handleResetFilters}
-              />
-            </div>
-          )}
-
-          <AppliedFilterChips
-            values={appliedFilters}
-            onClear={handleResetFilters}
-            inCard
-          />
 
           <ResponsiveTable
             cols={CIRCLE_PSR_COLS}
