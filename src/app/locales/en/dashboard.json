@@ -41,7 +41,8 @@
     "sections": {
       "circlewisePsrStatus": "Circle-wise PSR Status",
       "recentPsrEntries": "Recent PSR Entries",
-      "overview": "PSR Overview"
+      "overview": "PSR Overview",
+      "requestSummary": "PSR Request Summary"
     },
     "requestSummary": {
       "today": "Today",
