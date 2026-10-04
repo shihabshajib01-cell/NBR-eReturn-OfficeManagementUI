@@ -453,6 +453,7 @@ export function UserActivityReportPage() {
   }, []);
 
   const title = tp("userActivityReport.title") || baseCfg.title;
+  const desc = tp("userActivityReport.desc") || baseCfg.desc;
   const tabs = [
     { id: "users", label: tr("userActivityWorkspace.tabs.users") },
     { id: "organization", label: tr("userActivityWorkspace.tabs.organization") },
@@ -465,6 +466,7 @@ export function UserActivityReportPage() {
       <div className="table-page__header">
         <div>
           <h1 className="table-page__title">{title}</h1>
+          <p className="table-page__desc">{desc}</p>
         </div>
       </div>
 
